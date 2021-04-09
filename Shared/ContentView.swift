@@ -8,9 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    //1.
+    @State var stocks = [EquityModel]()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            //3.
+            List(stocks) { comment in
+                VStack(alignment: .leading) {
+                    Text(comment.companyName)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    Text(comment.symbol)
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                    Text("\(comment.latestPrice)")
+                        .font(.body)
+                }
+                
+            }
+            //2.
+            .onAppear() {
+                apiCall().getStockPrice(ticker: "TSLA") { stock in
+                    self.stocks += [stock]
+                }
+            }.navigationTitle("Stocks")
+        }
     }
 }
 

@@ -15,6 +15,10 @@
 		2500A069261E9E250043FF96 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A03E261E9E240043FF96 /* ContentView.swift */; };
 		2500A06A261E9E250043FF96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2500A03F261E9E250043FF96 /* Assets.xcassets */; };
 		2500A06B261E9E250043FF96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2500A03F261E9E250043FF96 /* Assets.xcassets */; };
+		2500A07B261E9E4C0043FF96 /* EquityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* EquityModel.swift */; };
+		2500A07C261E9E4C0043FF96 /* EquityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* EquityModel.swift */; };
+		2500A07E261E9E840043FF96 /* EquityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* EquityAPI.swift */; };
+		2500A07F261E9E840043FF96 /* EquityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* EquityAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,8 @@
 		2500A05F261E9E250043FF96 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2500A063261E9E250043FF96 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		2500A065261E9E250043FF96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2500A07A261E9E4C0043FF96 /* EquityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityModel.swift; sourceTree = "<group>"; };
+		2500A07D261E9E840043FF96 /* EquityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,8 @@
 				2500A03D261E9E240043FF96 /* ArbitrageApp.swift */,
 				2500A03E261E9E240043FF96 /* ContentView.swift */,
 				2500A03F261E9E250043FF96 /* Assets.xcassets */,
+				2500A07A261E9E4C0043FF96 /* EquityModel.swift */,
+				2500A07D261E9E840043FF96 /* EquityAPI.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -308,8 +316,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2500A07E261E9E840043FF96 /* EquityAPI.swift in Sources */,
 				2500A068261E9E250043FF96 /* ContentView.swift in Sources */,
 				2500A066261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
+				2500A07B261E9E4C0043FF96 /* EquityModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,8 +327,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2500A07F261E9E840043FF96 /* EquityAPI.swift in Sources */,
 				2500A069261E9E250043FF96 /* ContentView.swift in Sources */,
 				2500A067261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
+				2500A07C261E9E4C0043FF96 /* EquityModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
