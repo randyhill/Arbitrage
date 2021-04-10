@@ -9,29 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
     //1.
-    @State var stocks = [EquityModel]()
+    @State var positions = [Position]()
     
     var body: some View {
         NavigationView {
             //3.
-            List(stocks) { comment in
+            List(positions) { position in
                 VStack(alignment: .leading) {
-                    Text(comment.companyName)
+                    Text(position.currentState)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text(comment.symbol)
+                        .padding()
+                    Text(position.bestCaseString)
                         .font(.subheadline)
                         .fontWeight(.bold)
-                    Text("\(comment.latestPrice)")
-                        .font(.body)
+                    Text("\(position.worstCaseString)")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
                 }
-                
             }
             //2.
             .onAppear() {
-                apiCall().getStockPrice(ticker: "TSLA") { stock in
-                    self.stocks += [stock]
-                }
+                positions = Database.shared.positions
+//                apiCall().getEquity(ticker: "TSLA") { stock in
+//                    self.stocks += [stock]
+//                }
             }.navigationTitle("Stocks")
         }
     }
