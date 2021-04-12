@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     //1.
-    @State var positions = [Position]()
+    @ObservedObject var db = Database.shared
     
     var body: some View {
         NavigationView {
             //3.
-            List(positions) { position in
+            List(db.positions) { position in
                 VStack(alignment: .leading) {
                     Text(position.currentState)
                         .font(.title)
@@ -30,7 +30,8 @@ struct ContentView: View {
             }
             //2.
             .onAppear() {
-                positions = Database.shared.positions
+//               let _ =  Database.shared
+//                positions = Database.shared.positions
 //                apiCall().getEquity(ticker: "TSLA") { stock in
 //                    self.stocks += [stock]
 //                }

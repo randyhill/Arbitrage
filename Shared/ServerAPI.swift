@@ -14,10 +14,17 @@ class ServerAPI {
         let apiPath = "https://cloud.iexapis.com/stable/stock/\(ticker)/quote?token=\(token)"
        guard let url = URL(string: apiPath) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             do {
-                let stock = try JSONDecoder().decode(Equity.self, from: data!)
-                completion(stock)
+                if let data = data {
+                    let stock = try JSONDecoder().decode(Equity.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(stock)
+                    }
+                } else {
+                    let errorString = error?.localizedDescription ?? "unknown"
+                    Log.error("Failed to fetch url: \(url), error: \(errorString), response: \(String(describing: response))")
+                }
             } catch {
                 Log.error("Failed to fetch: \(ticker), error: \(error)")
             }

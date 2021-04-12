@@ -18,7 +18,7 @@ struct Equity: Codable, Identifiable {
     let peRatio: Double
     private let lastTradeTime: Int
     private let latestUpdate: Int
-    private let iexLastUpdated: Int
+    private let iexLastUpdated: Int?
     
     var lastTradeDate: Date {
         return Date.fromInternetEpoch(lastTradeTime)
@@ -29,7 +29,7 @@ struct Equity: Codable, Identifiable {
     }
     
     var iexUpdateDate: Date {
-        return Date.fromInternetEpoch(iexLastUpdated)
+        return Date.fromInternetEpoch(iexLastUpdated ?? 0)
     }
     
     var title: String {
