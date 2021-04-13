@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct DashboardView: View {
     //1.
     @ObservedObject var db = Database.shared
     
@@ -16,10 +16,14 @@ struct ContentView: View {
             //3.
             List(db.positions) { position in
                 VStack(alignment: .leading) {
-                    Text(position.currentState)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
+                    NavigationLink(
+                        destination: PositionEditor(position: position, db: db),
+                        label: {
+                            Text(position.currentState)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding()
+                    })
                     Text(position.bestCaseString)
                         .font(.subheadline)
                         .fontWeight(.bold)
@@ -42,6 +46,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        DashboardView()
     }
 }

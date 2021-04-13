@@ -9,12 +9,12 @@ import SwiftUI
 
 class Position: Codable, Identifiable {
     let id: UUID
-    let ticker: String
+    var ticker: String
     let bestCase: Double
     let worstCase: Double
     let soonest: Date
     let latest: Date
-    let isOwned: Bool
+    var isOwned: Bool
     
     var currentState: String {
         if let equity = Database.shared.getEquityFor(ticker) {

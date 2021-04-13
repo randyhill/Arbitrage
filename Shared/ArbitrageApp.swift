@@ -12,7 +12,7 @@ struct ArbitrageApp: App {
     var body: some Scene {
         let database = Database.shared
         WindowGroup {
-            ContentView()
+            DashboardView()
         }
     }
 }
