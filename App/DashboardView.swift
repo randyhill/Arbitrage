@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct DashboardView: View {
-    //1.
     @ObservedObject var db = Database.shared
     
     var body: some View {
         NavigationView {
-            //3.
             List(db.positions) { position in
                 VStack(alignment: .leading) {
                     NavigationLink(
@@ -24,15 +22,14 @@ struct DashboardView: View {
                                 .fontWeight(.bold)
                                 .padding()
                     })
-                    Text(position.bestCaseString)
+                    Text(position.bestCaseDescription)
                         .font(.subheadline)
                         .fontWeight(.bold)
-                    Text("\(position.worstCaseString)")
+                    Text("\(position.worstCaseDescription)")
                         .font(.subheadline)
                         .fontWeight(.bold)
                 }
             }
-            //2.
             .onAppear() {
 //               let _ =  Database.shared
 //                positions = Database.shared.positions

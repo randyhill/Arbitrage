@@ -107,6 +107,7 @@
 		2551539726252F3E004881D3 /* TextFieldActive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldActive.swift; sourceTree = "<group>"; };
 		2551539826252F3E004881D3 /* TextFieldDynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldDynamic.swift; sourceTree = "<group>"; };
 		2551539A26252F3E004881D3 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		255153F426261050004881D3 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		259429A826252B5900B36B5C /* PositionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionEditor.swift; sourceTree = "<group>"; };
 		25AA3B3E26210FB70049779F /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		25AA3B67262138E30049779F /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
@@ -149,28 +150,28 @@
 		2500A037261E9E240043FF96 = {
 			isa = PBXGroup;
 			children = (
+				2500A03F261E9E250043FF96 /* Assets.xcassets */,
 				2551537E26252F3E004881D3 /* Shared */,
 				2500A046261E9E250043FF96 /* iOS */,
 				2500A04D261E9E250043FF96 /* Mac */,
-				25AA3B66262127DA0049779F /* Models */,
 				2500A045261E9E250043FF96 /* Products */,
-				2500A03C261E9E240043FF96 /* Shared */,
+				2500A03C261E9E240043FF96 /* App */,
 				2500A057261E9E250043FF96 /* Tests iOS */,
 				2500A062261E9E250043FF96 /* Tests macOS */,
 				25AA3B3D26210FB70049779F /* Utilities */,
 			);
 			sourceTree = "<group>";
 		};
-		2500A03C261E9E240043FF96 /* Shared */ = {
+		2500A03C261E9E240043FF96 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				25AA3B66262127DA0049779F /* Models */,
 				2500A03D261E9E240043FF96 /* ArbitrageApp.swift */,
 				2500A03E261E9E240043FF96 /* DashboardView.swift */,
-				2500A03F261E9E250043FF96 /* Assets.xcassets */,
 				2500A07D261E9E840043FF96 /* ServerAPI.swift */,
 				259429A826252B5900B36B5C /* PositionEditor.swift */,
 			);
-			path = Shared;
+			path = App;
 			sourceTree = "<group>";
 		};
 		2500A045261E9E250043FF96 /* Products */ = {
@@ -222,6 +223,7 @@
 		2551537E26252F3E004881D3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				255153F326261050004881D3 /* Utilities */,
 				2551537F26252F3E004881D3 /* Extensions */,
 				2551539226252F3E004881D3 /* View Modifiers */,
 				2551539426252F3E004881D3 /* Widgets */,
@@ -280,6 +282,14 @@
 				2551539A26252F3E004881D3 /* Checkbox.swift */,
 			);
 			path = Widgets;
+			sourceTree = "<group>";
+		};
+		255153F326261050004881D3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				255153F426261050004881D3 /* Log.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		25AA3B3D26210FB70049779F /* Utilities */ = {
