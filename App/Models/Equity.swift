@@ -16,13 +16,21 @@ struct Equity: Codable, Identifiable {
     let primaryExchange: String
     let marketCap: Int
     let peRatio: Double
-    private let lastTradeTime: Int
-    private let latestUpdate: Int
+    let lastTradeTime: Int
+    let latestUpdate: Int
     private let iexLastUpdated: Int?
     private let iexBidPrice: Double
     private let iexBidSize: Double
     private let iexAskPrice: Double
     private let iexAskSize: Double
+    
+    var ask: Double {
+        return iexAskPrice
+    }
+    
+    var bid: Double {
+        return iexBidPrice
+    }
     
     var lastTradeDate: Date {
         return Date.fromInternetEpoch(lastTradeTime)

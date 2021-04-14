@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+let annualizedReturnGoal: Double = 0.50 // 50%
+
 class Position: Identifiable, ObservableObject {
     let id: UUID
     var ticker: String
+    @Published var equity: Equity?
     var bestCase: Double
     var worstCase: Double
     var bestPercentage: Double
@@ -22,7 +25,7 @@ class Position: Identifiable, ObservableObject {
         let equity = Database.shared.getEquityFor(ticker)
         return equity?.latestPrice
     }
-    
+
     var priceString: String {
         if let price = currentPrice {
             return "$\(price.formatToDecimalPlaces())"
@@ -72,6 +75,14 @@ class Position: Identifiable, ObservableObject {
             if annualized > 10 { return 10 }
             return annualized - 1
         }
+    }
+    
+    // At what price will we meet our annulaized return goal..
+    var purchasePrice: Double {
+        let years = Double(averageDays)/365.242199
+        let tReturn = pow(1 + annualizedReturnGoal, years) - 1
+        let _goalReturnsPrice = tReturn * outcome
+        return _goalReturnsPrice
     }
     
     var bestCaseString: String {

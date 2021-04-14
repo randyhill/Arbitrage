@@ -10,7 +10,6 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var db: Database
     @State var positions: [Position]
-    private let textPadding: CGFloat = 0.5
     @State private var isShowingDetailView = false
     @State var newPosition = Position()
     @State var navigationTitle = "Stocks"
@@ -18,42 +17,20 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             List(positions) { position in
-                VStack(alignment: .leading) {
-                    NavigationLink(
-                        destination: PositionEditor(position: position),
-                        label: {
-                            Text(position.currentState)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding()
-                    })
-                    Text(position.bestCaseDescription)
-                        .font(.subheadline)
-                        .padding(textPadding)
-                    Text("\(position.worstCaseDescription)")
-                        .font(.subheadline)
-                        .padding(textPadding)
-                    Text("Average Days: \(position.averageDays)")
-                        .font(.subheadline)
-                        .padding(textPadding)
-                    Text("Average Return: \(String.toPercent(position.totalReturn))")
-                        .font(.subheadline)
-                        .padding(textPadding)
-                    Text("Annualized Return: \(String.toPercent(position.annualizedReturn))")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-                }
+                PositionView(position: position)
+                    .debug {
+                        print("Position equity: \(position.equity)")
+                    }
             }
             .onAppear() {
-//                positions = Database.shared.positions
+                positions = Database.shared.positions
             }
             .toolbar {
                  ToolbarItem(placement: .principal) {
                     AppTitleBar(isShowingDetailView: $isShowingDetailView, newPosition: $newPosition, title: $navigationTitle)
                         .environmentObject(db)
                    }
-              }
+            }
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
             VStack {
