@@ -19,6 +19,10 @@ struct Equity: Codable, Identifiable {
     private let lastTradeTime: Int
     private let latestUpdate: Int
     private let iexLastUpdated: Int?
+    private let iexBidPrice: Double
+    private let iexBidSize: Double
+    private let iexAskPrice: Double
+    private let iexAskSize: Double
     
     var lastTradeDate: Date {
         return Date.fromInternetEpoch(lastTradeTime)

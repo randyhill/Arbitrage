@@ -120,4 +120,8 @@ class Position: Identifiable, ObservableObject {
         self.isOwned = isOwned
         self.buyNotifications = buyNotifications
     }
+    
+    convenience init() {
+        self.init(ticker: "")
+    }
 }
