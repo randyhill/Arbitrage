@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @ObservedObject var db = Database.shared
-    
+    @EnvironmentObject var db: Database
+    @State var positions: [Position]
+    private let textPadding: CGFloat = 0.5
+
     var body: some View {
         NavigationView {
-            List(db.positions) { position in
+            List(positions) { position in
                 VStack(alignment: .leading) {
                     NavigationLink(
-                        destination: PositionEditor(position: position, db: db),
+                        destination: PositionEditor(position: position),
                         label: {
                             Text(position.currentState)
                                 .font(.title)
@@ -24,18 +26,24 @@ struct DashboardView: View {
                     })
                     Text(position.bestCaseDescription)
                         .font(.subheadline)
-                        .fontWeight(.bold)
+                        .padding(textPadding)
                     Text("\(position.worstCaseDescription)")
                         .font(.subheadline)
+                        .padding(textPadding)
+                    Text("Average Days: \(position.averageDays)")
+                        .font(.subheadline)
+                        .padding(textPadding)
+                    Text("Average Return: \(String.toPercent(position.totalReturn))")
+                        .font(.subheadline)
+                        .padding(textPadding)
+                    Text("Annualized Return: \(String.toPercent(position.annualizedReturn))")
+                        .font(.headline)
                         .fontWeight(.bold)
+                        .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 }
             }
             .onAppear() {
-//               let _ =  Database.shared
 //                positions = Database.shared.positions
-//                apiCall().getEquity(ticker: "TSLA") { stock in
-//                    self.stocks += [stock]
-//                }
             }.navigationTitle("Stocks")
         }
     }
@@ -43,6 +51,7 @@ struct DashboardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardView()
+        DashboardView(positions: Database.testPositions)
+            .environmentObject(Database.shared)
     }
 }

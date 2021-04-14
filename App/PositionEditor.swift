@@ -9,32 +9,58 @@ import SwiftUI
 
 struct PositionEditor: View {
     @State var position: Position
-    @ObservedObject var db: Database
+    @EnvironmentObject var db: Database
     
     // Private state
     @State private var bestCaseString = ""
 
     var body: some View {
         Form {
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $position.ticker)
+            HStack {
+                Text("Current Price: \(position.priceString)")
+            }
+            TextFieldActive(title: "Best Case: $", placeholder: "$0.0", text: $position.bestCaseString)
+                .keyboardType(.decimalPad)
+            HStack {
+                Text("Soonest: ")
+                DatePicker("", selection: $position.soonest, displayedComponents: .date)
+                    .frame(width: 124, alignment: .trailing)
+            }
+            TextFieldActive(title: "Worst Case: $", placeholder: "$0.0", text: $position.worstCaseString)
+                .keyboardType(.decimalPad)
+            HStack {
+                Text("Latest: ")
+                DatePicker("", selection: $position.latest, displayedComponents: .date)
+                    .frame(width: 124, alignment: .trailing)
+            }
+            HStack {
+                Text("Average Days: \(position.averageDays)")
+            }
             HStack {
                 Checkbox(isChecked: $position.isOwned) { (changed) in
                     print("is changed: \(changed)")
                 }
                 Text("Owned")
-            }
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $position.ticker)
-            TextFieldActive(title: "Best Case: $", placeholder: "$0.0", text: $bestCaseString)
-                .keyboardType(.decimalPad)
-//            TextFieldActive(title: "Ticker", text: $position.ticker)
-//            TextFieldActive(title: "Ticker", text: $position.ticker)
-//            TextFieldActive(title: "Ticker", text: $position.ticker)
+                Spacer()
+                Checkbox(isChecked: $position.isOwned) { (changed) in
+                    print("is changed: \(changed)")
+                }
+                Text("Sell Notifications")
+            }.padding()
         }
         .onDisappear() {
-            position.bestCaseString = bestCaseString
             db.updatePosition(position)
         }
         .onAppear() {
             bestCaseString = position.bestCaseString
         }
+    }
+}
+
+struct PositionEditor_Previews: PreviewProvider {
+    static var previews: some View {
+        PositionEditor(position: Database.testPositions.first!)
+            .environmentObject(Database.shared)
     }
 }
