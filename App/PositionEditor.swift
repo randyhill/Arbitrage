@@ -16,7 +16,7 @@ struct PositionEditor: View {
 
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $position.ticker)
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $position.symbol)
             HStack {
                 Text("Current Price: \(position.priceString)")
             }
@@ -49,9 +49,9 @@ struct PositionEditor: View {
                 Text("Sell Notifications")
             }.padding()
         }
-        .onDisappear() {
-            db.updatePosition(position)
-        }
+//        .onDisappear() {
+//            db.updatePosition(position)
+//        }
         .onAppear() {
             bestCaseString = position.bestCaseString
         }
@@ -61,6 +61,6 @@ struct PositionEditor: View {
 struct PositionEditor_Previews: PreviewProvider {
     static var previews: some View {
         PositionEditor(position: Database.testPositions.first!)
-            .environmentObject(Database.shared)
+            .environmentObject(Database())
     }
 }

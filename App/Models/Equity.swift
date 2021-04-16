@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Equity: Codable, Identifiable {
+struct Equity: Hashable, Codable, Identifiable {
     let id = UUID()
     let symbol: String
     let companyName: String
@@ -55,5 +55,22 @@ struct Equity: Codable, Identifiable {
     
     var info: String {
         return "Updated: \(lastUpdateDate.toUniqueTimeDayOrDate())\nIEX Update: \(iexUpdateDate.toUniqueTimeDayOrDate())\nExchange: \(primaryExchange)"
+    }
+    
+    init() {
+        symbol = ""
+        companyName = ""
+        latestPrice = 0.0
+        volume = 0
+        primaryExchange = ""
+        marketCap = 0
+        peRatio = 0.0
+        lastTradeTime = 0
+        latestUpdate = 0
+        iexLastUpdated = 0
+        iexBidSize = 0
+        iexBidPrice = 0
+        iexAskPrice = 0
+        iexAskSize = 0
     }
 }

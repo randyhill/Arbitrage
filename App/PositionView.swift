@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PositionView: View {
-    @State var position: Position
+    @Binding var position: Position
     private let textPadding: CGFloat = 0.5
 
     var body: some View {
@@ -43,11 +43,14 @@ struct PositionView: View {
                 .fontWeight(.bold)
                 .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         }
+        .debug {
+            Log.console("Position equity: \(String(describing: position.equity))")
+        }
     }
 }
 
 struct PositionView_Previews: PreviewProvider {
     static var previews: some View {
-        PositionView(position: Database.testPositions.first!)
+        PositionView(position: .constant(Database.testPositions.first!))
     }
 }

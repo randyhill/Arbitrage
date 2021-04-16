@@ -9,28 +9,31 @@ import SwiftUI
 
 struct DashboardView: View {
     @EnvironmentObject var db: Database
-    @State var positions: [Position]
     @State private var isShowingDetailView = false
     @State var newPosition = Position()
     @State var navigationTitle = "Stocks"
 
     var body: some View {
         NavigationView {
-            List(positions) { position in
-                PositionView(position: position)
-                    .debug {
-                        print("Position equity: \(position.equity)")
-                    }
+            List {
+                ForEach(db.positions.indices, id: \.self) { index in
+                    PositionView(position: $db.positions[index])
+                        .debug {
+                            Log.console("Dashboard equity: \(db.positionAt(index).equity)")
+                        }
+                }
+
             }
-            .onAppear() {
-                positions = Database.shared.positions
-            }
+//            .onAppear() {
+//                positions = db.positions
+//            }
             .toolbar {
                  ToolbarItem(placement: .principal) {
                     AppTitleBar(isShowingDetailView: $isShowingDetailView, newPosition: $newPosition, title: $navigationTitle)
                         .environmentObject(db)
                    }
             }
+ 
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
             VStack {
@@ -43,7 +46,7 @@ struct DashboardView: View {
                     Button("Save") {
                         isShowingDetailView = false
                         db.addPosition(newPosition)
-                        positions = db.positions
+//                        positions = db.positions
                     }
                     .padding()
                 }
@@ -85,7 +88,8 @@ struct AppTitleBar: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardView(positions: Database.testPositions)
-            .environmentObject(Database.shared)
+        DashboardView()
+            .environmentObject(Database())
     }
 }
+

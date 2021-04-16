@@ -9,9 +9,9 @@ import SwiftUI
 
 let annualizedReturnGoal: Double = 0.50 // 50%
 
-class Position: Identifiable, ObservableObject {
-    let id: UUID
-    var ticker: String
+class Position: Identifiable {
+    var id: UUID
+    var symbol: String
     @Published var equity: Equity?
     var bestCase: Double
     var worstCase: Double
@@ -22,22 +22,19 @@ class Position: Identifiable, ObservableObject {
     var buyNotifications: Bool
     
     var currentPrice: Double? {
-        let equity = Database.shared.getEquityFor(ticker)
         return equity?.latestPrice
     }
 
     var priceString: String {
-        if let price = currentPrice {
-            return "$\(price.formatToDecimalPlaces())"
-        }
-        return "N/A"
+        guard let price = currentPrice else { return "n/a" }
+        return "$\(price.formatToDecimalPlaces())"
     }
     
     var currentState: String {
-        if let equity = Database.shared.getEquityFor(ticker) {
-            return equity.title
+        guard let equity = equity else {
+            return symbol + ": no data"
         }
-        return ticker + ": no data"
+        return equity.title
     }
     
     var outcome: Double {
@@ -46,7 +43,7 @@ class Position: Identifiable, ObservableObject {
     
     var totalReturn: Double? {
         guard let price = currentPrice else {
-            return nil
+            return 0
         }
         let grossReturn = outcome
         return grossReturn/price - 1
@@ -94,8 +91,7 @@ class Position: Identifiable, ObservableObject {
                 return Log.error("Could not convert: \(newValue) to double")
             }
             bestCase = newDouble
-            self.objectWillChange.send()
-        }
+         }
     }
     
     var worstCaseString: String {
@@ -107,7 +103,6 @@ class Position: Identifiable, ObservableObject {
                 return Log.error("Could not convert: \(newValue) to double")
             }
             worstCase = newDouble
-            self.objectWillChange.send()
         }
     }
 
@@ -122,7 +117,7 @@ class Position: Identifiable, ObservableObject {
 
     init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID()
-        self.ticker = ticker
+        self.symbol = ticker
         self.bestCase = best
         self.worstCase = worst
         self.bestPercentage = bestPercentage

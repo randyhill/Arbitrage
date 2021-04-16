@@ -10,17 +10,17 @@ import SwiftUI
 class Positions: ObservableObject {
     private var hash = [String: Position]()
     
-    var positions: [Position] {
+    var list: [Position] {
         return Array(hash.values)
     }
     
     func add(_ newPosition: Position) {
-        hash[newPosition.ticker] = newPosition
+        hash[newPosition.symbol] = newPosition
         objectWillChange.send()
     }
     
     func update(_ position: Position) {
-        hash[position.ticker] = position
+        hash[position.symbol] = position
         objectWillChange.send()
     }
 }

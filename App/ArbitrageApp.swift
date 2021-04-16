@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct ArbitrageApp: App {
-    @StateObject var database = Database.shared
+    @StateObject private var database = Database()
     
     var body: some Scene {
         WindowGroup {
-            DashboardView(positions: database.positions).environmentObject(database)
+            DashboardView().environmentObject(database)
         }
     }
 }
