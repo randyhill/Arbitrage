@@ -19,16 +19,16 @@ struct Equity: Hashable, Codable, Identifiable {
     let lastTradeTime: Int
     let latestUpdate: Int
     private let iexLastUpdated: Int?
-    private let iexBidPrice: Double
-    private let iexBidSize: Double
-    private let iexAskPrice: Double
-    private let iexAskSize: Double
+    private let iexBidPrice: Double?
+    private let iexBidSize: Double?
+    private let iexAskPrice: Double?
+    private let iexAskSize: Double?
     
-    var ask: Double {
+    var ask: Double? {
         return iexAskPrice
     }
     
-    var bid: Double {
+    var bid: Double? {
         return iexBidPrice
     }
     
@@ -42,19 +42,6 @@ struct Equity: Hashable, Codable, Identifiable {
     
     var iexUpdateDate: Date {
         return Date.fromInternetEpoch(iexLastUpdated ?? 0)
-    }
-    
-    var title: String {
-        return "Ticker: \(symbol)\nName: \(companyName)\nPrice: \(latestPrice)"
-    }
-    
-    var details: String {
-        let lastTradeString = lastTradeDate.toUniqueTimeDayOrDate()
-        return "Volume: \(Int.shortFormat(volume))\nLast Trade: \(lastTradeString)\nMarket Cap: \(marketCap.shortFormatted)"
-    }
-    
-    var info: String {
-        return "Updated: \(lastUpdateDate.toUniqueTimeDayOrDate())\nIEX Update: \(iexUpdateDate.toUniqueTimeDayOrDate())\nExchange: \(primaryExchange)"
     }
     
     init() {
@@ -71,6 +58,23 @@ struct Equity: Hashable, Codable, Identifiable {
         iexBidSize = 0
         iexBidPrice = 0
         iexAskPrice = 0
+        iexAskSize = 0
+    }
+    
+    init(latestPrice: Double, bid: Double, ask: Double) {
+        self.latestPrice = latestPrice
+        self.iexBidPrice = bid
+        self.iexAskPrice = ask
+        symbol = "test"
+        companyName = "testing"
+         volume = 0
+        primaryExchange = "testing"
+        marketCap = 0
+        peRatio = 0.0
+        lastTradeTime = 0
+        latestUpdate = 0
+        iexLastUpdated = 0
+        iexBidSize = 0
         iexAskSize = 0
     }
 }

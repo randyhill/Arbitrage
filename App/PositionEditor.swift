@@ -35,7 +35,7 @@ struct PositionEditor: View {
                     .frame(width: 124, alignment: .trailing)
             }
             HStack {
-                Text("Average Days: \(position.averageDays)")
+                Text("Average Days: \(position.periodDays)")
             }
             HStack {
                 Checkbox(isChecked: $position.isOwned) { (changed) in

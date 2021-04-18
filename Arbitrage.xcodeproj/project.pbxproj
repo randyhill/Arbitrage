@@ -19,6 +19,38 @@
 		2500A07C261E9E4C0043FF96 /* Equity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* Equity.swift */; };
 		2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* ServerAPI.swift */; };
 		2500A07F261E9E840043FF96 /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* ServerAPI.swift */; };
+		253CF9BC262B9FC000AE5D4A /* Equity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* Equity.swift */; };
+		253CF9BD262BA12900AE5D4A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B67262138E30049779F /* Position.swift */; };
+		253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B67262138E30049779F /* Position.swift */; };
+		253CF9CA262BA28F00AE5D4A /* Date+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551539026252F3E004881D3 /* Date+iOS.swift */; };
+		253CF9CB262BA28F00AE5D4A /* Color+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538A26252F3E004881D3 /* Color+iOS.swift */; };
+		253CF9CC262BA28F00AE5D4A /* UILabel+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538F26252F3E004881D3 /* UILabel+iOS.swift */; };
+		253CF9CD262BA28F00AE5D4A /* UIColor+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538926252F3E004881D3 /* UIColor+Shared.swift */; };
+		253CF9CE262BA28F00AE5D4A /* UITextView+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538E26252F3E004881D3 /* UITextView+iOS.swift */; };
+		253CF9CF262BA28F00AE5D4A /* String+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538C26252F3E004881D3 /* String+iOS.swift */; };
+		253CF9D0262BA28F00AE5D4A /* UIImage+IOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538D26252F3E004881D3 /* UIImage+IOS.swift */; };
+		253CF9D1262BA28F00AE5D4A /* TimeInterval+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551539126252F3E004881D3 /* TimeInterval+iOS.swift */; };
+		253CF9D2262BA28F00AE5D4A /* UITextField+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538B26252F3E004881D3 /* UITextField+iOS.swift */; };
+		253CF9D3262BA28F00AE5D4A /* URL+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538726252F3E004881D3 /* URL+Shared.swift */; };
+		253CF9D4262BA28F00AE5D4A /* UIView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538826252F3E004881D3 /* UIView+Shared.swift */; };
+		253CF9D5262BA29600AE5D4A /* Color+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538326252F3E004881D3 /* Color+Shared.swift */; };
+		253CF9D6262BA29600AE5D4A /* String+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538426252F3E004881D3 /* String+Shared.swift */; };
+		253CF9D7262BA29600AE5D4A /* Math+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538026252F3E004881D3 /* Math+Shared.swift */; };
+		253CF9D8262BA29600AE5D4A /* View+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538226252F3E004881D3 /* View+Shared.swift */; };
+		253CF9D9262BA29600AE5D4A /* JSON+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538526252F3E004881D3 /* JSON+Shared.swift */; };
+		253CF9DA262BA29600AE5D4A /* Collections+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538126252F3E004881D3 /* Collections+Shared.swift */; };
+		253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538326252F3E004881D3 /* Color+Shared.swift */; };
+		253CF9DC262BA29800AE5D4A /* String+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538426252F3E004881D3 /* String+Shared.swift */; };
+		253CF9DD262BA29800AE5D4A /* View+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538226252F3E004881D3 /* View+Shared.swift */; };
+		253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538526252F3E004881D3 /* JSON+Shared.swift */; };
+		253CF9DF262BA2A100AE5D4A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153F426261050004881D3 /* Log.swift */; };
+		253CF9E0262BA2A300AE5D4A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153F426261050004881D3 /* Log.swift */; };
+		253CF9E2262BB3C000AE5D4A /* PositionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */; };
+		253CF9E3262BB3C000AE5D4A /* PositionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */; };
+		253CF9E5262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
+		253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
+		253CF9E8262BBDEA00AE5D4A /* ReturnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */; };
+		253CF9E9262BBDEA00AE5D4A /* ReturnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */; };
 		2551539D26252F3E004881D3 /* Math+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538026252F3E004881D3 /* Math+Shared.swift */; };
 		2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538126252F3E004881D3 /* Collections+Shared.swift */; };
 		2551539F26252F3E004881D3 /* View+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538226252F3E004881D3 /* View+Shared.swift */; };
@@ -89,6 +121,9 @@
 		2500A065261E9E250043FF96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2500A07A261E9E4C0043FF96 /* Equity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equity.swift; sourceTree = "<group>"; };
 		2500A07D261E9E840043FF96 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
+		253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTitle.swift; sourceTree = "<group>"; };
+		253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionReturns.swift; sourceTree = "<group>"; };
+		253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnField.swift; sourceTree = "<group>"; };
 		2551538026252F3E004881D3 /* Math+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Math+Shared.swift"; sourceTree = "<group>"; };
 		2551538126252F3E004881D3 /* Collections+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collections+Shared.swift"; sourceTree = "<group>"; };
 		2551538226252F3E004881D3 /* View+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Shared.swift"; sourceTree = "<group>"; };
@@ -175,6 +210,9 @@
 				2500A03E261E9E240043FF96 /* DashboardView.swift */,
 				259429A826252B5900B36B5C /* PositionEditor.swift */,
 				255153FA262767C6004881D3 /* PositionView.swift */,
+				253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */,
+				253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */,
+				253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -247,8 +285,6 @@
 				2551538426252F3E004881D3 /* String+Shared.swift */,
 				2551538526252F3E004881D3 /* JSON+Shared.swift */,
 				2551538626252F3E004881D3 /* iOS Extensions */,
-				2551539026252F3E004881D3 /* Date+iOS.swift */,
-				2551539126252F3E004881D3 /* TimeInterval+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -264,6 +300,8 @@
 				2551538C26252F3E004881D3 /* String+iOS.swift */,
 				2551538D26252F3E004881D3 /* UIImage+IOS.swift */,
 				2551538E26252F3E004881D3 /* UITextView+iOS.swift */,
+				2551539126252F3E004881D3 /* TimeInterval+iOS.swift */,
+				2551539026252F3E004881D3 /* Date+iOS.swift */,
 				2551538F26252F3E004881D3 /* UILabel+iOS.swift */,
 			);
 			path = "iOS Extensions";
@@ -479,9 +517,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
+				253CF9E8262BBDEA00AE5D4A /* ReturnField.swift in Sources */,
 				255153A226252F3E004881D3 /* JSON+Shared.swift in Sources */,
 				255153A426252F3E004881D3 /* UIView+Shared.swift in Sources */,
 				2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */,
+				253CF9E2262BB3C000AE5D4A /* PositionTitle.swift in Sources */,
 				255153AB26252F3E004881D3 /* UILabel+iOS.swift in Sources */,
 				2551539F26252F3E004881D3 /* View+Shared.swift in Sources */,
 				255153A726252F3E004881D3 /* UITextField+iOS.swift in Sources */,
@@ -497,6 +537,7 @@
 				255153AA26252F3E004881D3 /* UITextView+iOS.swift in Sources */,
 				255153A926252F3E004881D3 /* UIImage+IOS.swift in Sources */,
 				255153B126252F3E004881D3 /* TextFieldActive.swift in Sources */,
+				253CF9E5262BB9A800AE5D4A /* PositionReturns.swift in Sources */,
 				255153B026252F3E004881D3 /* TextFieldDynamicNative.swift in Sources */,
 				2500A066261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
 				2551539D26252F3E004881D3 /* Math+Shared.swift in Sources */,
@@ -518,13 +559,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				2500A07F261E9E840043FF96 /* ServerAPI.swift in Sources */,
+				253CF9E3262BB3C000AE5D4A /* PositionTitle.swift in Sources */,
 				2500A069261E9E250043FF96 /* DashboardView.swift in Sources */,
+				253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */,
 				255153F626262C69004881D3 /* Log.swift in Sources */,
+				253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */,
+				253CF9E9262BBDEA00AE5D4A /* ReturnField.swift in Sources */,
 				255153F826262C79004881D3 /* Collections+Shared.swift in Sources */,
 				259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */,
+				253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */,
+				253CF9DD262BA29800AE5D4A /* View+Shared.swift in Sources */,
 				2500A067261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
+				253CF9DC262BA29800AE5D4A /* String+Shared.swift in Sources */,
 				255153F726262C70004881D3 /* Math+Shared.swift in Sources */,
 				2500A07C261E9E4C0043FF96 /* Equity.swift in Sources */,
+				253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */,
 				255153FC262767C6004881D3 /* PositionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,7 +582,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				253CF9CC262BA28F00AE5D4A /* UILabel+iOS.swift in Sources */,
+				253CF9D8262BA29600AE5D4A /* View+Shared.swift in Sources */,
+				253CF9D3262BA28F00AE5D4A /* URL+Shared.swift in Sources */,
+				253CF9BC262B9FC000AE5D4A /* Equity.swift in Sources */,
+				253CF9DA262BA29600AE5D4A /* Collections+Shared.swift in Sources */,
+				253CF9D5262BA29600AE5D4A /* Color+Shared.swift in Sources */,
+				253CF9D4262BA28F00AE5D4A /* UIView+Shared.swift in Sources */,
+				253CF9CF262BA28F00AE5D4A /* String+iOS.swift in Sources */,
+				253CF9DF262BA2A100AE5D4A /* Log.swift in Sources */,
+				253CF9CA262BA28F00AE5D4A /* Date+iOS.swift in Sources */,
+				253CF9D7262BA29600AE5D4A /* Math+Shared.swift in Sources */,
+				253CF9D6262BA29600AE5D4A /* String+Shared.swift in Sources */,
+				253CF9CE262BA28F00AE5D4A /* UITextView+iOS.swift in Sources */,
+				253CF9D2262BA28F00AE5D4A /* UITextField+iOS.swift in Sources */,
+				253CF9D0262BA28F00AE5D4A /* UIImage+IOS.swift in Sources */,
 				2500A059261E9E250043FF96 /* Tests_iOS.swift in Sources */,
+				253CF9BD262BA12900AE5D4A /* Position.swift in Sources */,
+				253CF9D1262BA28F00AE5D4A /* TimeInterval+iOS.swift in Sources */,
+				253CF9CB262BA28F00AE5D4A /* Color+iOS.swift in Sources */,
+				253CF9CD262BA28F00AE5D4A /* UIColor+Shared.swift in Sources */,
+				253CF9D9262BA29600AE5D4A /* JSON+Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				253CF9E0262BA2A300AE5D4A /* Log.swift in Sources */,
 				2500A064261E9E250043FF96 /* Tests_macOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
