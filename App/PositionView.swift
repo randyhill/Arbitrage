@@ -14,7 +14,7 @@ struct PositionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             NavigationLink(
-                destination: PositionEditor(position: position),
+                destination: PositionEditor(position: $position),
                 label: {
                     PositionTitle(position: $position)
                         .padding()

@@ -51,7 +51,7 @@ struct DashboardView: View {
                     .padding()
                 }
                 .frame(alignment: .trailing)
-                PositionEditor(position: Position(ticker: ""))
+                PositionEditor(position: $newPosition)
                     .environmentObject(db)
             }
         })

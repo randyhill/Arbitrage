@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PositionEditor: View {
-    @State var position: Position
+    @Binding var position: Position
     @EnvironmentObject var db: Database
     
     // Private state
@@ -38,15 +38,13 @@ struct PositionEditor: View {
                 Text("Average Days: \(position.periodDays)")
             }
             HStack {
-                Checkbox(isChecked: $position.isOwned) { (changed) in
-                    print("is changed: \(changed)")
+                Checkbox(isChecked: $position.isOwned, title: "Owned") { (changed) in
+                    print("IsOwned: \(changed)")
                 }
-                Text("Owned")
                 Spacer()
-                Checkbox(isChecked: $position.isOwned) { (changed) in
-                    print("is changed: \(changed)")
+                Checkbox(isChecked: $position.buyNotifications, title: "Notifications") { (changed) in
+                    print("Notifications: \(changed)")
                 }
-                Text("Sell Notifications")
             }.padding()
         }
 //        .onDisappear() {
@@ -60,7 +58,7 @@ struct PositionEditor: View {
 
 struct PositionEditor_Previews: PreviewProvider {
     static var previews: some View {
-        PositionEditor(position: Database.testPositions.first!)
+        PositionEditor(position: .constant(Database.testPosition))
             .environmentObject(Database())
     }
 }

@@ -18,7 +18,7 @@ class Position: Identifiable {
     var bestPercentage: Double
     var soonest: Date
     var latest: Date
-    var isOwned: Bool
+    @Published var isOwned: Bool
     var buyNotifications: Bool
     
     var price: Double? {
@@ -46,7 +46,7 @@ class Position: Identifiable {
         guard let price = price else {
             return 0
         }
-        return returnCalc(soldAt: outcome, boughtAt: price)
+        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
     }
     
     // if we bought at the ask, what return should wee expect?
@@ -54,7 +54,7 @@ class Position: Identifiable {
         guard let price = askPrice else {
             return 0
         }
-        return returnCalc(soldAt: outcome, boughtAt: price)
+        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
     }
     
     // If we sold at the bid, what return would we be giving up?
@@ -62,7 +62,7 @@ class Position: Identifiable {
         guard let price = bidPrice else {
             return 0
         }
-        return returnCalc(soldAt: outcome, boughtAt: price)
+        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
     }
 
     var periodDays: Int {
@@ -77,30 +77,30 @@ class Position: Identifiable {
         guard let price = price else {
             return 0
         }
-        return annualizedReturnCalc(soldAt: outcome, boughtAt: price, days: periodDays)
+        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
     }
     
     var bidReturn: Double? {
         guard let price = askPrice else {
             return 0
         }
-        return annualizedReturnCalc(soldAt: outcome, boughtAt: price, days: periodDays)
+        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
     }
     
     var askReturn: Double? {
         guard let price = bidPrice else {
             return 0
         }
-        return annualizedReturnCalc(soldAt: outcome, boughtAt: price, days: periodDays)
+        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
     }
     
-    var bidColor: Color {
-        return annualizedReturnColor(bidReturn)
-    }
-    
-    var askColor: Color {
-        return annualizedReturnColor(bidReturn)
-    }
+//    var bidColor: Color {
+//        return AnnualizedReturn.color(bidReturn)
+//    }
+//
+//    var askColor: Color {
+//        return AnnualizedReturn.color(bidReturn)
+//    }
 
     // At what price will we meet our annulaized return goal..
     var goalPrice: Double {
@@ -112,7 +112,7 @@ class Position: Identifiable {
     
     var bestCaseString: String {
         get {
-            return "\(bestCase.formatToDecimalPlaces())"
+            return "\(bestCase.equityPrice)"
         }
         set {
             guard let newDouble = newValue.double else {
@@ -124,7 +124,7 @@ class Position: Identifiable {
     
     var worstCaseString: String {
         get {
-            return "\(worstCase.formatToDecimalPlaces())"
+            return "\(worstCase.equityPrice)"
         }
         set {
             guard let newDouble = newValue.double else {
@@ -172,46 +172,46 @@ class Position: Identifiable {
         self.worstCase = worst
     }
     
-    func annualizedReturnColor(_ annualizedReturn: Double?) -> Color {
-        guard let annualizedReturn = annualizedReturn else {
-            return Color.gray
-        }
-        if annualizedReturn >= 0.5 {
-            return Color.coolGreen
-        }
-        if annualizedReturn >= 0.35 {
-            return Color.coolBlue
-        }
-        if isOwned {
-            if annualizedReturn <= 0.10 {
-                return Color.coolRed
-            }
-            if annualizedReturn <= 0.20 {
-                return Color.coolYellow
-            }
-        }
-        return Color.white
-    }
-    
-    private func returnCalc(soldAt: Double, boughtAt: Double) -> Double {
-        return soldAt/boughtAt - 1
-    }
-
-    // Cap at 1,000% percent cause, come-on man.
-    // Since we are using days instead of years there is a minor amount of imprecision since we ignore leap years
-    private func annualizedReturnCalc(soldAt: Double, boughtAt: Double, days: Int) -> Double {
-        let grossReturn = returnCalc(soldAt: soldAt, boughtAt: boughtAt)
-        let negativeReturn = grossReturn < 0
-        let years = Double(days)/364
-        let annualized = (pow(1 + grossReturn, 1/years))
-        if negativeReturn {
-            if annualized > 10 {
-                return -10
-            }
-            return -annualized
-        } else {
-            if annualized > 10 { return 10 }
-            return annualized - 1
-        }
-    }
+//    func annualizedReturnColor(_ annualizedReturn: Double?) -> Color {
+//        guard let annualizedReturn = annualizedReturn else {
+//            return Color.gray
+//        }
+//        if annualizedReturn >= 0.5 {
+//            return Color.coolGreen
+//        }
+//        if annualizedReturn >= 0.35 {
+//            return Color.coolBlue
+//        }
+//        if isOwned {
+//            if annualizedReturn <= 0.10 {
+//                return Color.coolRed
+//            }
+//            if annualizedReturn <= 0.20 {
+//                return Color.coolYellow
+//            }
+//        }
+//        return Color.white
+//    }
+//
+//    private func returnCalc(soldAt: Double, boughtAt: Double) -> Double {
+//        return soldAt/boughtAt - 1
+//    }
+//
+//    // Cap at 1,000% percent cause, come-on man.
+//    // Since we are using days instead of years there is a minor amount of imprecision since we ignore leap years
+//    private func annualizedReturnCalc(soldAt: Double, boughtAt: Double, days: Int) -> Double {
+//        let grossReturn = returnCalc(soldAt: soldAt, boughtAt: boughtAt)
+//        let negativeReturn = grossReturn < 0
+//        let years = Double(days)/364
+//        let annualized = (pow(1 + grossReturn, 1/years))
+//        if negativeReturn {
+//            if annualized > 10 {
+//                return -10
+//            }
+//            return -annualized
+//        } else {
+//            if annualized > 10 { return 10 }
+//            return annualized - 1
+//        }
+//    }
 }

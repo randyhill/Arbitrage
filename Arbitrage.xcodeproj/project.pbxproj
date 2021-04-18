@@ -49,8 +49,10 @@
 		253CF9E3262BB3C000AE5D4A /* PositionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */; };
 		253CF9E5262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
 		253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
-		253CF9E8262BBDEA00AE5D4A /* ReturnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */; };
-		253CF9E9262BBDEA00AE5D4A /* ReturnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */; };
+		253CF9E8262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */; };
+		253CF9E9262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */; };
+		253CF9EB262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
+		253CF9EC262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
 		2551539D26252F3E004881D3 /* Math+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538026252F3E004881D3 /* Math+Shared.swift */; };
 		2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538126252F3E004881D3 /* Collections+Shared.swift */; };
 		2551539F26252F3E004881D3 /* View+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538226252F3E004881D3 /* View+Shared.swift */; };
@@ -123,7 +125,8 @@
 		2500A07D261E9E840043FF96 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
 		253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTitle.swift; sourceTree = "<group>"; };
 		253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionReturns.swift; sourceTree = "<group>"; };
-		253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnField.swift; sourceTree = "<group>"; };
+		253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedField.swift; sourceTree = "<group>"; };
+		253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedReturn.swift; sourceTree = "<group>"; };
 		2551538026252F3E004881D3 /* Math+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Math+Shared.swift"; sourceTree = "<group>"; };
 		2551538126252F3E004881D3 /* Collections+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collections+Shared.swift"; sourceTree = "<group>"; };
 		2551538226252F3E004881D3 /* View+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Shared.swift"; sourceTree = "<group>"; };
@@ -212,7 +215,7 @@
 				255153FA262767C6004881D3 /* PositionView.swift */,
 				253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */,
 				253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */,
-				253CF9E7262BBDEA00AE5D4A /* ReturnField.swift */,
+				253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				2500A07A261E9E4C0043FF96 /* Equity.swift */,
 				25AA3B67262138E30049779F /* Position.swift */,
 				25AA3B6926213A1B0049779F /* Database.swift */,
+				253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -517,7 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
-				253CF9E8262BBDEA00AE5D4A /* ReturnField.swift in Sources */,
+				253CF9E8262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */,
 				255153A226252F3E004881D3 /* JSON+Shared.swift in Sources */,
 				255153A426252F3E004881D3 /* UIView+Shared.swift in Sources */,
 				2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */,
@@ -535,6 +539,7 @@
 				255153A126252F3E004881D3 /* String+Shared.swift in Sources */,
 				255153AC26252F3E004881D3 /* Date+iOS.swift in Sources */,
 				255153AA26252F3E004881D3 /* UITextView+iOS.swift in Sources */,
+				253CF9EB262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */,
 				255153A926252F3E004881D3 /* UIImage+IOS.swift in Sources */,
 				255153B126252F3E004881D3 /* TextFieldActive.swift in Sources */,
 				253CF9E5262BB9A800AE5D4A /* PositionReturns.swift in Sources */,
@@ -559,12 +564,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2500A07F261E9E840043FF96 /* ServerAPI.swift in Sources */,
+				253CF9EC262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */,
 				253CF9E3262BB3C000AE5D4A /* PositionTitle.swift in Sources */,
 				2500A069261E9E250043FF96 /* DashboardView.swift in Sources */,
 				253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */,
 				255153F626262C69004881D3 /* Log.swift in Sources */,
 				253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */,
-				253CF9E9262BBDEA00AE5D4A /* ReturnField.swift in Sources */,
+				253CF9E9262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */,
 				255153F826262C79004881D3 /* Collections+Shared.swift in Sources */,
 				259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */,
 				253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */,
