@@ -9,9 +9,13 @@ import SwiftUI
 
 let annualizedReturnGoal: Double = 0.50 // 50%
 
-class Position: Identifiable {
+class Position: Identifiable, Codable {
     enum Spread {
         case bid, ask
+    }
+    
+    enum CodingKeys: CodingKey {
+        case id, symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify
     }
     
     var id: UUID
@@ -23,7 +27,7 @@ class Position: Identifiable {
     var soonest: Date
     var latest: Date
     @Published var isOwned: Bool
-    var buyNotifications: Bool
+    var doNotify: Bool
     
     var price: Double? {
         return equity?.latestPrice
@@ -53,22 +57,6 @@ class Position: Identifiable {
         }
         return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
     }
-    
-    // if we bought at the ask, what return should wee expect?
-//    var purchaseTotalReturn: Double? {
-//        guard let price = askPrice else {
-//            return 0
-//        }
-//        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
-//    }
-//
-//    // If we sold at the bid, what return would we be giving up?
-//    var saleTotalReturn: Double? {
-//        guard let price = bidPrice else {
-//            return 0
-//        }
-//        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
-//    }
 
     var periodDays: Int {
         let now = Date()
@@ -88,20 +76,6 @@ class Position: Identifiable {
         }
         return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
     }
-    
-//    var bidReturn: Double? {
-//        guard let price = askPrice else {
-//            return 0
-//        }
-//        return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
-//    }
-//
-//    var askReturn: Double? {
-//        guard let price = bidPrice else {
-//            return 0
-//        }
-//        return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
-//    }
 
     // At what price will we meet our annulaized return goal..
     var buyPrice: Double {
@@ -152,7 +126,7 @@ class Position: Identifiable {
         self.soonest = soonest
         self.latest = latest
         self.isOwned = isOwned
-        self.buyNotifications = buyNotifications
+        self.doNotify = buyNotifications
     }
     
     convenience init() {
@@ -167,6 +141,32 @@ class Position: Identifiable {
         self.equity = Equity(latestPrice: latestPrice, bid: bid, ask: ask)
         self.bestCase = best
         self.worstCase = worst
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(UUID.self, forKey: .id)
+        self.symbol = try container.decode(String.self, forKey: .symbol)
+        self.bestCase = try container.decode(Double.self, forKey: .bestCase)
+        self.worstCase = try container.decode(Double.self, forKey: .worstCase)
+        self.bestPercentage = try container.decode(Double.self, forKey: .bestPercentage)
+        self.soonest = try container.decode(Date.self, forKey: .soonest)
+        self.latest = try container.decode(Date.self, forKey: .latest)
+        self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
+        self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(symbol, forKey: .symbol)
+        try container.encode(bestCase, forKey: .bestCase)
+        try container.encode(worstCase, forKey: .worstCase)
+        try container.encode(bestPercentage, forKey: .bestPercentage)
+        try container.encode(soonest, forKey: .soonest)
+        try container.encode(latest, forKey: .latest)
+        try container.encode(isOwned, forKey: .isOwned)
+        try container.encode(doNotify, forKey: .doNotify)
     }
     
     func annualizedReturnFor(_ spread: Spread) -> AnnualizedReturn {

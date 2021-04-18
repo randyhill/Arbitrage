@@ -43,7 +43,7 @@ struct PositionEditor: View {
                     print("IsOwned: \(changed)")
                 }
                 Spacer()
-                Checkbox(isChecked: $position.buyNotifications, title: "Notifications") { (changed) in
+                Checkbox(isChecked: $position.doNotify, title: "Notifications") { (changed) in
                     print("Notifications: \(changed)")
                 }
             }.padding()
@@ -55,6 +55,8 @@ struct PositionEditor: View {
         .onDisappear() {
             position.bestCaseString = bestCaseString
             position.worstCaseString = worstCaseString
+            db.save()
+            db.refreshAllSymbols()
         }
     }
 }

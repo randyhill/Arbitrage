@@ -18,20 +18,23 @@ class Database: ObservableObject {
     @Published var equities = [Equity]()
     private var positionHash = [String: Position]()
     private var equityHash = [String: Equity]()
+    private var fileName = "positions.arb"
     
     var newPosition: Position {
         return Position()
     }
     
     init() {
-        addPosition("TSLA", best: 1000.0321, worst: 100,  soonest: Date().add(days: 1), latest: Date().add(months: 13))
-        addPosition("AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))
+        if !load() {
+            positions.append(contentsOf: (Database.testPositions))
+        }
+        refreshAllSymbols()
     }
     
     func getEquityFor(_ ticker: String) -> Equity? {
         return equityHash[ticker]
     }
-    
+
     func addEquity(ticker: String, equity: Equity) {
         equities += [equity]
         equityHash[ticker] = equity
@@ -56,6 +59,15 @@ class Database: ObservableObject {
         }
     }
     
+    func refreshAllSymbols() {
+        for position in positions {
+            refreshSymbolData(position.symbol) { newEquity in
+                self.addEquity(ticker: position.symbol, equity: newEquity)
+                position.equity = newEquity
+            }
+        }
+    }
+    
     private func refreshSymbolData(_ symbol: String, completion: @escaping (_ equity: Equity)->Void) {
         guard symbol.count > 0 else {
             return Log.error("Passed empty symbol")
@@ -67,5 +79,34 @@ class Database: ObservableObject {
                 completion(equity)
             }
         }
+    }
+    
+    func save() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return Log.error("Weak self in file save") }
+            guard let data = try? JSONEncoder().encode(self.positions) else { return Log.error("Error encoding data") }
+            do {
+                try data.write(to: URL.forDocument(named: self.fileName))
+            } catch {
+                Log.error("Can't write to tasks file: \(error)")
+            }
+        }
+    }
+    
+    func load() -> Bool {
+        let url = URL.forDocument(named: self.fileName)
+        if let data = FileManager.default.contents(atPath: url.path) {
+            let decoder = JSONDecoder()
+            do {
+                self.positions = try decoder.decode([Position].self, from: data)
+            } catch {
+                Log.error("Error: \(error.localizedDescription) trying to read: \(url.path)")
+                return false
+            }
+        } else {
+            Log.error("No data at \(url.path)")
+            return false
+        }
+        return true
     }
 }
