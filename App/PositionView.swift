@@ -19,8 +19,11 @@ struct PositionView: View {
                     PositionTitle(position: $position)
                         .padding()
             })
+            .background(Color.black)
             PositionReturns(position: $position)
         }
+        .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+//        .border(Color.gray)
      }
 }
 

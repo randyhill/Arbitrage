@@ -49,10 +49,14 @@
 		253CF9E3262BB3C000AE5D4A /* PositionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */; };
 		253CF9E5262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
 		253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */; };
-		253CF9E8262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */; };
-		253CF9E9262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */; };
+		253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */; };
+		253CF9E9262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */; };
 		253CF9EB262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
 		253CF9EC262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
+		253CFA00262CD03300AE5D4A /* DateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9FF262CD03300AE5D4A /* DateRow.swift */; };
+		253CFA01262CD03300AE5D4A /* DateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9FF262CD03300AE5D4A /* DateRow.swift */; };
+		253CFA03262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */; };
+		253CFA04262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */; };
 		2551539D26252F3E004881D3 /* Math+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538026252F3E004881D3 /* Math+Shared.swift */; };
 		2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538126252F3E004881D3 /* Collections+Shared.swift */; };
 		2551539F26252F3E004881D3 /* View+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538226252F3E004881D3 /* View+Shared.swift */; };
@@ -125,8 +129,10 @@
 		2500A07D261E9E840043FF96 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
 		253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTitle.swift; sourceTree = "<group>"; };
 		253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionReturns.swift; sourceTree = "<group>"; };
-		253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedField.swift; sourceTree = "<group>"; };
+		253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedRow.swift; sourceTree = "<group>"; };
 		253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedReturn.swift; sourceTree = "<group>"; };
+		253CF9FF262CD03300AE5D4A /* DateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRow.swift; sourceTree = "<group>"; };
+		253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitPriceRow.swift; sourceTree = "<group>"; };
 		2551538026252F3E004881D3 /* Math+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Math+Shared.swift"; sourceTree = "<group>"; };
 		2551538126252F3E004881D3 /* Collections+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collections+Shared.swift"; sourceTree = "<group>"; };
 		2551538226252F3E004881D3 /* View+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Shared.swift"; sourceTree = "<group>"; };
@@ -215,7 +221,9 @@
 				255153FA262767C6004881D3 /* PositionView.swift */,
 				253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */,
 				253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */,
-				253CF9E7262BBDEA00AE5D4A /* AnnualizedField.swift */,
+				253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */,
+				253CF9FF262CD03300AE5D4A /* DateRow.swift */,
+				253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -521,7 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
-				253CF9E8262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */,
+				253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
 				255153A226252F3E004881D3 /* JSON+Shared.swift in Sources */,
 				255153A426252F3E004881D3 /* UIView+Shared.swift in Sources */,
 				2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */,
@@ -533,6 +541,7 @@
 				2500A068261E9E250043FF96 /* DashboardView.swift in Sources */,
 				25AA3B6A26213A1B0049779F /* Database.swift in Sources */,
 				259429A926252B5900B36B5C /* PositionEditor.swift in Sources */,
+				253CFA03262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */,
 				2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */,
 				255153AF26252F3E004881D3 /* ToggleView.swift in Sources */,
 				25AA3B68262138E30049779F /* Position.swift in Sources */,
@@ -549,6 +558,7 @@
 				2500A07B261E9E4C0043FF96 /* Equity.swift in Sources */,
 				255153A526252F3E004881D3 /* UIColor+Shared.swift in Sources */,
 				255153AE26252F3E004881D3 /* TextFieldClearButton.swift in Sources */,
+				253CFA00262CD03300AE5D4A /* DateRow.swift in Sources */,
 				255153AD26252F3E004881D3 /* TimeInterval+iOS.swift in Sources */,
 				255153A626252F3E004881D3 /* Color+iOS.swift in Sources */,
 				255153F526262C68004881D3 /* Log.swift in Sources */,
@@ -570,7 +580,8 @@
 				253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */,
 				255153F626262C69004881D3 /* Log.swift in Sources */,
 				253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */,
-				253CF9E9262BBDEA00AE5D4A /* AnnualizedField.swift in Sources */,
+				253CFA04262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */,
+				253CF9E9262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
 				255153F826262C79004881D3 /* Collections+Shared.swift in Sources */,
 				259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */,
 				253CF9E6262BB9A800AE5D4A /* PositionReturns.swift in Sources */,
@@ -581,6 +592,7 @@
 				2500A07C261E9E4C0043FF96 /* Equity.swift in Sources */,
 				253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */,
 				255153FC262767C6004881D3 /* PositionView.swift in Sources */,
+				253CFA01262CD03300AE5D4A /* DateRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

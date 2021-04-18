@@ -12,6 +12,7 @@ struct AnnualizedReturn {
     let AR: Double?
     let bgColor: Color
     let textColor: Color
+    let frameColor: Color
     
     var priceString: String {
         if let price = price {
@@ -30,6 +31,7 @@ struct AnnualizedReturn {
             self.price = nil
             bgColor = Color.gray
             textColor = Color.white
+            frameColor = Color.black
             return
         }
         self.price = price
@@ -38,6 +40,7 @@ struct AnnualizedReturn {
         let colors = AnnualizedReturn.colors(annualized, isOwned: isOwned)
         self.bgColor = colors.background
         self.textColor = colors.text
+        self.frameColor = colors.text == Color.white  ? Color.black : Color.white
     }
     
     static func colors(_ annualizedReturn: Double, isOwned: Bool) -> (text: Color, background: Color) {

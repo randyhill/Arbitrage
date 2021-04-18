@@ -9,37 +9,19 @@ import SwiftUI
 
 struct PositionReturns: View {
     @Binding var position: Position
-    private let textPadding: CGFloat = 0.5
+    private let textPadding: CGFloat = 1
 
     var body: some View {
-        VStack {
-            if let bid = position.equity?.bid {
-                Text("Bid: \(bid)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            }
-            if let ask = position.equity?.ask {
-                Text("Ask: \(ask)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            }
-            Text("Days: \(position.periodDays)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            Text("Best Case: \(position.bestCaseString)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            Text("Worst Case: \(position.worstCaseString)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            Text("Goal Price: \(position.goalPrice.equityPrice)")
-                    .font(.subheadline)
-                    .padding(textPadding)
-            Text("Total Return: \(String.toPercent(position.totalReturn))")
-                .font(.subheadline)
-                .padding(textPadding)
-            AnnualizedField(title: "Ask:", annualReturn: AnnualizedReturn(price: position.askPrice, exitPrice: position.outcome, days: position.periodDays, isOwned: position.isOwned))
-            AnnualizedField(title: "Bid:", annualReturn: AnnualizedReturn(price: position.bidPrice, exitPrice: position.outcome, days: position.periodDays, isOwned: position.isOwned))
+        VStack (alignment: .leading) {
+            ExitPriceRow(position: position)
+                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+            DateRow(title: "End", position: position)
+                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+            AnnualizedRow(title: "Ask:", annualReturn:
+                            position.annualizedReturnFor(.ask))
+                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+            AnnualizedRow(title: "Bid:", annualReturn: position.annualizedReturnFor(.bid))
+                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
         }
     }
 }

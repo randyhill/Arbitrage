@@ -10,6 +10,10 @@ import SwiftUI
 let annualizedReturnGoal: Double = 0.50 // 50%
 
 class Position: Identifiable {
+    enum Spread {
+        case bid, ask
+    }
+    
     var id: UUID
     var symbol: String
     @Published var equity: Equity?
@@ -38,7 +42,7 @@ class Position: Identifiable {
         return "$\(price.formatToDecimalPlaces())"
     }
     
-    var outcome: Double {
+    var exitPrice: Double {
         return bestCase * bestPercentage + worstCase * (1 - bestPercentage)
     }
     
@@ -46,24 +50,24 @@ class Position: Identifiable {
         guard let price = price else {
             return 0
         }
-        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
+        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
     }
     
     // if we bought at the ask, what return should wee expect?
-    var purchaseTotalReturn: Double? {
-        guard let price = askPrice else {
-            return 0
-        }
-        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
-    }
-    
-    // If we sold at the bid, what return would we be giving up?
-    var saleTotalReturn: Double? {
-        guard let price = bidPrice else {
-            return 0
-        }
-        return AnnualizedReturn.returnCalc(sellAt: outcome, price: price)
-    }
+//    var purchaseTotalReturn: Double? {
+//        guard let price = askPrice else {
+//            return 0
+//        }
+//        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
+//    }
+//    
+//    // If we sold at the bid, what return would we be giving up?
+//    var saleTotalReturn: Double? {
+//        guard let price = bidPrice else {
+//            return 0
+//        }
+//        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
+//    }
 
     var periodDays: Int {
         let now = Date()
@@ -73,46 +77,42 @@ class Position: Identifiable {
         return Int(averaged)
     }
     
+    var endDate: Date {
+        return Date().add(days: periodDays)
+    }
+    
     var annualizedReturn: Double? {
         guard let price = price else {
             return 0
         }
-        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
+        return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
     }
     
-    var bidReturn: Double? {
-        guard let price = askPrice else {
-            return 0
-        }
-        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
-    }
-    
-    var askReturn: Double? {
-        guard let price = bidPrice else {
-            return 0
-        }
-        return AnnualizedReturn.calc(sellAt: outcome, price: price, days: periodDays)
-    }
-    
-//    var bidColor: Color {
-//        return AnnualizedReturn.color(bidReturn)
+//    var bidReturn: Double? {
+//        guard let price = askPrice else {
+//            return 0
+//        }
+//        return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
 //    }
 //
-//    var askColor: Color {
-//        return AnnualizedReturn.color(bidReturn)
+//    var askReturn: Double? {
+//        guard let price = bidPrice else {
+//            return 0
+//        }
+//        return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
 //    }
 
     // At what price will we meet our annulaized return goal..
-    var goalPrice: Double {
+    var buyPrice: Double {
         let years = Double(periodDays)/365.242199
         let tReturn = pow(1 + annualizedReturnGoal, years) - 1
-        let _goalReturnsPrice = tReturn * outcome
+        let _goalReturnsPrice = tReturn * exitPrice
         return _goalReturnsPrice
     }
     
     var bestCaseString: String {
         get {
-            return "\(bestCase.equityPrice)"
+            return "\(bestCase.currency)"
         }
         set {
             guard let newDouble = newValue.double else {
@@ -124,7 +124,7 @@ class Position: Identifiable {
     
     var worstCaseString: String {
         get {
-            return "\(worstCase.equityPrice)"
+            return "\(worstCase.currency)"
         }
         set {
             guard let newDouble = newValue.double else {
@@ -134,18 +134,10 @@ class Position: Identifiable {
         }
     }
     
-    var bestCaseDescription: String {
-        return "Best Case: $\(bestCase.formatted) by \(soonest.toFullUniqueDate())"
-    }
-    
-    var worstCaseDescription: String {
-        return "Worst Case: $\(worstCase.formatted) by \(latest.toFullUniqueDate())"
-    }
-    
     var companyName: String {
         return equity?.companyName ?? "No Data"
     }
-
+    
     init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID()
         self.symbol = ticker
@@ -172,46 +164,12 @@ class Position: Identifiable {
         self.worstCase = worst
     }
     
-//    func annualizedReturnColor(_ annualizedReturn: Double?) -> Color {
-//        guard let annualizedReturn = annualizedReturn else {
-//            return Color.gray
-//        }
-//        if annualizedReturn >= 0.5 {
-//            return Color.coolGreen
-//        }
-//        if annualizedReturn >= 0.35 {
-//            return Color.coolBlue
-//        }
-//        if isOwned {
-//            if annualizedReturn <= 0.10 {
-//                return Color.coolRed
-//            }
-//            if annualizedReturn <= 0.20 {
-//                return Color.coolYellow
-//            }
-//        }
-//        return Color.white
-//    }
-//
-//    private func returnCalc(soldAt: Double, boughtAt: Double) -> Double {
-//        return soldAt/boughtAt - 1
-//    }
-//
-//    // Cap at 1,000% percent cause, come-on man.
-//    // Since we are using days instead of years there is a minor amount of imprecision since we ignore leap years
-//    private func annualizedReturnCalc(soldAt: Double, boughtAt: Double, days: Int) -> Double {
-//        let grossReturn = returnCalc(soldAt: soldAt, boughtAt: boughtAt)
-//        let negativeReturn = grossReturn < 0
-//        let years = Double(days)/364
-//        let annualized = (pow(1 + grossReturn, 1/years))
-//        if negativeReturn {
-//            if annualized > 10 {
-//                return -10
-//            }
-//            return -annualized
-//        } else {
-//            if annualized > 10 { return 10 }
-//            return annualized - 1
-//        }
-//    }
+    func annualizedReturnFor(_ spread: Spread) -> AnnualizedReturn {
+        switch spread {
+        case .ask:
+            return AnnualizedReturn(price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .bid:
+            return AnnualizedReturn(price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+       }
+    }
 }

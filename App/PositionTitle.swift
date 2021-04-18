@@ -11,10 +11,13 @@ struct PositionTitle: View {
     @Binding var position: Position
     
     var body: some View {
-        let title = "\(position.companyName) (\(position.symbol))\n\(position.priceString)"
-        Text(title)
-            .font(.title)
-            .fontWeight(.bold)
+        HStack {
+            Text("\(position.companyName) (\(position.symbol))")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(Color.white)
+                .background(Color.black)
+        }
     }
 }
 
