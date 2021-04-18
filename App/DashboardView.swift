@@ -18,15 +18,9 @@ struct DashboardView: View {
             List {
                 ForEach(db.positions.indices, id: \.self) { index in
                     PositionView(position: $db.positions[index])
-                        .debug {
-                            Log.console("Dashboard equity: \(db.positionAt(index).equity)")
-                        }
                 }
 
             }
-//            .onAppear() {
-//                positions = db.positions
-//            }
             .toolbar {
                  ToolbarItem(placement: .principal) {
                     AppTitleBar(isShowingDetailView: $isShowingDetailView, newPosition: $newPosition, title: $navigationTitle)
@@ -46,7 +40,6 @@ struct DashboardView: View {
                     Button("Save") {
                         isShowingDetailView = false
                         db.addPosition(newPosition)
-//                        positions = db.positions
                     }
                     .padding()
                 }

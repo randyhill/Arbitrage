@@ -17,8 +17,8 @@ class Position: Identifiable {
     var id: UUID
     var symbol: String
     @Published var equity: Equity?
-    var bestCase: Double
-    var worstCase: Double
+    var bestCase: Double?
+    var worstCase: Double?
     var bestPercentage: Double
     var soonest: Date
     var latest: Date
@@ -43,7 +43,8 @@ class Position: Identifiable {
     }
     
     var exitPrice: Double {
-        return bestCase * bestPercentage + worstCase * (1 - bestPercentage)
+        guard let best = bestCase, let worst = worstCase else {return 0.0 }
+        return best * bestPercentage + worst * (1 - bestPercentage)
     }
     
     var totalReturn: Double? {
@@ -60,7 +61,7 @@ class Position: Identifiable {
 //        }
 //        return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
 //    }
-//    
+//
 //    // If we sold at the bid, what return would we be giving up?
 //    var saleTotalReturn: Double? {
 //        guard let price = bidPrice else {
@@ -112,11 +113,13 @@ class Position: Identifiable {
     
     var bestCaseString: String {
         get {
-            return "\(bestCase.currency)"
+            guard let best = bestCase else { return "" }
+            return "\(best.formatToDecimalPlaces())"
         }
         set {
             guard let newDouble = newValue.double else {
-                return Log.error("Could not convert: \(newValue) to double")
+                bestCase = nil
+                return Log.error("Can't convert \(newValue) to double")
             }
             bestCase = newDouble
          }
@@ -124,10 +127,12 @@ class Position: Identifiable {
     
     var worstCaseString: String {
         get {
-            return "\(worstCase.currency)"
+            guard let worst = worstCase else { return "" }
+            return "\(worst.formatToDecimalPlaces())"
         }
         set {
             guard let newDouble = newValue.double else {
+                worstCase = nil
                 return Log.error("Could not convert: \(newValue) to double")
             }
             worstCase = newDouble

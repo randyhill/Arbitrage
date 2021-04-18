@@ -13,10 +13,10 @@ struct PositionReturns: View {
 
     var body: some View {
         VStack (alignment: .leading) {
-            ExitPriceRow(position: position)
-                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
-            DateRow(title: "End", position: position)
-                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+//            ExitPriceRow(position: position)
+//                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+//            DateRow(title: "End", position: position)
+//                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
             AnnualizedRow(title: "Ask:", annualReturn:
                             position.annualizedReturnFor(.ask))
                 .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))

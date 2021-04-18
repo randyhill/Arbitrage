@@ -13,6 +13,7 @@ struct PositionEditor: View {
     
     // Private state
     @State private var bestCaseString = ""
+    @State private var worstCaseString = ""
 
     var body: some View {
         Form {
@@ -20,14 +21,14 @@ struct PositionEditor: View {
             HStack {
                 Text("Current Price: \(position.priceString)")
             }
-            TextFieldActive(title: "Best Case: $", placeholder: "$0.0", text: $position.bestCaseString)
+            TextFieldActive(title: "Best Case: $", placeholder: "0.0", text: $bestCaseString)
                 .keyboardType(.decimalPad)
             HStack {
                 Text("Soonest: ")
                 DatePicker("", selection: $position.soonest, displayedComponents: .date)
                     .frame(width: 124, alignment: .trailing)
             }
-            TextFieldActive(title: "Worst Case: $", placeholder: "$0.0", text: $position.worstCaseString)
+            TextFieldActive(title: "Worst Case: $", placeholder: "0.0", text: $worstCaseString)
                 .keyboardType(.decimalPad)
             HStack {
                 Text("Latest: ")
@@ -47,11 +48,13 @@ struct PositionEditor: View {
                 }
             }.padding()
         }
-//        .onDisappear() {
-//            db.updatePosition(position)
-//        }
         .onAppear() {
             bestCaseString = position.bestCaseString
+            worstCaseString = position.worstCaseString
+        }
+        .onDisappear() {
+            position.bestCaseString = bestCaseString
+            position.worstCaseString = worstCaseString
         }
     }
 }
