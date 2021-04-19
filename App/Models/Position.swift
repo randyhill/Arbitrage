@@ -56,8 +56,11 @@ class Position: Identifiable, Codable {
     }
     
     var exitPrice: Double {
-        guard let best = bestCase, let worst = worstCase else {return 0.0 }
-        return best * bestPercentage + worst * (1 - bestPercentage)
+        guard let best = bestCase else {return 0.0 }
+        if let worst = worstCase {
+            return best * bestPercentage + worst * (1 - bestPercentage)
+        }
+        return best
     }
     
     var totalReturn: Double? {
@@ -72,10 +75,13 @@ class Position: Identifiable, Codable {
         let soonestDays = now.daysUntil(soonest)
         if let latest = latest {
             let lastestDays = now.daysUntil(latest)
-            let averaged = soonestDays * bestPercentage + lastestDays * (1 - bestPercentage)
+            var averaged = Double(soonestDays) * bestPercentage + Double(lastestDays) * (1 - bestPercentage)
+            if averaged.truncatingRemainder(dividingBy: 1) >= 0.5 {
+                averaged += 1
+            }
             return Int(averaged)
         }
-        return Int(soonestDays)
+        return soonestDays
     }
     
     var endDate: Date {
@@ -129,7 +135,7 @@ class Position: Identifiable, Codable {
         return equity?.companyName ?? "No Data"
     }
     
-    init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
+    init(ticker: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID()
         self._symbol = ticker.uppercased()
         self.bestCase = best
@@ -145,7 +151,7 @@ class Position: Identifiable, Codable {
         self.init(ticker: "")
     }
     
-    convenience init(best: Double = 0.0, worst: Double = 0.0, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
+    convenience init(best: Double = 0.0, worst: Double? = nil, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
         self.init()
         self.soonest = soonest
         self.latest = latest
