@@ -87,6 +87,8 @@
 		255153F826262C79004881D3 /* Collections+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538126252F3E004881D3 /* Collections+Shared.swift */; };
 		255153FB262767C6004881D3 /* PositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153FA262767C6004881D3 /* PositionView.swift */; };
 		255153FC262767C6004881D3 /* PositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153FA262767C6004881D3 /* PositionView.swift */; };
+		2563DF59262D140000A77A59 /* AppTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563DF58262D140000A77A59 /* AppTitleBar.swift */; };
+		2563DF5A262D140000A77A59 /* AppTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563DF58262D140000A77A59 /* AppTitleBar.swift */; };
 		259429A926252B5900B36B5C /* PositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259429A826252B5900B36B5C /* PositionEditor.swift */; };
 		259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259429A826252B5900B36B5C /* PositionEditor.swift */; };
 		25AA3B68262138E30049779F /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B67262138E30049779F /* Position.swift */; };
@@ -158,6 +160,7 @@
 		2551539A26252F3E004881D3 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		255153F426261050004881D3 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		255153FA262767C6004881D3 /* PositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionView.swift; sourceTree = "<group>"; };
+		2563DF58262D140000A77A59 /* AppTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleBar.swift; sourceTree = "<group>"; };
 		259429A826252B5900B36B5C /* PositionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionEditor.swift; sourceTree = "<group>"; };
 		25AA3B67262138E30049779F /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		25AA3B6926213A1B0049779F /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -213,17 +216,18 @@
 		2500A03C261E9E240043FF96 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				255153F9262631A5004881D3 /* Routers */,
-				25AA3B66262127DA0049779F /* Models */,
+				253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */,
+				2563DF58262D140000A77A59 /* AppTitleBar.swift */,
 				2500A03D261E9E240043FF96 /* ArbitrageApp.swift */,
 				2500A03E261E9E240043FF96 /* DashboardView.swift */,
-				259429A826252B5900B36B5C /* PositionEditor.swift */,
-				255153FA262767C6004881D3 /* PositionView.swift */,
-				253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */,
-				253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */,
-				253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */,
 				253CF9FF262CD03300AE5D4A /* DateRow.swift */,
 				253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */,
+				25AA3B66262127DA0049779F /* Models */,
+				259429A826252B5900B36B5C /* PositionEditor.swift */,
+				253CF9E4262BB9A800AE5D4A /* PositionReturns.swift */,
+				253CF9E1262BB3C000AE5D4A /* PositionTitle.swift */,
+				255153FA262767C6004881D3 /* PositionView.swift */,
+				255153F9262631A5004881D3 /* Routers */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -559,6 +563,7 @@
 				255153A526252F3E004881D3 /* UIColor+Shared.swift in Sources */,
 				255153AE26252F3E004881D3 /* TextFieldClearButton.swift in Sources */,
 				253CFA00262CD03300AE5D4A /* DateRow.swift in Sources */,
+				2563DF59262D140000A77A59 /* AppTitleBar.swift in Sources */,
 				255153AD26252F3E004881D3 /* TimeInterval+iOS.swift in Sources */,
 				255153A626252F3E004881D3 /* Color+iOS.swift in Sources */,
 				255153F526262C68004881D3 /* Log.swift in Sources */,
@@ -580,6 +585,7 @@
 				253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */,
 				255153F626262C69004881D3 /* Log.swift in Sources */,
 				253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */,
+				2563DF5A262D140000A77A59 /* AppTitleBar.swift in Sources */,
 				253CFA04262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */,
 				253CF9E9262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
 				255153F826262C79004881D3 /* Collections+Shared.swift in Sources */,
