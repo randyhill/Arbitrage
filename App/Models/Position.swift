@@ -162,29 +162,40 @@ class Position: Identifiable, Codable {
     }
     
     required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self._symbol = try container.decode(String.self, forKey: ._symbol)
-        self.bestCase = try container.decode(Double.self, forKey: .bestCase)
-        self.worstCase = try container.decode(Double.self, forKey: .worstCase)
-        self.bestPercentage = try container.decode(Double.self, forKey: .bestPercentage)
-        self.soonest = try container.decode(Date.self, forKey: .soonest)
-        self.latest = try container.decode(Date.self, forKey: .latest)
-        self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
-        self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
+        do {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.id = try container.decode(UUID.self, forKey: .id)
+            self._symbol = try container.decode(String.self, forKey: ._symbol)
+            self.bestCase = try? container.decode(Double.self, forKey: .bestCase)
+            self.worstCase = try? container.decode(Double.self, forKey: .worstCase)
+            self.bestPercentage = try container.decode(Double.self, forKey: .bestPercentage)
+            self.soonest = try container.decode(Date.self, forKey: .soonest)
+            self.latest = try? container.decode(Date.self, forKey: .latest)
+            self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
+            self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
+        } catch {
+            Log.error("Failed to decode: \(error)")
+            throw error
+        }
+
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(_symbol, forKey: ._symbol)
-        try container.encode(bestCase, forKey: .bestCase)
-        try container.encode(worstCase, forKey: .worstCase)
-        try container.encode(bestPercentage, forKey: .bestPercentage)
-        try container.encode(soonest, forKey: .soonest)
-        try container.encode(latest, forKey: .latest)
-        try container.encode(isOwned, forKey: .isOwned)
-        try container.encode(doNotify, forKey: .doNotify)
+        do {
+            try container.encode(id, forKey: .id)
+            try container.encode(_symbol, forKey: ._symbol)
+            try container.encode(bestCase, forKey: .bestCase)
+            try container.encode(worstCase, forKey: .worstCase)
+            try container.encode(bestPercentage, forKey: .bestPercentage)
+            try container.encode(soonest, forKey: .soonest)
+            try container.encode(latest, forKey: .latest)
+            try container.encode(isOwned, forKey: .isOwned)
+            try container.encode(doNotify, forKey: .doNotify)
+        } catch {
+            Log.error("Failed to encode: \(error)")
+            throw error
+        }
     }
     
     func annualizedReturnFor(_ spread: Spread) -> AnnualizedReturn {

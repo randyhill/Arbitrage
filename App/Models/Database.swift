@@ -81,12 +81,22 @@ class Database: ObservableObject {
         }
     }
     
+    private func getDocumentURL() -> URL {
+        // find all possible documents directories for this user
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+        // just send back the first one, which ought to be the only one
+        let documentsURL = paths[0]
+        return documentsURL.appendingPathComponent(fileName)
+    }
+    
     func save() {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return Log.error("Weak self in file save") }
             guard let data = try? JSONEncoder().encode(self.positions) else { return Log.error("Error encoding data") }
             do {
-                try data.write(to: URL.forDocument(named: self.fileName))
+                let url = self.getDocumentURL()
+                try data.write(to: url)
             } catch {
                 Log.error("Can't write to tasks file: \(error)")
             }
@@ -94,10 +104,10 @@ class Database: ObservableObject {
     }
     
     func load() -> Bool {
-        let url = URL.forDocument(named: self.fileName)
+        let url = getDocumentURL()
         if let data = FileManager.default.contents(atPath: url.path) {
-            let decoder = JSONDecoder()
             do {
+                let decoder = JSONDecoder()
                 self.positions = try decoder.decode([Position].self, from: data)
             } catch {
                 Log.error("Error: \(error.localizedDescription) trying to read: \(url.path)")
