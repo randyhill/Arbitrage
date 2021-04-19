@@ -14,10 +14,11 @@ struct PositionEditor: View {
     // Private state
     @State private var bestCaseString = ""
     @State private var worstCaseString = ""
+    @State private var symbol = ""
 
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $position.symbol)
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $symbol)
             HStack {
                 Text("Current Price: \(position.priceString)")
             }
@@ -51,10 +52,12 @@ struct PositionEditor: View {
         .onAppear() {
             bestCaseString = position.bestCaseString
             worstCaseString = position.worstCaseString
+            symbol = position.symbol
         }
         .onDisappear() {
             position.bestCaseString = bestCaseString
             position.worstCaseString = worstCaseString
+            position.symbol = symbol
             db.save()
             db.refreshAllSymbols()
         }

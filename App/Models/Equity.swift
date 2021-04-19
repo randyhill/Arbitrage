@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct Equity: Hashable, Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     let symbol: String
     let companyName: String
     let latestPrice: Double
     let volume: Int?
     let primaryExchange: String
     let marketCap: Int
-    let peRatio: Double
+    let peRatio: Double?
     let lastTradeTime: Int
     let latestUpdate: Int
     private let iexLastUpdated: Int?

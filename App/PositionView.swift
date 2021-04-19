@@ -22,8 +22,6 @@ struct PositionView: View {
             .background(Color.black)
             PositionReturns(position: $position)
         }
-        .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
-//        .border(Color.gray)
      }
 }
 
