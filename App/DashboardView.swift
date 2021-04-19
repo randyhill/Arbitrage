@@ -16,7 +16,7 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(db.positions.indices, id: \.self) { index in
+                ForEach(db.sorted.indices, id: \.self) { index in
                     PositionView(position: $db.positions[index])
                 }
 

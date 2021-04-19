@@ -13,12 +13,12 @@ struct PositionTitle: View {
     var body: some View {
         HStack {
             Text(position.symbol)
-                .font(.title3)
+                .font(.subheadline)
                 .fontWeight(.bold)
                 .foregroundColor(Color.white)
                 .background(Color.black)
             Text(position.companyName)
-                .font(.headline)
+                .font(.caption)
                 .foregroundColor(Color.white)
                 .background(Color.black)
         }

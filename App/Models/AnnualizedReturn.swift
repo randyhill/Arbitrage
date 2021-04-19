@@ -7,7 +7,17 @@
 
 import SwiftUI
 
-struct AnnualizedReturn {
+struct AnnualizedReturn: Comparable {
+    static func < (lhs: AnnualizedReturn, rhs: AnnualizedReturn) -> Bool {
+        if let leftReturn = lhs.AR {
+            if let rightReturn = rhs.AR {
+                return leftReturn < rightReturn
+            }
+            return true
+        }
+        return false
+    }
+    
     let price: Double?
     let AR: Double?
     let bgColor: Color
@@ -68,6 +78,7 @@ struct AnnualizedReturn {
     // Cap at 1,000% percent cause, come-on man.
     // Since we are using days instead of years there is a minor amount of imprecision since we ignore leap years
     static func calc(sellAt: Double, price: Double, days: Int) -> Double {
+        guard price > 0 else { return 0 }
         let grossReturn = returnCalc(sellAt: sellAt, price: price)
         let negativeReturn = grossReturn < 0
         let years = Double(days)/364

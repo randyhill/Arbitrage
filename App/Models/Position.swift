@@ -43,11 +43,17 @@ class Position: Identifiable, Codable {
     }
     
     var askPrice: Double? {
-        return equity?.ask ?? equity?.latestPrice
+        if let ask = equity?.ask, ask > 0 {
+            return ask
+        }
+        return equity?.latestPrice
     }
     
     var bidPrice: Double? {
-        return equity?.bid ?? equity?.latestPrice
+        if let bid = equity?.bid, bid > 0 {
+            return bid
+        }
+        return equity?.latestPrice
     }
 
     var priceString: String {

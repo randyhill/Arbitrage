@@ -14,7 +14,7 @@ struct Equity: Hashable, Codable, Identifiable {
     let latestPrice: Double
     let volume: Int?
     let primaryExchange: String
-    let marketCap: Int
+    let marketCap: Int?
     let peRatio: Double?
     let lastTradeTime: Int
     let latestUpdate: Int

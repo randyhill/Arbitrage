@@ -24,6 +24,13 @@ class Database: ObservableObject {
         return Position()
     }
     
+    var sorted: [Position] {
+         let sortedPositions = positions.sorted { first, second in
+            first.annualizedReturnFor(.ask) > second.annualizedReturnFor(.bid)
+        }
+        return sortedPositions
+    }
+    
     init() {
         if !load() {
             positions.append(contentsOf: (Database.testPositions))

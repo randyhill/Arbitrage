@@ -16,9 +16,11 @@ struct PositionReturns: View {
             AnnualizedRow(title: "Ask:", annualReturn:
                             position.annualizedReturnFor(.ask))
                 .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
-            AnnualizedRow(title: "Bid:", annualReturn: position.annualizedReturnFor(.bid))
-                .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
-        }
+            if position.isOwned {
+                AnnualizedRow(title: "Bid:", annualReturn: position.annualizedReturnFor(.bid))
+                    .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
+            }
+         }
     }
 }
 
