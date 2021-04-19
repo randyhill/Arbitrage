@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Equity: Hashable, Codable, Identifiable {
-    var id = UUID()
+    var id: UUID?
     let symbol: String
     let companyName: String
     let latestPrice: Double
@@ -45,6 +45,7 @@ struct Equity: Hashable, Codable, Identifiable {
     }
     
     init() {
+        id = UUID()
         symbol = ""
         companyName = ""
         latestPrice = 0.0
@@ -62,6 +63,7 @@ struct Equity: Hashable, Codable, Identifiable {
     }
     
     init(latestPrice: Double, bid: Double, ask: Double) {
+        id = UUID()
         self.latestPrice = latestPrice
         self.iexBidPrice = bid
         self.iexAskPrice = ask

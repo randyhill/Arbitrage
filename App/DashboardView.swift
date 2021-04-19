@@ -11,7 +11,7 @@ struct DashboardView: View {
     @EnvironmentObject var db: Database
     @State private var isShowingDetailView = false
     @State var newPosition = Position()
-    @State var navigationTitle = "Stocks"
+    @State var navigationTitle = "Positions"
 
     var body: some View {
         NavigationView {
@@ -71,6 +71,14 @@ struct AppTitleBar: View {
                     newPosition = db.newPosition
                 }, label: {
                     Image(systemName: "pencil.circle.fill")
+                            .font(.largeTitle)
+                })
+                .frame(alignment: .trailing)
+                Spacer(minLength: 80.0)
+                Button(action: {
+                    db.refreshAllSymbols()
+                }, label: {
+                    Image(systemName: "arrow.clockwise.circle.fill")
                             .font(.largeTitle)
                 })
                 .frame(alignment: .trailing)
