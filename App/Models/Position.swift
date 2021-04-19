@@ -25,7 +25,7 @@ class Position: Identifiable, Codable {
     var worstCase: Double?
     var bestPercentage: Double
     var soonest: Date
-    var latest: Date
+    var latest: Date?
     @Published var isOwned: Bool
     var doNotify: Bool
     
@@ -70,9 +70,12 @@ class Position: Identifiable, Codable {
     var periodDays: Int {
         let now = Date()
         let soonestDays = now.daysUntil(soonest)
-        let lastestDays = now.daysUntil(latest)
-        let averaged = soonestDays * bestPercentage + lastestDays * (1 - bestPercentage)
-        return Int(averaged)
+        if let latest = latest {
+            let lastestDays = now.daysUntil(latest)
+            let averaged = soonestDays * bestPercentage + lastestDays * (1 - bestPercentage)
+            return Int(averaged)
+        }
+        return Int(soonestDays)
     }
     
     var endDate: Date {
@@ -126,7 +129,7 @@ class Position: Identifiable, Codable {
         return equity?.companyName ?? "No Data"
     }
     
-    init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false, buyNotifications: Bool = true) {
+    init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID()
         self._symbol = ticker.uppercased()
         self.bestCase = best

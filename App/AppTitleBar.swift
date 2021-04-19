@@ -29,7 +29,7 @@ struct AppTitleBar: View {
                             .font(.largeTitle)
                 })
                 .frame(alignment: .trailing)
-                Spacer(minLength: 40)
+                Spacer(minLength: 20.0)
                 Button(action: {
                     db.refreshAllSymbols()
                 }, label: {

@@ -15,6 +15,8 @@ struct PositionEditor: View {
     @State private var bestCaseString = ""
     @State private var worstCaseString = ""
     @State private var symbol = ""
+    @State private var latest = Date()
+    @State private var buttonTitle = "Add 2nd Date"
 
     var body: some View {
         Form {
@@ -25,17 +27,26 @@ struct PositionEditor: View {
             TextFieldActive(title: "Best Case: $", placeholder: "0.0", text: $bestCaseString)
                 .keyboardType(.decimalPad)
             HStack {
-                Text("Soonest: ")
+                Text("Completion Date: ")
                 DatePicker("", selection: $position.soonest, displayedComponents: .date)
                     .frame(width: 124, alignment: .trailing)
             }
             TextFieldActive(title: "Worst Case: $", placeholder: "0.0", text: $worstCaseString)
                 .keyboardType(.decimalPad)
             HStack {
-                Text("Latest: ")
-                DatePicker("", selection: $position.latest, displayedComponents: .date)
-                    .frame(width: 124, alignment: .trailing)
-            }
+                if position.latest == nil {
+                    Button(buttonTitle) {
+                        position.latest = position.soonest
+                        let next = position.soonest.add(days: 1)
+                        latest = next
+                        buttonTitle = ""
+                    }
+                } else {
+                    Text("Second Date: ")
+                    DatePicker("", selection: $latest, displayedComponents: .date)
+                        .frame(width: 124, alignment: .trailing)
+                }
+             }
             HStack {
                 Text("Average Days: \(position.periodDays)")
             }
