@@ -15,11 +15,11 @@ class Position: Identifiable, Codable {
     }
     
     enum CodingKeys: CodingKey {
-        case id, symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify
+        case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify
     }
     
     var id: UUID
-    var symbol: String
+    var _symbol: String
     @Published var equity: Equity?
     var bestCase: Double?
     var worstCase: Double?
@@ -29,6 +29,15 @@ class Position: Identifiable, Codable {
     @Published var isOwned: Bool
     var doNotify: Bool
     
+    var symbol: String {
+        get {
+            return _symbol
+        }
+        set {
+            _symbol = newValue.uppercased()
+        }
+    }
+
     var price: Double? {
         return equity?.latestPrice
     }
@@ -119,7 +128,7 @@ class Position: Identifiable, Codable {
     
     init(ticker: String, best: Double = 0.0, worst: Double = 0.0, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID()
-        self.symbol = ticker
+        self._symbol = ticker.uppercased()
         self.bestCase = best
         self.worstCase = worst
         self.bestPercentage = bestPercentage
@@ -146,7 +155,7 @@ class Position: Identifiable, Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
-        self.symbol = try container.decode(String.self, forKey: .symbol)
+        self._symbol = try container.decode(String.self, forKey: ._symbol)
         self.bestCase = try container.decode(Double.self, forKey: .bestCase)
         self.worstCase = try container.decode(Double.self, forKey: .worstCase)
         self.bestPercentage = try container.decode(Double.self, forKey: .bestPercentage)
@@ -159,7 +168,7 @@ class Position: Identifiable, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(symbol, forKey: .symbol)
+        try container.encode(_symbol, forKey: ._symbol)
         try container.encode(bestCase, forKey: .bestCase)
         try container.encode(worstCase, forKey: .worstCase)
         try container.encode(bestPercentage, forKey: .bestPercentage)

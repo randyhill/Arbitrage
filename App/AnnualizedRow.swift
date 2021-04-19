@@ -10,23 +10,24 @@ import SwiftUI
 struct AnnualizedRow: View {
     var title: String
     var annualReturn: AnnualizedReturn
+    private let font = Font.subheadline
     
     var body: some View {
         HStack {
             Text(title)
-                .font(.headline)
+                .font(font)
                 .fontWeight(.semibold)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
             Text(annualReturn.priceString)
-                .font(.headline)
+                .font(font)
                 .fontWeight(.regular)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
            Text("Annualized:")
-                .font(.headline)
+                .font(font)
                 .fontWeight(.semibold)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
             Text(annualReturn.annualizedString)
-                .font(.headline)
+                .font(font)
                 .fontWeight(.heavy)
                 .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .foregroundColor(annualReturn.textColor)

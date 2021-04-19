@@ -55,7 +55,7 @@ struct AnnualizedReturn {
                 return (text: Color.white, background: Color.coolRed)
             }
             if annualizedReturn <= 0.20 {
-                return (text: Color.white, background: Color.coolYellow)
+                return (text: Color.white, background: Color.coolOrange)
             }
         }
         return (text: Color.black, background: Color.white)
