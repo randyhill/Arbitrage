@@ -50,7 +50,7 @@ struct AnnualizedReturn: Comparable {
         let colors = AnnualizedReturn.colors(annualized, isOwned: isOwned)
         self.bgColor = colors.background
         self.textColor = colors.text
-        self.frameColor = colors.text == Color.white  ? Color.black : Color.white
+        self.frameColor = Color.black
     }
     
     static func colors(_ annualizedReturn: Double, isOwned: Bool) -> (text: Color, background: Color) {

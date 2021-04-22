@@ -39,7 +39,7 @@ struct AnnualizedRow: View {
                 .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .foregroundColor(annualReturn.textColor)
                 .background(annualReturn.bgColor)
-                .border(annualReturn.frameColor, width: 2)
+                .border(annualReturn.frameColor, width: 1)
         }
     }
 }

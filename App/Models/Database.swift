@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 class Database: ObservableObject {
-    static let testPositions = [Position(ticker: "TSLA", best: 1000.0321, worst: nil,  soonest: Date().add(days: 1), latest: Date().add(days: 2)), Position(ticker: "AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))]
+    static let testPositions = [Position(ticker: "TSLA", best: 1000.0321, worst: nil,  soonest: Date().add(days: 1), latest: Date().add(days: 2)),
+                                Position(ticker: "AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7)),
+                                Position(ticker: "RUN", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))]
     static var testPosition: Position {
         return Database.testPositions[0]
     }
