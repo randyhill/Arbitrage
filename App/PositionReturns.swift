@@ -12,12 +12,11 @@ struct PositionReturns: View {
     private let textPadding: CGFloat = 1
 
     var body: some View {
-        VStack (alignment: .leading) {
-            AnnualizedRow(title: "Ask:", annualReturn:
-                            position.annualizedReturnFor(.ask))
+        VStack(alignment: .trailing) {
+            AnnualizedRow(position: $position, priceType: .ask)
                 .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
             if position.isOwned {
-                AnnualizedRow(title: "Bid:", annualReturn: position.annualizedReturnFor(.bid))
+                AnnualizedRow(position: $position, priceType: .bid)
                     .padding(EdgeInsets(top: textPadding, leading: textPadding, bottom: textPadding, trailing: textPadding))
             }
          }

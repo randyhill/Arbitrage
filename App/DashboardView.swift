@@ -30,7 +30,7 @@ struct DashboardView: View {
  
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
-            VStack {
+            VStack (alignment: .leading) {
                 HStack {
                     Button("Cancel") {
                         isShowingDetailView = false

@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct AnnualizedRow: View {
-    var title: String
-    var annualReturn: AnnualizedReturn
-    private let font = Font.subheadline
+    @Binding var position: Position
+    var priceType: Position.Spread
+    private let font = Font.body
     
     var body: some View {
         HStack {
-            Text(title)
+            let annualReturn = position.annualizedReturnFor(priceType)
+            let priceTitle = priceType == .ask ? "Ask:" : "Bid:"
+            Text(position.symbol)
                 .font(font)
                 .fontWeight(.semibold)
+                .frame(width: 64, alignment: .leading)
+                .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
+            Text(priceTitle)
+                .font(font)
+                .fontWeight(.semibold)
+                .frame(width: 40, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
             Text(annualReturn.priceString)
                 .font(font)
                 .fontWeight(.regular)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
-           Text("Annualized:")
+           Text("Return:")
                 .font(font)
                 .fontWeight(.semibold)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
@@ -39,7 +47,6 @@ struct AnnualizedRow: View {
 
 struct ReturnField_Previews: PreviewProvider {
     static var previews: some View {
-        let annualReturn = AnnualizedReturn(price: 9.987, exitPrice: 19, days: 364, isOwned: true)
-        AnnualizedRow(title: "Bid:", annualReturn: annualReturn)
+        AnnualizedRow(position: .constant(Database.testPosition), priceType: .ask)
     }
 }
