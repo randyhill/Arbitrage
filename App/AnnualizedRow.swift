@@ -10,7 +10,7 @@ import SwiftUI
 struct AnnualizedRow: View {
     @Binding var position: Position
     var priceType: Position.Spread
-    private let font = Font.body
+    private let font = Font.callout
     
     var body: some View {
         HStack {
@@ -19,28 +19,27 @@ struct AnnualizedRow: View {
             Text(position.symbol)
                 .font(font)
                 .fontWeight(.semibold)
-                .frame(width: 64, alignment: .leading)
+                .frame(width: 72, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
             Text(priceTitle)
-                .font(font)
+                .font(Font.caption2)
                 .fontWeight(.semibold)
-                .frame(width: 40, alignment: .leading)
+                .frame(width: 36, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
             Text(annualReturn.priceString)
                 .font(font)
                 .fontWeight(.regular)
+                .frame(width: 72, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
-           Text("Return:")
-                .font(font)
-                .fontWeight(.semibold)
-                .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
+            Spacer().frame(width: 52)
             Text(annualReturn.annualizedString)
                 .font(font)
                 .fontWeight(.heavy)
+                .frame(width: 72, alignment: .trailing)
                 .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .foregroundColor(annualReturn.textColor)
                 .background(annualReturn.bgColor)
-                .border(annualReturn.frameColor, width: 1)
+                .border(annualReturn.frameColor, width: 2)
         }
     }
 }

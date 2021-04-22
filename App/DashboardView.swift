@@ -19,7 +19,6 @@ struct DashboardView: View {
                 ForEach(db.sorted.indices, id: \.self) { index in
                     PositionView(position: $db.positions[index])
                 }
-
             }
             .toolbar {
                  ToolbarItem(placement: .principal) {
@@ -48,7 +47,6 @@ struct DashboardView: View {
                     .environmentObject(db)
             }
         })
-        .background(Color.blue)
     }
 }
 struct ContentView_Previews: PreviewProvider {

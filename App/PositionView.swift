@@ -9,19 +9,22 @@ import SwiftUI
 
 struct PositionView: View {
     @Binding var position: Position
-    private let textPadding: CGFloat = 0.5
 
     var body: some View {
-        HStack {
-            NavigationLink(
-                destination: PositionEditor(position: $position),
-                label: {
-                    PositionReturns(position: $position)
-                        .background(Color.black)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(4.0)
-             })
-        }
+         NavigationLink(
+            destination: PositionEditor(position: $position),
+            label: {
+                VStack {
+                    AnnualizedRow(position: $position, priceType: .ask)
+                    if position.isOwned {
+                        AnnualizedRow(position: $position, priceType: .bid)
+                    }
+                }
+          })
+        .listRowBackground(Color.gray)
+        .background(Color.black)
+        .foregroundColor(Color.white)
+        .cornerRadius(4.0)
     }
 }
 
