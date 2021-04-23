@@ -62,7 +62,7 @@ struct Equity: Hashable, Codable, Identifiable {
         iexAskSize = 0
     }
     
-    init(latestPrice: Double, bid: Double, ask: Double) {
+    init(latestPrice: Double, bid: Double? = nil, ask: Double? = nil) {
         id = UUID()
         self.latestPrice = latestPrice
         self.iexBidPrice = bid

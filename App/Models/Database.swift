@@ -12,8 +12,17 @@ class Database: ObservableObject {
     static let testPositions = [Position(ticker: "TSLA", best: 1000.0321, worst: nil,  soonest: Date().add(days: 1), latest: Date().add(days: 2)),
                                 Position(ticker: "AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7)),
                                 Position(ticker: "RUN", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))]
+    
     static var testPosition: Position {
-        return Database.testPositions[0]
+        let position = Position(ticker: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
+        position.equity = Equity(latestPrice: 134.25, bid: 134.25, ask: 134.30)
+        return position
+    }
+    
+    static var testPosition2: Position {
+        let position = Position(ticker: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
+        position.equity = Equity(latestPrice: 134.25, bid: nil, ask: nil)
+        return position
     }
 
     @Published var positions = [Position]()
@@ -28,7 +37,7 @@ class Database: ObservableObject {
     
     var sorted: [Position] {
          let sortedPositions = positions.sorted { first, second in
-            first.annualizedReturnFor(.ask) > second.annualizedReturnFor(.bid)
+            first.annualizedReturnFor(.ask) > second.annualizedReturnFor(.ask)
         }
         return sortedPositions
     }

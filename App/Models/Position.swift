@@ -11,11 +11,11 @@ let annualizedReturnGoal: Double = 0.50 // 50%
 
 class Position: Identifiable, Codable {
     enum Spread {
-        case bid, ask
+        case bid, ask, mid, purchasePrice
     }
     
     enum CodingKeys: CodingKey {
-        case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify
+        case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify, annualized
     }
     
     var id: UUID
@@ -24,6 +24,7 @@ class Position: Identifiable, Codable {
     var bestCase: Double?
     var worstCase: Double?
     var bestPercentage: Double
+    var annualized: Double
     var soonest: Date
     var latest: Date?
     @Published var isOwned: Bool
@@ -38,26 +39,39 @@ class Position: Identifiable, Codable {
         }
     }
 
-    var price: Double? {
+    var purchasePrice: Double? {
+        if let ask = askPrice {
+            return ask
+        }
+        if let bid = bidPrice {
+            return bid
+        }
         return equity?.latestPrice
+    }
+    
+    var midPoint: Double? {
+        if let ask = askPrice, let bid = bidPrice {
+            return (ask + bid)/2
+        }
+        return nil
     }
     
     var askPrice: Double? {
         if let ask = equity?.ask, ask > 0 {
             return ask
         }
-        return equity?.latestPrice
+        return nil
     }
     
     var bidPrice: Double? {
         if let bid = equity?.bid, bid > 0 {
             return bid
         }
-        return equity?.latestPrice
+        return nil
     }
 
     var priceString: String {
-        guard let price = price else { return "n/a" }
+        guard let price = purchasePrice else { return "n/a" }
         return "$\(price.formatToDecimalPlaces())"
     }
     
@@ -70,7 +84,7 @@ class Position: Identifiable, Codable {
     }
     
     var totalReturn: Double? {
-        guard let price = price else {
+        guard let price = purchasePrice else {
             return 0
         }
         return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
@@ -95,7 +109,7 @@ class Position: Identifiable, Codable {
     }
     
     var annualizedReturn: Double? {
-        guard let price = price else {
+        guard let price = purchasePrice else {
             return 0
         }
         return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
@@ -151,6 +165,7 @@ class Position: Identifiable, Codable {
         self.latest = latest
         self.isOwned = isOwned
         self.doNotify = buyNotifications
+        self.annualized = 0.0
     }
     
     convenience init() {
@@ -165,6 +180,7 @@ class Position: Identifiable, Codable {
         self.equity = Equity(latestPrice: latestPrice, bid: bid, ask: ask)
         self.bestCase = best
         self.worstCase = worst
+        self.annualized = 0.0
     }
     
     required init(from decoder: Decoder) throws {
@@ -179,11 +195,11 @@ class Position: Identifiable, Codable {
             self.latest = try? container.decode(Date.self, forKey: .latest)
             self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
             self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
+            self.annualized = (try? container.decode(Double.self, forKey: .annualized)) ?? 0.0
         } catch {
             Log.error("Failed to decode: \(error)")
             throw error
         }
-
     }
     
     func encode(to encoder: Encoder) throws {
@@ -198,6 +214,7 @@ class Position: Identifiable, Codable {
             try container.encode(latest, forKey: .latest)
             try container.encode(isOwned, forKey: .isOwned)
             try container.encode(doNotify, forKey: .doNotify)
+            try container.encode(doNotify, forKey: .annualized)
         } catch {
             Log.error("Failed to encode: \(error)")
             throw error
@@ -210,6 +227,10 @@ class Position: Identifiable, Codable {
             return AnnualizedReturn(price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .bid:
             return AnnualizedReturn(price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .mid:
+            return AnnualizedReturn(price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .purchasePrice:
+            return AnnualizedReturn(price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
        }
     }
 }

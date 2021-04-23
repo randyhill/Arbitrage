@@ -24,9 +24,9 @@ struct AnnualizedReturn: Comparable {
     let textColor: Color
     let frameColor: Color
     
-    var priceString: String {
+    var priceString2: String {
         if let price = price {
-            return "$" + price.formatToDecimalPlaces(min: 2, max: 3)
+            return price.stockPrice
         }
         return "n/a"
     }

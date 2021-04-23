@@ -16,9 +16,6 @@ struct PositionView: View {
             label: {
                 VStack {
                     AnnualizedRow(position: $position, priceType: .ask)
-                    if position.isOwned {
-                        AnnualizedRow(position: $position, priceType: .bid)
-                    }
                 }
           })
         .listRowBackground(Color.gray)
