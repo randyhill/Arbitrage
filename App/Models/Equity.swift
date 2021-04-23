@@ -79,4 +79,22 @@ struct Equity: Hashable, Codable, Identifiable {
         iexBidSize = 0
         iexAskSize = 0
     }
+    
+    init(_ symbol: String, latestPrice: Double, bid: Double? = nil, ask: Double? = nil) {
+        id = UUID()
+        self.latestPrice = latestPrice
+        self.iexBidPrice = bid
+        self.iexAskPrice = ask
+        self.symbol = symbol
+        companyName = "testing"
+         volume = 0
+        primaryExchange = "testing"
+        marketCap = 0
+        peRatio = 0.0
+        lastTradeTime = 0
+        latestUpdate = 0
+        iexLastUpdated = 0
+        iexBidSize = 0
+        iexAskSize = 0
+    }
 }

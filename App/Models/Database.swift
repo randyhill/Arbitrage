@@ -91,13 +91,27 @@ class Database: ObservableObject {
             return Log.error("Passed empty symbol")
         }
         ServerAPI.getEquity(ticker: symbol) { equity in
+            // Data changes need to happen on main thread?
             DispatchQueue.main.async {
-                // Data changes need to happen on main thread?
+#if DEV
+                let equity = self.addTestDataTo(equity: equity)
+#endif
                 self.addEquity(ticker: symbol, equity: equity)
                 completion(equity)
             }
         }
     }
+    
+#if DEV
+    private func addTestDataTo(equity: Equity) -> Equity {
+        // Give us bid/ask outside of regular hours.
+        if equity.ask == nil, equity.latestPrice > 0 {
+            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice - 0.1, ask: equity.latestPrice + 0.15)
+        }
+        return equity
+    }
+#endif
+
     
     private func getDocumentURL() -> URL {
         // find all possible documents directories for this user

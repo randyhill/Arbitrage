@@ -30,16 +30,16 @@ struct AnnualizedRow: View {
                 Spacer().frame(width: 40)
                 AnnualizedPrice(annualReturn: position.annualizedReturnFor(.purchasePrice), alignment: .trailing, preText: "$")
                 Spacer().frame(width: 40)
+                Text(annualReturn.annualizedString)
+                   .font(font)
+                   .fontWeight(.heavy)
            }
-             Text(annualReturn.annualizedString)
-                .font(font)
-                .fontWeight(.heavy)
         }
     }
 }
 
 struct ReturnField_Previews: PreviewProvider {
     static var previews: some View {
-        AnnualizedRow(position: .constant(Database.testPosition2), priceType: .ask)
+        AnnualizedRow(position: .constant(Database.testPosition), priceType: .ask)
     }
 }

@@ -785,6 +785,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nvariance.arbitrage.Arbitrage;
 				PRODUCT_NAME = Arbitrage;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
