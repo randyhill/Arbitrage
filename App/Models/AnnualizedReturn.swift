@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AnnualizedReturn: Comparable {
     static func < (lhs: AnnualizedReturn, rhs: AnnualizedReturn) -> Bool {
-        if let leftReturn = lhs.AR {
-            if let rightReturn = rhs.AR {
+        if let leftReturn = lhs.annualReturn {
+            if let rightReturn = rhs.annualReturn {
                 return leftReturn < rightReturn
             }
             return true
@@ -18,11 +18,75 @@ struct AnnualizedReturn: Comparable {
         return false
     }
     
+    enum State: Equatable {
+        case buy, possibleBuy, neutral, possibleSale(Bool), sell(Bool)
+        
+        static func make(_ annualReturn: Double, isOwned: Bool) -> State {
+            switch annualReturn {
+            case 0.5...:
+                return .buy
+            case 0.35...:
+                return .possibleBuy
+            case ...0:
+                return .sell(isOwned)
+            case ..<0.2:
+                return possibleSale(isOwned)
+            default:
+                return neutral
+            }
+        }
+        
+        var color: Color {
+            switch self {
+            case .buy:
+                return Color.blue
+            case .possibleBuy:
+                return Color.lightBlue
+            case .neutral:
+                return Color.white
+            case .possibleSale(let isOwned):
+                if isOwned {
+                    return Color.coolSalmon
+                } else {
+                    return Color.white
+                }
+            case .sell(let isOwned):
+                if isOwned {
+                    return Color.coolRed
+                } else {
+                    return Color.white
+                }
+            }
+        }
+        
+        var textColor: Color {
+            switch self {
+            case .buy:
+                return Color.white
+            case .neutral, .possibleBuy, .possibleSale:
+                return Color.black
+            case .sell(let isOwned):
+                if isOwned {
+                    return Color.white
+                } else {
+                    return Color.black
+                }
+            }
+       }
+    }
+    
     let price: Double?
-    let AR: Double?
-    let bgColor: Color
-    let textColor: Color
-    let frameColor: Color
+    let annualReturn: Double?
+    var bgColor: Color {
+        return state.color
+    }
+    var textColor: Color {
+        return state.textColor
+    }
+    var frameColor: Color {
+        return Color.black
+    }
+    let state: State
     
     var priceString2: String {
         if let price = price {
@@ -32,43 +96,20 @@ struct AnnualizedReturn: Comparable {
     }
     
     var annualizedString: String {
-        return String.toPercent(AR, maxPlaces: 0)
+        return String.toPercent(annualReturn, maxPlaces: 0)
     }
     
     init(price: Double?, exitPrice: Double, days: Int, isOwned: Bool) {
         guard let price = price else {
-            self.AR = nil
+            self.annualReturn = nil
             self.price = nil
-            bgColor = Color.gray
-            textColor = Color.white
-            frameColor = Color.black
+            state = .neutral
             return
         }
         self.price = price
         let annualized = AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: days)
-        self.AR = annualized
-        let colors = AnnualizedReturn.colors(annualized, isOwned: isOwned)
-        self.bgColor = colors.background
-        self.textColor = colors.text
-        self.frameColor = Color.black
-    }
-    
-    static func colors(_ annualizedReturn: Double, isOwned: Bool) -> (text: Color, background: Color) {
-        if annualizedReturn >= 0.5 {
-            return (text: Color.white, background: Color.coolGreen)
-        }
-        if annualizedReturn >= 0.35 {
-             return (text: Color.white, background: Color.coolBlue)
-        }
-        if isOwned {
-            if annualizedReturn <= 0.10 {
-                return (text: Color.white, background: Color.coolRed)
-            }
-            if annualizedReturn <= 0.20 {
-                return (text: Color.white, background: Color.coolOrange)
-            }
-        }
-        return (text: Color.black, background: Color.white)
+        self.annualReturn = annualized
+        self.state = State.make(annualized, isOwned: isOwned)
     }
     
     static func returnCalc(sellAt: Double, price: Double) -> Double {

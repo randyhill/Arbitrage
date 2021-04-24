@@ -14,7 +14,7 @@ struct AnnualizedPrice: View {
     let font = Font.callout
     let weight = Font.Weight.heavy
     var body: some View {
-        let width: CGFloat = preText != nil ? 90.0 : 80.0
+        let width: CGFloat = preText != nil ? 102 : 84
         HStack {
             if let preText = preText {
                 Text(preText)

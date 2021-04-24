@@ -106,7 +106,7 @@ class Database: ObservableObject {
     private func addTestDataTo(equity: Equity) -> Equity {
         // Give us bid/ask outside of regular hours.
         if equity.ask == nil, equity.latestPrice > 0 {
-            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice - 0.1, ask: equity.latestPrice + 0.15)
+            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice * 0.9, ask: equity.latestPrice * 1.15)
         }
         return equity
     }
