@@ -11,10 +11,10 @@ struct AnnualizedPrice: View {
     var annualReturn: AnnualizedReturn
     var alignment: Alignment = .center
     var preText: String? = nil
-    let font = Font.callout
+    let font = Font.footnote
     let weight = Font.Weight.heavy
     var body: some View {
-        let width: CGFloat = preText != nil ? 102 : 84
+        let width: CGFloat = preText != nil ? 102 : 78
         HStack {
             if let preText = preText {
                 Text(preText)

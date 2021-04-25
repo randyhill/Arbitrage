@@ -29,23 +29,7 @@ struct DashboardView: View {
  
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
-            VStack (alignment: .leading) {
-                HStack {
-                    Button("Cancel") {
-                        isShowingDetailView = false
-                    }
-                    .padding()
-                    Spacer()
-                    Button("Save") {
-                        isShowingDetailView = false
-                        db.addPosition(newPosition)
-                    }
-                    .padding()
-                }
-                .frame(alignment: .trailing)
-                PositionEditor(position: $newPosition)
-                    .environmentObject(db)
-            }
+            NewPositionEditor(newPosition: $newPosition, isShowingDetailView: $isShowingDetailView)
         })
     }
 }

@@ -25,7 +25,7 @@ struct AnnualizedReturn: Comparable {
             switch annualReturn {
             case 0.5...:
                 return .buy
-            case 0.35...:
+            case 0.3...:
                 return .possibleBuy
             case ...0:
                 return .sell(isOwned)
@@ -52,7 +52,7 @@ struct AnnualizedReturn: Comparable {
                 }
             case .sell(let isOwned):
                 if isOwned {
-                    return Color.coolRed
+                    return Color.red
                 } else {
                     return Color.white
                 }
@@ -75,6 +75,7 @@ struct AnnualizedReturn: Comparable {
        }
     }
     
+    let symbol: String
     let price: Double?
     let annualReturn: Double?
     var bgColor: Color {
@@ -99,13 +100,15 @@ struct AnnualizedReturn: Comparable {
         return String.toPercent(annualReturn, maxPlaces: 0)
     }
     
-    init(price: Double?, exitPrice: Double, days: Int, isOwned: Bool) {
+    init(symbol: String, price: Double?, exitPrice: Double, days: Int, isOwned: Bool) {
         guard let price = price else {
             self.annualReturn = nil
             self.price = nil
+            self.symbol = symbol
             state = .neutral
             return
         }
+        self.symbol = symbol
         self.price = price
         let annualized = AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: days)
         self.annualReturn = annualized

@@ -224,13 +224,13 @@ class Position: Identifiable, Codable {
     func annualizedReturnFor(_ spread: Spread) -> AnnualizedReturn {
         switch spread {
         case .ask:
-            return AnnualizedReturn(price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+            return AnnualizedReturn(symbol: symbol, price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .bid:
-            return AnnualizedReturn(price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+            return AnnualizedReturn(symbol: symbol, price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .mid:
-            return AnnualizedReturn(price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+            return AnnualizedReturn(symbol: symbol, price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .purchasePrice:
-            return AnnualizedReturn(price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+            return AnnualizedReturn(symbol: symbol, price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
        }
     }
 }

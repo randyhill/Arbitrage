@@ -74,6 +74,7 @@ class Database: ObservableObject {
         positionHash[newPosition.symbol] = newPosition
         refreshSymbolData(newPosition.symbol) { equity in
             newPosition.equity = equity
+            self.positions = self.sorted
         }
     }
     
@@ -82,7 +83,8 @@ class Database: ObservableObject {
             refreshSymbolData(position.symbol) { newEquity in
                 self.addEquity(ticker: position.symbol, equity: newEquity)
                 position.equity = newEquity
-            }
+                self.positions = self.sorted
+           }
         }
     }
     

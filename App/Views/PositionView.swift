@@ -12,12 +12,11 @@ struct PositionView: View {
 
     var body: some View {
          NavigationLink(
-            destination: PositionEditor(position: $position),
+            destination:
+                PositionEditor(position: $position),
             label: {
-                VStack {
-                    AnnualizedRow(position: $position, priceType: .ask)
-                }
-          })
+                AnnualizedRow(position: $position, priceType: .ask)
+        })
         .listRowBackground(Color.gray)
         .background(Color.black)
         .foregroundColor(Color.white)

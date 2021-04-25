@@ -91,6 +91,8 @@
 		25AA3B6A26213A1B0049779F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B6926213A1B0049779F /* Database.swift */; };
 		25B2A7FC26337A9600DA7B3F /* AnnualizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */; };
 		25B2A7FD26337A9600DA7B3F /* AnnualizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */; };
+		25B2A80026339E0A00DA7B3F /* NewPositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */; };
+		25B2A80126339E0A00DA7B3F /* NewPositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,7 @@
 		25AA3B67262138E30049779F /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		25AA3B6926213A1B0049779F /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedPrice.swift; sourceTree = "<group>"; };
+		25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPositionEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +372,7 @@
 				253CFA02262CD4CC00AE5D4A /* ExitPriceRow.swift */,
 				259429A826252B5900B36B5C /* PositionEditor.swift */,
 				255153FA262767C6004881D3 /* PositionView.swift */,
+				25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -538,6 +542,7 @@
 			files = (
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
 				253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
+				25B2A80026339E0A00DA7B3F /* NewPositionEditor.swift in Sources */,
 				255153A226252F3E004881D3 /* JSON+Shared.swift in Sources */,
 				255153A426252F3E004881D3 /* UIView+Shared.swift in Sources */,
 				2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */,
@@ -598,6 +603,7 @@
 				25B2A7FD26337A9600DA7B3F /* AnnualizedPrice.swift in Sources */,
 				255153F726262C70004881D3 /* Math+Shared.swift in Sources */,
 				2500A07C261E9E4C0043FF96 /* Equity.swift in Sources */,
+				25B2A80126339E0A00DA7B3F /* NewPositionEditor.swift in Sources */,
 				253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */,
 				255153FC262767C6004881D3 /* PositionView.swift in Sources */,
 				253CFA01262CD03300AE5D4A /* DateRow.swift in Sources */,
