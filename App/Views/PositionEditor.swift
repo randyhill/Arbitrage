@@ -23,9 +23,7 @@ struct PositionEditor: View {
     var body: some View {
         Form {
             TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $symbol)
-            HStack {
-                Text("Current Price: \(position.priceString)")
-            }
+            StockInfoPanel(position: position)
             TextFieldActive(title: "Outcome: $", placeholder: "0.0", text: $bestCaseString)
                 .keyboardType(.decimalPad)
             HStack {

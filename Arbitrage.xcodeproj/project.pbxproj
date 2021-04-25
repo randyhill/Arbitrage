@@ -93,6 +93,12 @@
 		25B2A7FD26337A9600DA7B3F /* AnnualizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */; };
 		25B2A80026339E0A00DA7B3F /* NewPositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */; };
 		25B2A80126339E0A00DA7B3F /* NewPositionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */; };
+		25B2A8032635FD4900DA7B3F /* StockInfoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8022635FD4900DA7B3F /* StockInfoPanel.swift */; };
+		25B2A8042635FD4900DA7B3F /* StockInfoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8022635FD4900DA7B3F /* StockInfoPanel.swift */; };
+		25B2A8062636023000DA7B3F /* PriceReturnRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8052636023000DA7B3F /* PriceReturnRow.swift */; };
+		25B2A8072636023000DA7B3F /* PriceReturnRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8052636023000DA7B3F /* PriceReturnRow.swift */; };
+		25B2A80C26360FAE00DA7B3F /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A80B26360FAE00DA7B3F /* Scenario.swift */; };
+		25B2A80D26360FAE00DA7B3F /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A80B26360FAE00DA7B3F /* Scenario.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +170,9 @@
 		25AA3B6926213A1B0049779F /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedPrice.swift; sourceTree = "<group>"; };
 		25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPositionEditor.swift; sourceTree = "<group>"; };
+		25B2A8022635FD4900DA7B3F /* StockInfoPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoPanel.swift; sourceTree = "<group>"; };
+		25B2A8052636023000DA7B3F /* PriceReturnRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceReturnRow.swift; sourceTree = "<group>"; };
+		25B2A80B26360FAE00DA7B3F /* Scenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +365,7 @@
 				2500A07A261E9E4C0043FF96 /* Equity.swift */,
 				25AA3B67262138E30049779F /* Position.swift */,
 				25AA3B6926213A1B0049779F /* Database.swift */,
+				25B2A80B26360FAE00DA7B3F /* Scenario.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -373,6 +383,8 @@
 				259429A826252B5900B36B5C /* PositionEditor.swift */,
 				255153FA262767C6004881D3 /* PositionView.swift */,
 				25B2A7FF26339E0A00DA7B3F /* NewPositionEditor.swift */,
+				25B2A8022635FD4900DA7B3F /* StockInfoPanel.swift */,
+				25B2A8052636023000DA7B3F /* PriceReturnRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -543,6 +555,7 @@
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
 				253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
 				25B2A80026339E0A00DA7B3F /* NewPositionEditor.swift in Sources */,
+				25B2A8062636023000DA7B3F /* PriceReturnRow.swift in Sources */,
 				255153A226252F3E004881D3 /* JSON+Shared.swift in Sources */,
 				255153A426252F3E004881D3 /* UIView+Shared.swift in Sources */,
 				2500A07E261E9E840043FF96 /* ServerAPI.swift in Sources */,
@@ -553,6 +566,7 @@
 				255153A026252F3E004881D3 /* Color+Shared.swift in Sources */,
 				2500A068261E9E250043FF96 /* DashboardView.swift in Sources */,
 				25AA3B6A26213A1B0049779F /* Database.swift in Sources */,
+				25B2A8032635FD4900DA7B3F /* StockInfoPanel.swift in Sources */,
 				259429A926252B5900B36B5C /* PositionEditor.swift in Sources */,
 				253CFA03262CD4CC00AE5D4A /* ExitPriceRow.swift in Sources */,
 				2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */,
@@ -565,6 +579,7 @@
 				255153A926252F3E004881D3 /* UIImage+IOS.swift in Sources */,
 				255153B126252F3E004881D3 /* TextFieldActive.swift in Sources */,
 				255153B026252F3E004881D3 /* TextFieldDynamicNative.swift in Sources */,
+				25B2A80C26360FAE00DA7B3F /* Scenario.swift in Sources */,
 				2500A066261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
 				2551539D26252F3E004881D3 /* Math+Shared.swift in Sources */,
 				2500A07B261E9E4C0043FF96 /* Equity.swift in Sources */,
@@ -599,12 +614,15 @@
 				259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */,
 				253CF9DD262BA29800AE5D4A /* View+Shared.swift in Sources */,
 				2500A067261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
+				25B2A8042635FD4900DA7B3F /* StockInfoPanel.swift in Sources */,
 				253CF9DC262BA29800AE5D4A /* String+Shared.swift in Sources */,
 				25B2A7FD26337A9600DA7B3F /* AnnualizedPrice.swift in Sources */,
 				255153F726262C70004881D3 /* Math+Shared.swift in Sources */,
 				2500A07C261E9E4C0043FF96 /* Equity.swift in Sources */,
+				25B2A8072636023000DA7B3F /* PriceReturnRow.swift in Sources */,
 				25B2A80126339E0A00DA7B3F /* NewPositionEditor.swift in Sources */,
 				253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */,
+				25B2A80D26360FAE00DA7B3F /* Scenario.swift in Sources */,
 				255153FC262767C6004881D3 /* PositionView.swift in Sources */,
 				253CFA01262CD03300AE5D4A /* DateRow.swift in Sources */,
 			);

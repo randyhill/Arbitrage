@@ -27,8 +27,6 @@ class Database: ObservableObject {
 
     @Published var positions = [Position]()
     @Published var equities = [Equity]()
-    private var positionHash = [String: Position]()
-    private var equityHash = [String: Equity]()
     private var fileName = "positions.arb"
     
     var newPosition: Position {
@@ -49,13 +47,16 @@ class Database: ObservableObject {
         refreshAllSymbols()
     }
     
-    func getEquityFor(_ ticker: String) -> Equity? {
-        return equityHash[ticker]
+    // Eliminate positions with empty symbols
+    func clean(_ dirtyPositions: [Position]) -> [Position] {
+        let sortedPositions = dirtyPositions.filter({ position in
+            return position.symbol.count > 0
+        })
+        return sortedPositions
     }
 
     func addEquity(ticker: String, equity: Equity) {
         equities += [equity]
-        equityHash[ticker] = equity
     }
     
     func positionAt(_ index: Int) -> Position {
@@ -69,9 +70,11 @@ class Database: ObservableObject {
     }
     
     func addPosition(_ newPosition: Position) {
+        guard newPosition.symbol.count > 0 else {
+            return Log.error("Can't add position without symbol")
+        }
         Log.threadCheck(shouldBeMain: true)
         positions.append(newPosition)
-        positionHash[newPosition.symbol] = newPosition
         refreshSymbolData(newPosition.symbol) { equity in
             newPosition.equity = equity
             self.positions = self.sorted
@@ -106,9 +109,8 @@ class Database: ObservableObject {
     
 #if DEV
     private func addTestDataTo(equity: Equity) -> Equity {
-        // Give us bid/ask outside of regular hours.
         if equity.ask == nil, equity.latestPrice > 0 {
-            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice * 0.9, ask: equity.latestPrice * 1.15)
+            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice, ask: equity.latestPrice)
         }
         return equity
     }
@@ -142,7 +144,9 @@ class Database: ObservableObject {
         if let data = FileManager.default.contents(atPath: url.path) {
             do {
                 let decoder = JSONDecoder()
-                self.positions = try decoder.decode([Position].self, from: data)
+                let diskPositions = try decoder.decode([Position].self, from: data)
+                let cleaned = clean(diskPositions)
+                self.positions = cleaned
             } catch {
                 Log.error("Error: \(error.localizedDescription) trying to read: \(url.path)")
                 return false

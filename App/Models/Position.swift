@@ -15,10 +15,10 @@ class Position: Identifiable, Codable {
     }
     
     enum CodingKeys: CodingKey {
-        case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify, annualized
+        case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify, annualized, scenarios
     }
     
-    var id: UUID
+    let id: String
     var _symbol: String
     @Published var equity: Equity?
     var bestCase: Double?
@@ -29,6 +29,7 @@ class Position: Identifiable, Codable {
     var latest: Date?
     @Published var isOwned: Bool
     var doNotify: Bool
+    var scenarios: PositionScenarios
     
     var symbol: String {
         get {
@@ -76,11 +77,7 @@ class Position: Identifiable, Codable {
     }
     
     var exitPrice: Double {
-        guard let best = bestCase else {return 0.0 }
-        if let worst = worstCase {
-            return best * bestPercentage + worst * (1 - bestPercentage)
-        }
-        return best
+         return scenarios.averagePayout
     }
     
     var totalReturn: Double? {
@@ -91,17 +88,7 @@ class Position: Identifiable, Codable {
     }
 
     var periodDays: Int {
-        let now = Date()
-        let soonestDays = now.daysUntil(soonest)
-        if let latest = latest {
-            let lastestDays = now.daysUntil(latest)
-            var averaged = Double(soonestDays) * bestPercentage + Double(lastestDays) * (1 - bestPercentage)
-            if averaged.truncatingRemainder(dividingBy: 1) >= 0.5 {
-                averaged += 1
-            }
-            return Int(averaged)
-        }
-        return soonestDays
+        return scenarios.averageDays
     }
     
     var endDate: Date {
@@ -156,7 +143,7 @@ class Position: Identifiable, Codable {
     }
     
     init(ticker: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
-        self.id = UUID()
+        self.id = UUID().uuidString
         self._symbol = ticker.uppercased()
         self.bestCase = best
         self.worstCase = worst
@@ -166,6 +153,7 @@ class Position: Identifiable, Codable {
         self.isOwned = isOwned
         self.doNotify = buyNotifications
         self.annualized = 0.0
+        self.scenarios = PositionScenarios()
     }
     
     convenience init() {
@@ -181,12 +169,13 @@ class Position: Identifiable, Codable {
         self.bestCase = best
         self.worstCase = worst
         self.annualized = 0.0
+        self.scenarios = PositionScenarios()
     }
     
     required init(from decoder: Decoder) throws {
         do {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.id = try container.decode(UUID.self, forKey: .id)
+            self.id = try container.decode(String.self, forKey: .id)
             self._symbol = try container.decode(String.self, forKey: ._symbol)
             self.bestCase = try? container.decode(Double.self, forKey: .bestCase)
             self.worstCase = try? container.decode(Double.self, forKey: .worstCase)
@@ -196,6 +185,7 @@ class Position: Identifiable, Codable {
             self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
             self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
             self.annualized = (try? container.decode(Double.self, forKey: .annualized)) ?? 0.0
+            self.scenarios = (try? container.decode(PositionScenarios.self, forKey: .scenarios)) ?? PositionScenarios()
         } catch {
             Log.error("Failed to decode: \(error)")
             throw error
@@ -214,7 +204,8 @@ class Position: Identifiable, Codable {
             try container.encode(latest, forKey: .latest)
             try container.encode(isOwned, forKey: .isOwned)
             try container.encode(doNotify, forKey: .doNotify)
-            try container.encode(doNotify, forKey: .annualized)
+            try container.encode(annualized, forKey: .annualized)
+            try container.encode(scenarios, forKey: .scenarios)
         } catch {
             Log.error("Failed to encode: \(error)")
             throw error
@@ -232,5 +223,38 @@ class Position: Identifiable, Codable {
         case .purchasePrice:
             return AnnualizedReturn(symbol: symbol, price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
        }
+    }
+    
+    func priceString(_ spread: Spread)->  String {
+        var price: Double?
+        switch spread {
+        case .ask:
+            price = askPrice
+        case .bid:
+            price = bidPrice
+        case .mid:
+            price = midPoint
+        case .purchasePrice:
+           price = purchasePrice
+       }
+        guard let price = price else { return "n/a" }
+        return "$\(price.formatToDecimalPlaces())"
+    }
+    
+    
+    func lastUpdatedString(_ spread: Spread)->  String {
+        var date: Date?
+        switch spread {
+        case .ask:
+            date = equity?.lastUpdateDate
+        case .bid:
+            date = equity?.lastUpdateDate
+        case .mid:
+            date = equity?.lastUpdateDate
+        case .purchasePrice:
+            date = equity?.lastTradeDate
+        }
+        guard let date = date else { return "n/a" }
+        return date.toUniqueTimeDayOrDate()
     }
 }
