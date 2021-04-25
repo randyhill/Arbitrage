@@ -21,14 +21,9 @@ class Position: Identifiable, Codable {
     let id: String
     var _symbol: String
     @Published var equity: Equity?
-    var bestCase: Double?
-    var worstCase: Double?
-    var bestPercentage: Double
-    var annualized: Double
-    var soonest: Date
-    var latest: Date?
     @Published var isOwned: Bool
-    var doNotify: Bool
+    var annualized: Double
+    var doNotify: Bool                  // Ignore this position for alerts
     var scenarios: PositionScenarios
     
     var symbol: String {
@@ -110,34 +105,6 @@ class Position: Identifiable, Codable {
         return _goalReturnsPrice
     }
     
-    var bestCaseString: String {
-        get {
-            guard let best = bestCase else { return "" }
-            return "\(best.formatToDecimalPlaces())"
-        }
-        set {
-            guard let newDouble = newValue.double else {
-                bestCase = nil
-                return Log.error("Can't convert \(newValue) to double")
-            }
-            bestCase = newDouble
-         }
-    }
-    
-    var worstCaseString: String {
-        get {
-            guard let worst = worstCase else { return "" }
-            return "\(worst.formatToDecimalPlaces())"
-        }
-        set {
-            guard let newDouble = newValue.double else {
-                worstCase = nil
-                return Log.error("Could not convert: \(newValue) to double")
-            }
-            worstCase = newDouble
-        }
-    }
-    
     var companyName: String {
         return equity?.companyName ?? "No Data"
     }
@@ -145,11 +112,6 @@ class Position: Identifiable, Codable {
     init(ticker: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID().uuidString
         self._symbol = ticker.uppercased()
-        self.bestCase = best
-        self.worstCase = worst
-        self.bestPercentage = bestPercentage
-        self.soonest = soonest
-        self.latest = latest
         self.isOwned = isOwned
         self.doNotify = buyNotifications
         self.annualized = 0.0
@@ -162,12 +124,7 @@ class Position: Identifiable, Codable {
     
     convenience init(best: Double = 0.0, worst: Double? = nil, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
         self.init()
-        self.soonest = soonest
-        self.latest = latest
-        self.bestPercentage = bestPercentage
         self.equity = Equity(latestPrice: latestPrice, bid: bid, ask: ask)
-        self.bestCase = best
-        self.worstCase = worst
         self.annualized = 0.0
         self.scenarios = PositionScenarios()
     }
@@ -177,11 +134,6 @@ class Position: Identifiable, Codable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(String.self, forKey: .id)
             self._symbol = try container.decode(String.self, forKey: ._symbol)
-            self.bestCase = try? container.decode(Double.self, forKey: .bestCase)
-            self.worstCase = try? container.decode(Double.self, forKey: .worstCase)
-            self.bestPercentage = try container.decode(Double.self, forKey: .bestPercentage)
-            self.soonest = try container.decode(Date.self, forKey: .soonest)
-            self.latest = try? container.decode(Date.self, forKey: .latest)
             self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
             self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
             self.annualized = (try? container.decode(Double.self, forKey: .annualized)) ?? 0.0
@@ -197,11 +149,6 @@ class Position: Identifiable, Codable {
         do {
             try container.encode(id, forKey: .id)
             try container.encode(_symbol, forKey: ._symbol)
-            try container.encode(bestCase, forKey: .bestCase)
-            try container.encode(worstCase, forKey: .worstCase)
-            try container.encode(bestPercentage, forKey: .bestPercentage)
-            try container.encode(soonest, forKey: .soonest)
-            try container.encode(latest, forKey: .latest)
             try container.encode(isOwned, forKey: .isOwned)
             try container.encode(doNotify, forKey: .doNotify)
             try container.encode(annualized, forKey: .annualized)

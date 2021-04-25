@@ -13,6 +13,17 @@ class Scenario: Identifiable, Codable {
     var endDate: Date
     var percentage: Double
     
+    var payoutString: String {
+        get {
+            return payout.stockPrice
+        }
+        set {
+            if let newPayout = Double(newValue) {
+                payout = newPayout
+            }
+        }
+    }
+    
     var averagePayout: Double {
         return percentage * payout
     }
@@ -26,7 +37,7 @@ class Scenario: Identifiable, Codable {
         return Double(days) * percentage
     }
     
-    init(payout: Double, date: Date, percentage: Double = 0.5) {
+    init(payout: Double = 22.0, date: Date = Date().add(months: 2), percentage: Double = 0.5) {
         self.id = UUID().uuidString
         self.payout = payout
         self.endDate = date
@@ -36,7 +47,10 @@ class Scenario: Identifiable, Codable {
 
 class PositionScenarios: Identifiable, Codable {
     let id: String
-    var scenarios = [Scenario]()
+    private var scenarios = [Scenario]()
+    var list: [Scenario] {
+        return scenarios
+    }
     
     var averageDays: Int {
         var aveDays = scenarios.reduce(0) { days, scenario in
@@ -57,5 +71,9 @@ class PositionScenarios: Identifiable, Codable {
     
     init() {
         self.id = UUID().uuidString
+    }
+    
+    func add(_ scenario: Scenario) {
+        scenarios += [scenario]
     }
 }

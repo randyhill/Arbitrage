@@ -16,6 +16,8 @@ class Database: ObservableObject {
     static var testPosition: Position {
         let position = Position(ticker: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
         position.equity = Equity(latestPrice: 134.25, bid: 134.25, ask: 134.30)
+        position.scenarios.add(Scenario(payout: 82, date: Date().add(months: 2), percentage: 0.5))
+        position.scenarios.add(Scenario(payout: 64, date: Date().add(months: 4), percentage: 0.5))
         return position
     }
     

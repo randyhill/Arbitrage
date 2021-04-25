@@ -9,58 +9,40 @@ import SwiftUI
 
 struct PositionEditor: View {
     @Binding var position: Position
+    var activateTickerField = false
     @EnvironmentObject var db: Database
     
     // Private state
-    @State private var bestCaseString = ""
-    @State private var worstCaseString = ""
     @State private var symbol = ""
     @State private var latest = Date()
-    @State private var worstCaseTitle = "Add 2nd Outcome"
-    @State private var latestTitle = "Add 2nd Date"
     @State private var averageDays = 0
+    @State private var showScenarioEditor = false
+    @State private var newScenario = Scenario()
 
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", text: $symbol)
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol)
             StockInfoPanel(position: position)
-            TextFieldActive(title: "Outcome: $", placeholder: "0.0", text: $bestCaseString)
-                .keyboardType(.decimalPad)
             HStack {
-                Text("Completion Date:")
+                Text("Exit Scenarios")
+                    .font(.title3)
+                    .fontWeight(.bold)
                 Spacer()
-                DatePicker("", selection: $position.soonest, displayedComponents: .date)
-                    .frame(width: 124, alignment: .trailing)
-            }
-            if position.worstCase == nil {
-                Button(worstCaseTitle) {
-                    position.worstCase = position.bestCase
-                    worstCaseTitle = ""
+                Button("Add...") {
+                    newScenario = Scenario()
+                    position.scenarios.add(newScenario)
+                    showScenarioEditor = true
                 }
-            } else {
-                TextFieldActive(title: "2nd Case: $", placeholder: "0.0", text: $worstCaseString)
-                    .keyboardType(.decimalPad)
             }
-             HStack {
-                if position.latest == nil {
-                    Button(latestTitle) {
-                        position.latest = position.soonest
-                        let next = position.soonest.add(days: 1)
-                        latest = next
-                        latestTitle = ""
-                    }
-                } else {
-                    Text("Second Date: ")
-                    DatePicker("", selection: $latest, displayedComponents: .date)
-                        .frame(width: 124, alignment: .trailing)
-                        .onChange(of: latest, perform: { newDate in
-                            position.latest = latest
-                            averageDays = position.periodDays
-                        })
+            .sheet(isPresented: $showScenarioEditor, content: {
+                ScenarioEditor(scenario: $newScenario)
+            })
+            .frame(height: 54, alignment: .bottom)
+            
+            List {
+                ForEach(position.scenarios.list) { scenario in
+                    ScenarioRow(scenario: scenario)
                 }
-             }
-            HStack {
-                Text("Average Days: \(averageDays)")
             }
             HStack {
                 Checkbox(isChecked: $position.isOwned, title: "Owned") { (changed) in
@@ -73,20 +55,11 @@ struct PositionEditor: View {
             }.padding()
         }
         .onAppear() {
-            bestCaseString = position.bestCaseString
-            worstCaseString = position.worstCaseString
             averageDays = position.periodDays
-            if let latest = position.latest {
-                self.latest = latest
-            }
             symbol = position.symbol
+            showScenarioEditor = false
         }
         .onDisappear() {
-            position.bestCaseString = bestCaseString
-            position.worstCaseString = worstCaseString
-            if latestTitle.count == 0 {
-                position.latest = latest
-            }
             position.symbol = symbol
             db.save()
             db.refreshAllSymbols()
