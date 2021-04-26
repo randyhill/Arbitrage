@@ -16,32 +16,21 @@ struct PositionEditor: View {
     @State private var symbol = ""
     @State private var latest = Date()
     @State private var averageDays = 0
-    @State private var showScenarioEditor = false
-    @State private var newScenario = Scenario()
-
+    @State private var scenarios = [Scenario]()
+    @State private var exitPrice: Double = 0
+    @State private var exitDays: Int = 0
+    @State private var exitDate = Date()
+  
     var body: some View {
         Form {
             TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol)
             StockInfoPanel(position: position)
-            HStack {
-                Text("Exit Scenarios")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                Spacer()
-                Button("Add...") {
-                    newScenario = Scenario()
-                    position.scenarios.add(newScenario)
-                    showScenarioEditor = true
-                }
-            }
-            .sheet(isPresented: $showScenarioEditor, content: {
-                ScenarioEditor(scenario: $newScenario)
-            })
-            .frame(height: 54, alignment: .bottom)
+            ExitValuesRow(exitPrice: $exitPrice, periodDays: $exitDays, endDate: $exitDate)
+            ScenarioTitleRow(position: position)
             
             List {
-                ForEach(position.scenarios.list) { scenario in
-                    ScenarioRow(scenario: scenario)
+                ForEach(scenarios.indices, id: \.self) { index in
+                     ScenarioRow(scenario: $scenarios[index])
                 }
             }
             HStack {
@@ -55,9 +44,12 @@ struct PositionEditor: View {
             }.padding()
         }
         .onAppear() {
-            averageDays = position.periodDays
-            symbol = position.symbol
-            showScenarioEditor = false
+            self.scenarios = position.scenarios.list
+            self.averageDays = position.periodDays
+            self.symbol = position.symbol
+            self.exitPrice = position.exitPrice
+            self.exitDays = position.periodDays
+            self.exitDate = position.endDate
         }
         .onDisappear() {
             position.symbol = symbol

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScenarioRow: View {
-    @State var scenario: Scenario
+    @Binding var scenario: Scenario
     
     var body: some View {
         NavigationLink(
@@ -26,6 +26,6 @@ struct ScenarioRow: View {
 
 struct ScenarioRow_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioRow(scenario: Scenario(payout: 77, date: Date().add(years:1)))
+        ScenarioRow(scenario: .constant(Scenario(payout: 77, date: Date().add(years:1))))
     }
 }

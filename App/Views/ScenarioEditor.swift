@@ -18,9 +18,6 @@ struct ScenarioEditor: View {
                 .frame(height: 64)
             DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
                 .frame(height: 64)
-//            .frame(width: 124, alignment: .trailing)
-//            .onChange(of: $scenario.endDate, perform: { newDate in
-
         }
     }
 }
