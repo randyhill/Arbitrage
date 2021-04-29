@@ -17,7 +17,7 @@ struct IEXQuoteDelayed: Codable {
     let totalVolume: Int
     let processedTime: Int
     
-    var priceTime: Date {
+    var priceDate: Date {
         return Date.fromInternetEpoch(delayedPriceTime)
     }
     var processedAt: Date {

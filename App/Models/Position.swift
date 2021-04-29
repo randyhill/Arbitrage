@@ -42,7 +42,7 @@ class Position: Identifiable, Codable {
         if let bid = bidPrice {
             return bid
         }
-        return quote?.latestPrice
+        return quote?.lastTradePrice
     }
     
     var midPoint: Double? {
@@ -193,13 +193,13 @@ class Position: Identifiable, Codable {
         var date: Date?
         switch spread {
         case .ask:
-            date = quote?.lastUpdated
+            date = quote?.lastTradeTime
         case .bid:
-            date = quote?.lastUpdated
+            date = quote?.lastTradeTime
         case .mid:
-            date = quote?.lastUpdated
+            date = quote?.lastTradeTime
         case .purchasePrice:
-            date = quote?.lastTraded
+            date = quote?.lastTradeTime
         }
         guard let date = date else { return "n/a" }
         return date.toUniqueTimeDayOrDate()

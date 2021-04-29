@@ -7,110 +7,102 @@
 
 import SwiftUI
 
-//struct PriceTime {
-//    let price: Double
-//    let time: Date
-//}
+struct PriceTime: Hashable, Codable {
+    let price: Double
+    let time: Int
+    var timeStamp: Date {
+        return Date.fromInternetEpoch(time)
+    }
+    
+    // If arguments nil, return oldest possible time for compaarisons
+    static func create(price: Double?, time: Int?) -> PriceTime {
+        if let price = price, let time = time {
+            return PriceTime(price: price, time: time)
+        }
+        return PriceTime(price: 0, time: 0)
+    }
+}
 
 struct Quote: Hashable, Codable, Identifiable {
     let id: String
     let symbol: String
     let companyName: String
-    let latestPrice: Double
-    let latestPriceTime: Date
+    let lastTrade: PriceTime
     let bid: Double?
     let ask: Double?
-    let bidAskUpdated: Date?
     let volume: Int?
-    let updated: Date
+    let highPriceTime: PriceTime
+    let lowPriceTime: PriceTime
     
-    // Delayed fields
-    let delayedPrice: Double?
-    let delayedPriceTime: Date?
-    let high: Double?
-    let low: Double?
-    
-//    var lastTrade: Double {
-//        if let delayedPrice = delayedPrice, let delayedPriceTime =
-//    }
-//
-    var lastUpdated: Date {
-        if let bidAskUpdated = bidAskUpdated {
-            if bidAskUpdated > latestPriceTime {
-                return bidAskUpdated
-            }
-        }
-        return latestPriceTime
+    var lastTradePrice: Double {
+        return lastTrade.price
     }
     
-    var lastTraded: Date {
-        return latestPriceTime
+    var lastTradeTime: Date {
+        return lastTrade.timeStamp
+    }
+
+    var high: Double {
+        return highPriceTime.price
+    }
+    
+    var low: Double {
+        return lowPriceTime.price
     }
 
     init() {
         id = UUID().uuidString
         symbol = ""
         companyName = ""
-        latestPrice = 0
-        latestPriceTime = Date()
-        delayedPrice = 0
-        delayedPriceTime = Date()
-        high = 0
-        low = 0
+        lastTrade = PriceTime(price: 0, time: 0)
+        highPriceTime = PriceTime.create(price: 0, time: 0)
+        lowPriceTime = PriceTime.create(price: 0, time: 0)
         volume = 0
-        updated = Date()
         bid = nil
         ask = nil
-        bidAskUpdated = nil
     }
     
     init(_ quote: IEXQuote, delayed: IEXQuoteDelayed) {
         id = UUID().uuidString
         symbol = quote.symbol
         companyName = quote.companyName
-        latestPrice = quote.latestPrice
-        latestPriceTime = quote.lastTradeDate
+        let lastQuoteTime = quote.lastPriceTime
+        let delayedQuoteTime = PriceTime(price: delayed.delayedPrice, time: delayed.delayedPriceTime)
+        if delayedQuoteTime.time > lastQuoteTime.time {
+            lastTrade = delayedQuoteTime
+        } else {
+            lastTrade = lastQuoteTime
+        }
         bid = quote.bid
         ask = quote.ask
-        bidAskUpdated = quote.iexUpdateDate
-        volume = quote.volume
-        updated = quote.lastUpdateDate
-        delayedPrice = delayed.delayedPrice
-        delayedPriceTime = delayed.priceTime
-        high = delayed.high
-        low = delayed.low
+        volume = delayed.totalVolume > quote.volume ? delayed.totalVolume : quote.volume
+        let hpt = quote.highPriceTime
+        highPriceTime = hpt.time > delayed.delayedPriceTime ? hpt : PriceTime(price: delayed.high, time: delayed.delayedPriceTime)
+        let lpt = quote.lowPriceTime
+        lowPriceTime = lpt.time > delayed.delayedPriceTime ? lpt : PriceTime(price: delayed.low, time: delayed.delayedPriceTime)
     }
     
     init(_ quote: IEXQuote) {
         id = UUID().uuidString
         symbol = quote.symbol
         companyName = quote.companyName
-        latestPrice = quote.latestPrice
-        latestPriceTime = quote.lastTradeDate
+        lastTrade = quote.lastPriceTime
         bid = quote.bid
         ask = quote.ask
-        bidAskUpdated = quote.iexUpdateDate
         volume = quote.volume
-        updated = quote.lastUpdateDate
-        delayedPrice = nil
-        delayedPriceTime = nil
-        high = nil
-        low = nil
+        highPriceTime = quote.highPriceTime
+        lowPriceTime = quote.lowPriceTime
     }
     
+    // Used to create test versions
     init(latestPrice: Double, bid: Double?, ask: Double?)  {
         id = UUID().uuidString
         symbol = ""
         companyName = ""
-        latestPriceTime = Date()
-        delayedPrice = 0
-        delayedPriceTime = Date()
-        high = 0
-        low = 0
+        lastTrade = PriceTime(price: latestPrice, time: Int(Date().timeIntervalSince1970))
+        highPriceTime = PriceTime.create(price: 0, time: 0)
+        lowPriceTime = PriceTime.create(price: 0, time: 0)
         volume = 0
-        updated = Date()
-        bidAskUpdated = nil
-        self.latestPrice = latestPrice
         self.bid = bid
         self.ask = ask
     }
