@@ -23,7 +23,7 @@ struct PositionEditor: View {
   
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol)
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $position.symbol)
             StockInfoPanel(position: position)
             ExitValuesRow(exitPrice: $exitPrice, periodDays: $exitDays, endDate: $exitDate)
             ScenarioTitleRow(position: position)

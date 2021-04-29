@@ -9,26 +9,26 @@ import Foundation
 import SwiftUI
 
 class Database: ObservableObject {
-    static let testPositions = [Position(ticker: "TSLA", best: 1000.0321, worst: nil,  soonest: Date().add(days: 1), latest: Date().add(days: 2)),
-                                Position(ticker: "AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7)),
-                                Position(ticker: "RUN", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))]
-    
+    static let testPositions = [Position(symbol: "TSLA", best: 1000.0321, worst: nil,  soonest: Date().add(days: 1), latest: Date().add(days: 2)),
+                                Position(symbol: "AAPL", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7)),
+                                Position(symbol: "RUN", best: 800.030, worst: 400.0,  soonest: Date().add(days: 3), latest: Date().add(days: 7))]
+
     static var testPosition: Position {
-        let position = Position(ticker: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
-        position.equity = Equity(latestPrice: 134.25, bid: 134.25, ask: 134.30)
+        let position = Position(symbol: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
+        position.quote = Quote(latestPrice: 134.25, bid: 134.25, ask: 134.30)
         position.scenarios.add(Scenario(payout: 82, date: Date().add(months: 2), percentage: 0.5))
         position.scenarios.add(Scenario(payout: 64, date: Date().add(months: 4), percentage: 0.5))
         return position
     }
-    
+
     static var testPosition2: Position {
-        let position = Position(ticker: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
-        position.equity = Equity(latestPrice: 134.25, bid: nil, ask: nil)
+        let position = Position(symbol: "AAPL", best: 200.0, worst: 140,  soonest: Date().add(months: 10), latest: Date().add(years: 2))
+        position.quote = Quote(latestPrice: 134.25, bid: nil, ask: nil)
         return position
     }
 
     @Published var positions = [Position]()
-    @Published var equities = [Equity]()
+    @Published var equities = [Quote]()
     private var fileName = "positions.arb"
     
     var newPosition: Position {
@@ -43,9 +43,9 @@ class Database: ObservableObject {
     }
     
     init() {
-        if !load() {
-            positions.append(contentsOf: (Database.testPositions))
-        }
+//        if !load() {
+//            positions.append(contentsOf: (Database.testPositions))
+//        }
         refreshAllSymbols()
     }
     
@@ -57,17 +57,17 @@ class Database: ObservableObject {
         return sortedPositions
     }
 
-    func addEquity(ticker: String, equity: Equity) {
-        equities += [equity]
+    func addEquity(symbol: String, quote: Quote) {
+        equities += [quote]
     }
     
     func positionAt(_ index: Int) -> Position {
         return positions[index]
     }
     
-    func addPosition(_ ticker: String, best: Double = 0.0, worst: Double = 0.0, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false)
+    func addPosition(_ symbol: String, best: Double = 0.0, worst: Double = 0.0, soonest: Date = Date(), latest: Date = Date(), isOwned: Bool = false)
     {
-        let position = Position(ticker: ticker, best: best, worst: worst, soonest: soonest, latest: latest, isOwned: isOwned)
+        let position = Position(symbol: symbol, best: best, worst: worst, soonest: soonest, latest: latest, isOwned: isOwned)
         addPosition(position)
     }
     
@@ -77,8 +77,8 @@ class Database: ObservableObject {
         }
         Log.threadCheck(shouldBeMain: true)
         positions.append(newPosition)
-        refreshSymbolData(newPosition.symbol) { equity in
-            newPosition.equity = equity
+        refreshSymbolData(newPosition.symbol) { quote in
+            newPosition.quote = quote
             self.positions = self.sorted
         }
     }
@@ -86,37 +86,39 @@ class Database: ObservableObject {
     func refreshAllSymbols() {
         for position in positions {
             refreshSymbolData(position.symbol) { newEquity in
-                self.addEquity(ticker: position.symbol, equity: newEquity)
-                position.equity = newEquity
+                self.addEquity(symbol: position.symbol, quote: newEquity)
+                position.quote = newEquity
                 self.positions = self.sorted
            }
         }
     }
     
-    private func refreshSymbolData(_ symbol: String, completion: @escaping (_ equity: Equity)->Void) {
+    private func refreshSymbolData(_ symbol: String, completion: @escaping (_ quote: Quote)->Void) {
         guard symbol.count > 0 else {
             return Log.error("Passed empty symbol")
         }
-        ServerAPI.getEquity(ticker: symbol) { equity in
+        iexAPI.chainedQuote(symbol: symbol) { quote in
             // Data changes need to happen on main thread?
             DispatchQueue.main.async {
-#if DEV
-                let equity = self.addTestDataTo(equity: equity)
-#endif
-                self.addEquity(ticker: symbol, equity: equity)
-                completion(equity)
+//    #if DEV
+//                    let quote = self.addTestDataTo(quote: quote)
+//    #endif
+                if let quote = quote {
+                    self.addEquity(symbol: symbol, quote: quote)
+                    completion(quote)
+                }
             }
         }
     }
     
-#if DEV
-    private func addTestDataTo(equity: Equity) -> Equity {
-        if equity.ask == nil, equity.latestPrice > 0 {
-            return Equity(equity.symbol, latestPrice: equity.latestPrice, bid: equity.latestPrice, ask: equity.latestPrice)
-        }
-        return equity
-    }
-#endif
+//#if DEV
+//    private func addTestDataTo(quote: Quote) -> Quote {
+//        if quote.ask == nil, quote.latestPrice > 0 {
+//            return Quote(quote.symbol, latestPrice: quote.latestPrice, bid: quote.latestPrice, ask: quote.latestPrice)
+//        }
+//        return quote
+//    }
+//#endif
 
     
     private func getDocumentURL() -> URL {

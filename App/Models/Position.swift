@@ -20,7 +20,7 @@ class Position: Identifiable, Codable {
     
     let id: String
     var _symbol: String
-    @Published var equity: Equity?
+    @Published var quote: Quote?
     @Published var isOwned: Bool
     var annualized: Double
     var doNotify: Bool                  // Ignore this position for alerts
@@ -42,7 +42,7 @@ class Position: Identifiable, Codable {
         if let bid = bidPrice {
             return bid
         }
-        return equity?.latestPrice
+        return quote?.latestPrice
     }
     
     var midPoint: Double? {
@@ -53,14 +53,14 @@ class Position: Identifiable, Codable {
     }
     
     var askPrice: Double? {
-        if let ask = equity?.ask, ask > 0 {
+        if let ask = quote?.ask, ask > 0 {
             return ask
         }
         return nil
     }
     
     var bidPrice: Double? {
-        if let bid = equity?.bid, bid > 0 {
+        if let bid = quote?.bid, bid > 0 {
             return bid
         }
         return nil
@@ -106,12 +106,12 @@ class Position: Identifiable, Codable {
     }
     
     var companyName: String {
-        return equity?.companyName ?? "No Data"
+        return quote?.companyName ?? "No Data"
     }
     
-    init(ticker: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
+    init(symbol: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID().uuidString
-        self._symbol = ticker.uppercased()
+        self._symbol = symbol.uppercased()
         self.isOwned = isOwned
         self.doNotify = buyNotifications
         self.annualized = 0.0
@@ -119,15 +119,15 @@ class Position: Identifiable, Codable {
     }
     
     convenience init() {
-        self.init(ticker: "")
+        self.init(symbol: "")
     }
     
-    convenience init(best: Double = 0.0, worst: Double? = nil, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
-        self.init()
-        self.equity = Equity(latestPrice: latestPrice, bid: bid, ask: ask)
-        self.annualized = 0.0
-        self.scenarios = PositionScenarios()
-    }
+//    convenience init(best: Double = 0.0, worst: Double? = nil, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
+//        self.init()
+//        self.quote = IEXQuote(latestPrice: latestPrice, bid: bid, ask: ask)
+//        self.annualized = 0.0
+//        self.scenarios = PositionScenarios()
+//    }
     
     required init(from decoder: Decoder) throws {
         do {
@@ -193,13 +193,13 @@ class Position: Identifiable, Codable {
         var date: Date?
         switch spread {
         case .ask:
-            date = equity?.lastUpdateDate
+            date = quote?.lastUpdated
         case .bid:
-            date = equity?.lastUpdateDate
+            date = quote?.lastUpdated
         case .mid:
-            date = equity?.lastUpdateDate
+            date = quote?.lastUpdated
         case .purchasePrice:
-            date = equity?.lastTradeDate
+            date = quote?.lastTraded
         }
         guard let date = date else { return "n/a" }
         return date.toUniqueTimeDayOrDate()
