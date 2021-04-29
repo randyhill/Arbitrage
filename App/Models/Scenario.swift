@@ -13,19 +13,12 @@ class Scenario: Identifiable, Codable {
     var endDate: Date
     var percentage: Double
     
-    private var _payoutString = ""
-    var payoutString: String {
-        get {
-            return _payoutString
-        }
-        set {
-            _payoutString = newValue
-            if newValue.count == 0 {
+    var payoutString: String = "" {
+        didSet {
+             if payoutString.count == 0 {
                 payout = 0.0
-            } else if let newPayout = Double(newValue) {
+            } else if let newPayout = Double(payoutString) {
                 payout = newPayout
-            } else {
-                Log.error("Couldn't convert: \(newValue) to number")
             }
         }
     }
@@ -46,7 +39,7 @@ class Scenario: Identifiable, Codable {
     init(payout: Double = 22.0, date: Date = Date().add(months: 2), percentage: Double = 0.5) {
         self.id = UUID().uuidString
         self.payout = payout
-        self._payoutString = payout.stockPrice
+        self.payoutString = payout.stockPrice
         self.endDate = date
         self.percentage = percentage
     }

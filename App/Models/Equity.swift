@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Equity: Hashable, Codable, Identifiable {
-    var id: String
+    var id: String?
     let symbol: String
     let companyName: String
     let latestPrice: Double
