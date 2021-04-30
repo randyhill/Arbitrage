@@ -26,7 +26,7 @@ struct NewPositionEditor: View {
                 .padding()
             }
             .frame(alignment: .trailing)
-            PositionEditor(position: $newPosition, activateTickerField: true)
+            PositionEditor(position: $newPosition, scenarios: $newPosition.scenarios, activateTickerField: true)
                 .environmentObject(db)
         }
     }

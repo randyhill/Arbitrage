@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PositionEditor: View {
     @Binding var position: Position
+    @Binding var scenarios: PositionScenarios
     var activateTickerField = false
     @EnvironmentObject var db: Database
     
     // Private state
     @State private var latest = Date()
     @State private var averageDays = 0
-    @State private var scenarios = [Scenario]()
     @State private var exitPrice: Double = 0
     @State private var exitDays: Int = 0
     @State private var exitDate = Date()
@@ -29,8 +29,8 @@ struct PositionEditor: View {
                 .environmentObject(db)
 
             List {
-                ForEach(scenarios.indices, id: \.self) { index in
-                     ScenarioRow(scenario: $scenarios[index])
+                ForEach(scenarios.list.indices, id: \.self) { index in
+                    ScenarioRow(scenario: $scenarios.list[index])
                         .environmentObject(db)
                 }
             }
@@ -43,14 +43,12 @@ struct PositionEditor: View {
             }.padding()
         }
         .onAppear() {
-            self.scenarios = position.scenarios.list
             self.averageDays = position.periodDays
             self.exitPrice = position.exitPrice
             self.exitDays = position.periodDays
             self.exitDate = position.endDate
         }
         .onDisappear() {
-            position.scenarios.replace(scenarios)
             db.save()
             db.refreshAllSymbols()
         }
@@ -59,7 +57,7 @@ struct PositionEditor: View {
 
 struct PositionEditor_Previews: PreviewProvider {
     static var previews: some View {
-        PositionEditor(position: .constant(Database.testPosition))
+        PositionEditor(position: .constant(Database.testPosition), scenarios: .constant(Database.testPosition.scenarios))
             .environmentObject(Database())
     }
 }

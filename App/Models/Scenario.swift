@@ -54,7 +54,12 @@ class PositionScenarios: Identifiable, Codable {
     let id: String
     private var scenarios = [Scenario]()
     var list: [Scenario] {
-        return scenarios
+        get {
+            return scenarios
+        }
+        set {
+            scenarios = newValue
+        }
     }
     
     var averageDays: Int {
@@ -76,6 +81,10 @@ class PositionScenarios: Identifiable, Codable {
     
     init() {
         self.id = UUID().uuidString
+    }
+    
+    func get(_ index: Int) -> Scenario {
+        return scenarios[index]
     }
     
     func replace(_ newScenarios: [Scenario]) {

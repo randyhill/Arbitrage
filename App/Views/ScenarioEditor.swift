@@ -10,6 +10,7 @@ import SwiftUI
 struct ScenarioEditor: View {
     @EnvironmentObject var db: Database
     @Binding var scenario: Scenario
+    
     var body: some View {
         Form {
             Text("Exit Scenario")

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct PositionView: View {
     @Binding var position: Position
+    @State var scenarios: PositionScenarios
 
     var body: some View {
          NavigationLink(
             destination:
-                PositionEditor(position: $position),
+                PositionEditor(position: $position, scenarios: $scenarios),
             label: {
                 AnnualizedRow(position: $position, priceType: .ask)
         })
@@ -26,7 +27,7 @@ struct PositionView: View {
 
 struct PositionView_Previews: PreviewProvider {
     static var previews: some View {
-        PositionView(position: .constant(Database.testPositions.first!))
+        PositionView(position: .constant(Database.testPositions.first!), scenarios: Database.testPosition.scenarios)
     }
 }
 
