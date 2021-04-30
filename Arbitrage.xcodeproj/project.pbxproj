@@ -244,7 +244,7 @@
 			children = (
 				25B2A7FE26337E6600DA7B3F /* Views */,
 				25AA3B66262127DA0049779F /* Models */,
-				255153F9262631A5004881D3 /* Routers */,
+				255153F9262631A5004881D3 /* Networking */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -367,14 +367,14 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		255153F9262631A5004881D3 /* Routers */ = {
+		255153F9262631A5004881D3 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */,
 				2500A07A261E9E4C0043FF96 /* IEXQuote.swift */,
 				2500A07D261E9E840043FF96 /* iexAPI.swift */,
 			);
-			path = Routers;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		25AA3B66262127DA0049779F /* Models */ = {

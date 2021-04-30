@@ -22,7 +22,7 @@ struct AnnualizedPrice: View {
                     .fontWeight(weight)
                     .frame(alignment: .leading)
             }
-            Text(annualReturn.priceString2)
+            Text(annualReturn.priceString)
                 .font(font)
                 .fontWeight(weight)
                 .frame(alignment: alignment)

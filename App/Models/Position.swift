@@ -120,5 +120,4 @@ class Position: Identifiable, Codable {
         guard let quote = quote else { return AnnualizedReturn() }
         return quote.annualizedReturnFor(priceType, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
     }
-
 }

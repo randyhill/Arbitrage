@@ -16,7 +16,7 @@ struct PositionView: View {
             destination:
                 PositionEditor(position: position, scenarios: $scenarios),
             label: {
-                AnnualizedRow(position: $position, priceType: .ask)
+                AnnualizedRow(position: $position)
         })
         .listRowBackground(Color.gray)
         .background(Color.black)

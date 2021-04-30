@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AnnualizedRow: View {
     @Binding var position: Position
-    var priceType: Quote.PriceType
     private let font = Font.callout
     
     var body: some View {
@@ -45,6 +44,6 @@ struct AnnualizedRow: View {
 
 struct ReturnField_Previews: PreviewProvider {
     static var previews: some View {
-        AnnualizedRow(position: .constant(Database.testPosition), priceType: .ask)
+        AnnualizedRow(position: .constant(Database.testPosition2))
     }
 }

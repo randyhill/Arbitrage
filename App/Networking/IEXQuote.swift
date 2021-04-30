@@ -22,22 +22,29 @@ struct IEXQuote: Codable {
     private let iexLastUpdated: Int?        // Last update time of iexRealtimePrice, if -1 or 0, IEX has not quoted it in trading day.
     private let iexRealtimePrice: Double?   // Refers to the price of the last trade on IEX.
     private let iexRealtimeSize: Int?
-    private let iexBidPrice: Double?
+    private let iexBidPrice: Double?        // Can be returned as zero instead of nil
     private let iexBidSize: Double?
-    private let iexAskPrice: Double?
+    private let iexAskPrice: Double?        // Can be returned as zero instead of nil
     private let iexAskSize: Double?
     let high: Double?
     let highTime: Int?
     let low: Double?
     let lowTime: Int?
 
-    
+    // Return nil if it doesn't exist (nil or zero)
     var ask: Double? {
-        return iexAskPrice
+        guard let askValue = iexAskPrice, askValue > 0.0 else {
+            return nil
+        }
+        return  askValue
     }
     
+    // Return nil if it doesn't exist (nil or zero)
     var bid: Double? {
-        return iexBidPrice
+        guard let bidValue = iexBidPrice, bidValue > 0.0 else {
+            return nil
+        }
+        return  bidValue
     }
     
     var lastTradePrice: Double {

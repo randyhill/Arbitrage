@@ -89,7 +89,7 @@ struct AnnualizedReturn: Comparable {
     }
     let state: State
     
-    var priceString2: String {
+    var priceString: String {
         if let price = price {
             return price.stockPrice
         }
