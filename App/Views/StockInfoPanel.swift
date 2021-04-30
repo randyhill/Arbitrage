@@ -24,6 +24,10 @@ struct StockInfoPanel: View {
                 PriceReturnRow(title: "Bid:",  quote: quote, priceType: .bid, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
                 Divider()
             }
+            if quote.midPoint != nil {
+                PriceReturnRow(title: "Mid:",  quote: quote, priceType: .mid, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+                Divider()
+            }
             if quote.askPrice != nil {
                 PriceReturnRow(title: "Ask:",  quote: quote, priceType: .ask, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
                 Divider()

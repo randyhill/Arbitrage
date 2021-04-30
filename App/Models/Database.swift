@@ -75,13 +75,8 @@ class Database: ObservableObject {
             return Log.error("Can't add position without symbol")
         }
         Log.threadCheck(shouldBeMain: true)
+        positions.append(newPosition)
         
-        // Replace existing, don't create duplicates.
-        if let existingIndex = symbolMatch(newPosition.symbol) {
-            positions[existingIndex] = newPosition
-        } else {
-            positions.append(newPosition)
-        }
         getSymbolQuote(newPosition.symbol) { quote in
             newPosition.quote = quote
             self.positions = self.sorted

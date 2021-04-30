@@ -16,7 +16,7 @@ struct PositionEditor: View {
     // Private state
     @State private var symbol = ""
     @State private var quote: Quote? = nil
-//    @State private var isOwned: Bool = false
+    @State private var isOwned: Bool = false
     @State private var exitPrice: Double = 0
     @State private var periodDays: Int = 0
     @State private var exitDate = Date()
@@ -51,7 +51,8 @@ struct PositionEditor: View {
                 })
             }
             HStack {
-                Checkbox(isChecked: $position.isOwned, title: "Owned") { (changed) in
+                Checkbox(isChecked: $isOwned, title: "Owned") { (changed) in
+                    position.isOwned = changed
                  }
                 Spacer()
                 Checkbox(isChecked: $position.doNotify, title: "Notifications") { (changed) in
@@ -61,15 +62,12 @@ struct PositionEditor: View {
         .onAppear() {
             symbol = position.symbol
             quote = position.quote
-//            isOwned = position.isOwned
+            isOwned = position.isOwned
             exitPrice = position.exitPrice
             periodDays = position.periodDays
             exitDate = position.endDate
         }
         .onDisappear() {
-//            position.symbol = symbol
-//            position.quote = quote
-//            position.isOwned = isOwned
             db.save()
             db.refreshAllSymbols()
         }
