@@ -9,15 +9,18 @@ import SwiftUI
 
 struct PriceReturnRow: View {
     var title: String
-    var position: Position
-    var priceType: Position.PriceType
+    var quote: Quote
+    var priceType: Quote.PriceType
+    var isOwned: Bool
+    var exitPrice: Double
+    var periodDays: Int
     let font = Font.footnote
     
     var body: some View {
         HStack {
-            let ar = position.annualizedReturnFor(priceType)
-            let lastUpdated = position.lastUpdatedString(priceType)
-            let price = position.priceString(priceType)
+            let ar = quote.annualizedReturnFor(priceType, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+            let lastUpdated = quote.lastUpdatedString(priceType)
+            let price = quote.priceString(priceType)
             Text(title)
                 .font(font)
                 .fontWeight(.bold)
@@ -37,6 +40,6 @@ struct PriceReturnRow: View {
 
 struct PriceReturnRow_Previews: PreviewProvider {
     static var previews: some View {
-        PriceReturnRow(title: "Price", position: Database.testPosition, priceType: .bid)
+        PriceReturnRow(title: "Price", quote: Database.testPosition.quote!, priceType: .bid, isOwned: true, exitPrice: 20.0, periodDays: 44)
     }
 }

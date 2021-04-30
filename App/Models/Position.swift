@@ -10,9 +10,9 @@ import SwiftUI
 let annualizedReturnGoal: Double = 0.50 // 50%
 
 class Position: Identifiable, Codable {
-    enum PriceType {
-        case bid, ask, mid, purchase, high, low, last
-    }
+//    enum PriceType {
+//        case bid, ask, mid, purchase, high, low, last
+//    }
     
     enum CodingKeys: CodingKey {
         case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify, annualized, scenarios
@@ -34,49 +34,13 @@ class Position: Identifiable, Codable {
             _symbol = newValue.uppercased()
         }
     }
-
-    var purchasePrice: Double? {
-        if let ask = askPrice {
-            return ask
-        }
-        if let bid = bidPrice {
-            return bid
-        }
-        return quote?.lastTradePrice
-    }
-    
-    var midPoint: Double? {
-        if let ask = askPrice, let bid = bidPrice {
-            return (ask + bid)/2
-        }
-        return nil
-    }
-    
-    var askPrice: Double? {
-        if let ask = quote?.ask, ask > 0 {
-            return ask
-        }
-        return nil
-    }
-    
-    var bidPrice: Double? {
-        if let bid = quote?.bid, bid > 0 {
-            return bid
-        }
-        return nil
-    }
-
-    var priceString: String {
-        guard let price = purchasePrice else { return "n/a" }
-        return "$\(price.formatToDecimalPlaces())"
-    }
     
     var exitPrice: Double {
          return scenarios.averagePayout
     }
     
     var totalReturn: Double? {
-        guard let price = purchasePrice else {
+        guard let price = quote?.purchasePrice else {
             return 0
         }
         return AnnualizedReturn.returnCalc(sellAt: exitPrice, price: price)
@@ -91,7 +55,7 @@ class Position: Identifiable, Codable {
     }
     
     var annualizedReturn: Double? {
-        guard let price = purchasePrice else {
+        guard let price = quote?.purchasePrice else {
             return 0
         }
         return AnnualizedReturn.calc(sellAt: exitPrice, price: price, days: periodDays)
@@ -152,67 +116,9 @@ class Position: Identifiable, Codable {
         }
     }
     
-    func annualizedReturnFor(_ priceType: PriceType) -> AnnualizedReturn {
-        switch priceType {
-        case .ask:
-            return AnnualizedReturn(symbol: symbol, price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .bid:
-            return AnnualizedReturn(symbol: symbol, price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .mid:
-            return AnnualizedReturn(symbol: symbol, price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .purchase:
-            return AnnualizedReturn(symbol: symbol, price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .low:
-            return AnnualizedReturn(symbol: symbol, price: quote?.low, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-       case .high:
-            return AnnualizedReturn(symbol: symbol, price: quote?.high, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .last:
-            return AnnualizedReturn(symbol: symbol, price: quote?.lastTradePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-       }
+    func annualizedReturnFor(_ priceType: Quote.PriceType) -> AnnualizedReturn {
+        guard let quote = quote else { return AnnualizedReturn() }
+        return quote.annualizedReturnFor(priceType, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
     }
-    
-    func priceString(_ priceType: PriceType)->  String {
-        var price: Double?
-        switch priceType {
-        case .ask:
-            price = askPrice
-        case .bid:
-            price = bidPrice
-        case .mid:
-            price = midPoint
-        case .purchase:
-           price = purchasePrice
-        case .low:
-            price = quote?.low
-        case .high:
-            price = quote?.high
-        case .last:
-            price = quote?.lastTradePrice
-       }
-        guard let price = price else { return "n/a" }
-        return "$\(price.formatToDecimalPlaces())"
-    }
-    
-    
-    func lastUpdatedString(_ priceType: PriceType)->  String {
-        var date: Date?
-        switch priceType {
-        case .ask:
-            date = quote?.lastTradeDate
-        case .bid:
-            date = quote?.lastTradeDate
-        case .mid:
-            date = quote?.lastTradeDate
-        case .purchase:
-            date = quote?.lastTradeDate
-        case .low:
-            date = quote?.lowPriceTime.timeStamp
-        case .high:
-            date = quote?.highPriceTime.timeStamp
-        case .last:
-            date = quote?.lastTradeDate
-        }
-        guard let date = date else { return "n/a" }
-        return date.toUniqueTimeDayOrDate()
-    }
+
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AnnualizedRow: View {
     @Binding var position: Position
-    var priceType: Position.PriceType
+    var priceType: Quote.PriceType
     private let font = Font.callout
     
     var body: some View {
@@ -20,7 +20,7 @@ struct AnnualizedRow: View {
                 .fontWeight(.semibold)
                 .frame(width: 72, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
-            if position.bidPrice != nil, position.askPrice != nil, position.midPoint != nil {
+            if position.quote?.bidPrice != nil, position.quote?.askPrice != nil, position.quote?.midPoint != nil {
                 Spacer().frame(width: 8)
                 AnnualizedPrice(annualReturn: position.annualizedReturnFor(.bid), alignment: .center)
                 AnnualizedPrice(annualReturn: position.annualizedReturnFor(.mid), alignment: .center)

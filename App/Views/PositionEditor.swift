@@ -15,24 +15,29 @@ struct PositionEditor: View {
     
     // Private state
     @State private var symbol = ""
-    @State private var latest = Date()
-    @State private var averageDays = 0
+    @State private var quote: Quote? = nil
+//    @State private var isOwned: Bool = false
     @State private var exitPrice: Double = 0
-    @State private var exitDays: Int = 0
+    @State private var periodDays: Int = 0
     @State private var exitDate = Date()
    
     var body: some View {
         Form {
             TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol, onChangeCallback: { value in
                     if value.count > 0 {
-                        symbol = value.capitalized
+                        let capped = value.capitalized
+                        self.symbol = capped
+                        position.symbol = capped
                         db.getSymbolQuote(value) { quote in
+                            self.quote = quote
                             position.quote = quote
                         }
                     }
                 })
-            StockInfoPanel(position: position)
-            ExitValuesRow(exitPrice: $exitPrice, periodDays: $exitDays, endDate: $exitDate)
+            if let quote = quote {
+                StockInfoPanel(quote: quote, isOwned: position.isOwned, exitPrice: exitPrice, periodDays: periodDays)
+            }
+            ExitValuesRow(exitPrice: $exitPrice, periodDays: $periodDays, endDate: $exitDate)
             ScenarioTitleRow(position: $position)
                 .environmentObject(db)
 
@@ -55,13 +60,16 @@ struct PositionEditor: View {
         }
         .onAppear() {
             symbol = position.symbol
-            averageDays = position.periodDays
+            quote = position.quote
+//            isOwned = position.isOwned
             exitPrice = position.exitPrice
-            exitDays = position.periodDays
+            periodDays = position.periodDays
             exitDate = position.endDate
         }
         .onDisappear() {
-            position.symbol = symbol
+//            position.symbol = symbol
+//            position.quote = quote
+//            position.isOwned = isOwned
             db.save()
             db.refreshAllSymbols()
         }

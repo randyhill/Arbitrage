@@ -73,6 +73,25 @@ struct Quote: Hashable, Codable, Identifiable {
         }
         return lastTradePrice
     }
+    
+    var askPrice: Double? {
+        if let ask = ask, ask > 0 {
+            return ask
+        }
+        return nil
+    }
+    
+    var bidPrice: Double? {
+        if let bid = bid, bid > 0 {
+            return bid
+        }
+        return nil
+    }
+
+    var priceString: String {
+        guard let price = purchasePrice else { return "n/a" }
+        return "$\(price.formatToDecimalPlaces())"
+    }
 
     init() {
         id = UUID().uuidString
@@ -148,5 +167,41 @@ struct Quote: Hashable, Codable, Identifiable {
         case .last:
             return AnnualizedReturn(symbol: symbol, price: lastTradePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
        }
+    }
+    
+    func lastUpdatedString(_ priceType: PriceType)->  String {
+        var date: Date?
+        switch priceType {
+        case .ask, .bid, .mid, .purchase, .last:
+            date = lastTradeDate
+        case .low:
+            date = lowPriceTime.timeStamp
+        case .high:
+            date = highPriceTime.timeStamp
+        }
+        guard let date = date else { return "n/a" }
+        return date.toUniqueTimeDayOrDate()
+    }
+    
+    func priceString(_ priceType: PriceType)->  String {
+        var price: Double?
+        switch priceType {
+        case .ask:
+            price = ask
+        case .bid:
+            price = bid
+        case .mid:
+            price = midPoint
+        case .purchase:
+           price = purchasePrice
+        case .low:
+            price = low
+        case .high:
+            price = high
+        case .last:
+            price = lastTradePrice
+       }
+        guard let price = price else { return "n/a" }
+        return "$\(price.formatToDecimalPlaces())"
     }
 }

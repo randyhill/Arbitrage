@@ -100,6 +100,13 @@ struct AnnualizedReturn: Comparable {
         return String.toPercent(annualReturn, maxPlaces: 0)
     }
     
+    init() {
+        self.annualReturn = nil
+        self.price = nil
+        self.symbol = ""
+        state = .neutral
+    }
+    
     init(symbol: String, price: Double?, exitPrice: Double, days: Int, isOwned: Bool) {
         guard let price = price else {
             self.annualReturn = nil

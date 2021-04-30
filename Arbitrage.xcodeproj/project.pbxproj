@@ -19,7 +19,6 @@
 		2500A07C261E9E4C0043FF96 /* IEXQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* IEXQuote.swift */; };
 		2500A07E261E9E840043FF96 /* iexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* iexAPI.swift */; };
 		2500A07F261E9E840043FF96 /* iexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07D261E9E840043FF96 /* iexAPI.swift */; };
-		253CF9BC262B9FC000AE5D4A /* IEXQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2500A07A261E9E4C0043FF96 /* IEXQuote.swift */; };
 		253CF9BD262BA12900AE5D4A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B67262138E30049779F /* Position.swift */; };
 		253CF9BE262BA12C00AE5D4A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA3B67262138E30049779F /* Position.swift */; };
 		253CF9CA262BA28F00AE5D4A /* Date+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551539026252F3E004881D3 /* Date+iOS.swift */; };
@@ -371,6 +370,8 @@
 		255153F9262631A5004881D3 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */,
+				2500A07A261E9E4C0043FF96 /* IEXQuote.swift */,
 				2500A07D261E9E840043FF96 /* iexAPI.swift */,
 			);
 			path = Routers;
@@ -381,8 +382,6 @@
 			children = (
 				253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */,
 				25AA3B6926213A1B0049779F /* Database.swift */,
-				25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */,
-				2500A07A261E9E4C0043FF96 /* IEXQuote.swift */,
 				25AA3B67262138E30049779F /* Position.swift */,
 				25B2A80B26360FAE00DA7B3F /* Scenario.swift */,
 				25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */,
@@ -679,7 +678,6 @@
 				253CF9CC262BA28F00AE5D4A /* UILabel+iOS.swift in Sources */,
 				253CF9D8262BA29600AE5D4A /* View+Shared.swift in Sources */,
 				253CF9D3262BA28F00AE5D4A /* URL+Shared.swift in Sources */,
-				253CF9BC262B9FC000AE5D4A /* IEXQuote.swift in Sources */,
 				253CF9DA262BA29600AE5D4A /* Collections+Shared.swift in Sources */,
 				253CF9D5262BA29600AE5D4A /* Color+Shared.swift in Sources */,
 				253CF9D4262BA28F00AE5D4A /* UIView+Shared.swift in Sources */,

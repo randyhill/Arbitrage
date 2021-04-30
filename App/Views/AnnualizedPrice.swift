@@ -37,6 +37,7 @@ struct AnnualizedPrice: View {
 
 struct AnnualizedPrice_Previews: PreviewProvider {
     static var previews: some View {
-        AnnualizedPrice(annualReturn: Database.testPosition.annualizedReturnFor(.ask), alignment: .center, preText: "$")
+        let ar = Database.testPosition.quote!.annualizedReturnFor(.ask, isOwned: false, exitPrice: 20.0, periodDays: 22)
+        AnnualizedPrice(annualReturn: ar, alignment: .center, preText: "$")
     }
 }
