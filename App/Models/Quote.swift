@@ -38,7 +38,7 @@ struct Quote: Hashable, Codable, Identifiable {
         return lastTrade.price
     }
     
-    var lastTradeTime: Date {
+    var lastTradeDate: Date {
         return lastTrade.timeStamp
     }
 

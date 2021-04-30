@@ -9,12 +9,12 @@ import SwiftUI
 
 struct AnnualizedRow: View {
     @Binding var position: Position
-    var priceType: Position.Spread
+    var priceType: Position.PriceType
     private let font = Font.callout
     
     var body: some View {
         HStack {
-            let annualReturn = position.annualizedReturnFor(.purchasePrice)
+            let annualReturn = position.annualizedReturnFor(.purchase)
             Text(position.symbol)
                 .font(font)
                 .fontWeight(.semibold)
@@ -27,7 +27,7 @@ struct AnnualizedRow: View {
                 AnnualizedPrice(annualReturn: position.annualizedReturnFor(.ask), alignment: .center)
             } else {
                 Spacer().frame(width: 40)
-                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.purchasePrice), alignment: .trailing, preText: "$")
+                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.purchase), alignment: .trailing, preText: "$")
                 Spacer().frame(width: 40)
                 Text(annualReturn.annualizedString)
                    .font(font)

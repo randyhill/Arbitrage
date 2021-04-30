@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ScenarioTitleRow: View {
-    var position: Position
+    @EnvironmentObject var db: Database
+
+    @Binding var position: Position
+    @State private var newScenario: Scenario = Scenario()
     @State private var showScenarioEditor = false
-    @State private var newScenario = Scenario()
 
     var body: some View {
         HStack {
@@ -19,7 +21,7 @@ struct ScenarioTitleRow: View {
                 .fontWeight(.bold)
             Spacer()
             Button("Add...") {
-                newScenario = Scenario()
+                newScenario = db.lastScenario.copy
                 showScenarioEditor = true
             }
         }
@@ -40,6 +42,7 @@ struct ScenarioTitleRow: View {
                 .frame(alignment: .trailing)
             }
             ScenarioEditor(scenario: $newScenario)
+                .environmentObject(db)
         })
         .frame(height: 54, alignment: .bottom)
     }
@@ -47,6 +50,6 @@ struct ScenarioTitleRow: View {
 
 struct NewScenarioEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioTitleRow(position: Database.testPosition)
+        ScenarioTitleRow(position: .constant(Database.testPosition))
     }
 }

@@ -10,8 +10,8 @@ import SwiftUI
 let annualizedReturnGoal: Double = 0.50 // 50%
 
 class Position: Identifiable, Codable {
-    enum Spread {
-        case bid, ask, mid, purchasePrice
+    enum PriceType {
+        case bid, ask, mid, purchase, high, low, last
     }
     
     enum CodingKeys: CodingKey {
@@ -122,13 +122,6 @@ class Position: Identifiable, Codable {
         self.init(symbol: "")
     }
     
-//    convenience init(best: Double = 0.0, worst: Double? = nil, latestPrice: Double, bid: Double, ask: Double, soonest: Date, latest: Date, bestPercentage: Double = 0.5)  {
-//        self.init()
-//        self.quote = IEXQuote(latestPrice: latestPrice, bid: bid, ask: ask)
-//        self.annualized = 0.0
-//        self.scenarios = PositionScenarios()
-//    }
-    
     required init(from decoder: Decoder) throws {
         do {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -159,47 +152,65 @@ class Position: Identifiable, Codable {
         }
     }
     
-    func annualizedReturnFor(_ spread: Spread) -> AnnualizedReturn {
-        switch spread {
+    func annualizedReturnFor(_ priceType: PriceType) -> AnnualizedReturn {
+        switch priceType {
         case .ask:
             return AnnualizedReturn(symbol: symbol, price: askPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .bid:
             return AnnualizedReturn(symbol: symbol, price: bidPrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
         case .mid:
             return AnnualizedReturn(symbol: symbol, price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
-        case .purchasePrice:
+        case .purchase:
             return AnnualizedReturn(symbol: symbol, price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .low:
+            return AnnualizedReturn(symbol: symbol, price: quote?.low, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+       case .high:
+            return AnnualizedReturn(symbol: symbol, price: quote?.high, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .last:
+            return AnnualizedReturn(symbol: symbol, price: quote?.lastTradePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
        }
     }
     
-    func priceString(_ spread: Spread)->  String {
+    func priceString(_ priceType: PriceType)->  String {
         var price: Double?
-        switch spread {
+        switch priceType {
         case .ask:
             price = askPrice
         case .bid:
             price = bidPrice
         case .mid:
             price = midPoint
-        case .purchasePrice:
+        case .purchase:
            price = purchasePrice
+        case .low:
+            price = quote?.low
+        case .high:
+            price = quote?.high
+        case .last:
+            price = quote?.lastTradePrice
        }
         guard let price = price else { return "n/a" }
         return "$\(price.formatToDecimalPlaces())"
     }
     
     
-    func lastUpdatedString(_ spread: Spread)->  String {
+    func lastUpdatedString(_ priceType: PriceType)->  String {
         var date: Date?
-        switch spread {
+        switch priceType {
         case .ask:
-            date = quote?.lastTradeTime
+            date = quote?.lastTradeDate
         case .bid:
-            date = quote?.lastTradeTime
+            date = quote?.lastTradeDate
         case .mid:
-            date = quote?.lastTradeTime
-        case .purchasePrice:
-            date = quote?.lastTradeTime
+            date = quote?.lastTradeDate
+        case .purchase:
+            date = quote?.lastTradeDate
+        case .low:
+            date = quote?.lowPriceTime.timeStamp
+        case .high:
+            date = quote?.highPriceTime.timeStamp
+        case .last:
+            date = quote?.lastTradeDate
         }
         guard let date = date else { return "n/a" }
         return date.toUniqueTimeDayOrDate()

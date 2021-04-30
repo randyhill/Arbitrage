@@ -18,7 +18,7 @@ struct ExitValuesRow: View {
             Text("Exit:")
                 .font(font)
                 .fontWeight(.bold)
-                .frame(width: 40, alignment: .leading)
+                .frame(width: 40, alignment: .trailing)
             Text("$\(exitPrice.stockPrice)")
                 .font(font)
                 .frame(width: 60, alignment: .leading)

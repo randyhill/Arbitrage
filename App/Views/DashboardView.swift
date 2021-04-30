@@ -30,6 +30,7 @@ struct DashboardView: View {
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
             NewPositionEditor(newPosition: $newPosition, isShowingDetailView: $isShowingDetailView)
+                .environmentObject(db)
         })
     }
 }

@@ -29,6 +29,7 @@ class Database: ObservableObject {
 
     @Published var positions = [Position]()
     @Published var equities = [Quote]()
+    @Published var lastScenario = Scenario()
     private var fileName = "positions.arb"
     
     var newPosition: Position {
@@ -43,9 +44,7 @@ class Database: ObservableObject {
     }
     
     init() {
-//        if !load() {
-//            positions.append(contentsOf: (Database.testPositions))
-//        }
+        _ = load()
         refreshAllSymbols()
     }
     

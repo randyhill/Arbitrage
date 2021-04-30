@@ -13,7 +13,6 @@ struct PositionEditor: View {
     @EnvironmentObject var db: Database
     
     // Private state
-    @State private var symbol = ""
     @State private var latest = Date()
     @State private var averageDays = 0
     @State private var scenarios = [Scenario]()
@@ -26,33 +25,32 @@ struct PositionEditor: View {
             TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $position.symbol)
             StockInfoPanel(position: position)
             ExitValuesRow(exitPrice: $exitPrice, periodDays: $exitDays, endDate: $exitDate)
-            ScenarioTitleRow(position: position)
-            
+            ScenarioTitleRow(position: $position)
+                .environmentObject(db)
+
             List {
                 ForEach(scenarios.indices, id: \.self) { index in
                      ScenarioRow(scenario: $scenarios[index])
+                        .environmentObject(db)
                 }
             }
             HStack {
                 Checkbox(isChecked: $position.isOwned, title: "Owned") { (changed) in
-                    print("IsOwned: \(changed)")
-                }
+                 }
                 Spacer()
                 Checkbox(isChecked: $position.doNotify, title: "Notifications") { (changed) in
-                    print("Notifications: \(changed)")
                 }
             }.padding()
         }
         .onAppear() {
             self.scenarios = position.scenarios.list
             self.averageDays = position.periodDays
-            self.symbol = position.symbol
             self.exitPrice = position.exitPrice
             self.exitDays = position.periodDays
             self.exitDate = position.endDate
         }
         .onDisappear() {
-            position.symbol = symbol
+            position.scenarios.replace(scenarios)
             db.save()
             db.refreshAllSymbols()
         }

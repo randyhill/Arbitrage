@@ -13,7 +13,8 @@ class Scenario: Identifiable, Codable {
     var endDate: Date
     var percentage: Double
     
-    var payoutString: String = "" {
+    var payoutString: String = ""
+    {
         didSet {
              if payoutString.count == 0 {
                 payout = 0.0
@@ -36,7 +37,11 @@ class Scenario: Identifiable, Codable {
         return Double(days) * percentage
     }
     
-    init(payout: Double = 22.0, date: Date = Date().add(months: 2), percentage: Double = 0.5) {
+    var copy: Scenario {
+        return Scenario(payout: payout, date: endDate, percentage: percentage)
+    }
+    
+    init(payout: Double = 2.0, date: Date = Date(), percentage: Double = 0.5) {
         self.id = UUID().uuidString
         self.payout = payout
         self.payoutString = payout.stockPrice
@@ -71,6 +76,11 @@ class PositionScenarios: Identifiable, Codable {
     
     init() {
         self.id = UUID().uuidString
+    }
+    
+    func replace(_ newScenarios: [Scenario]) {
+        scenarios.removeAll()
+        scenarios.append(contentsOf: newScenarios)
     }
     
     func add(_ scenario: Scenario) {
