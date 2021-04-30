@@ -109,6 +109,8 @@
 		25D9AB89263B398100ECCFC2 /* IExQuoteDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */; };
 		25D9AB8B263B3D6E00ECCFC2 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */; };
 		25D9AB8C263B3D6E00ECCFC2 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */; };
+		25DFE3F0263C454800FED2BC /* ScenarioList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3EF263C454800FED2BC /* ScenarioList.swift */; };
+		25DFE3F1263C454800FED2BC /* ScenarioList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3EF263C454800FED2BC /* ScenarioList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +190,7 @@
 		25B2A81726364C0F00DA7B3F /* ExitValuesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitValuesRow.swift; sourceTree = "<group>"; };
 		25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IExQuoteDelayed.swift; sourceTree = "<group>"; };
 		25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
+		25DFE3EF263C454800FED2BC /* ScenarioList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +386,7 @@
 				25AA3B67262138E30049779F /* Position.swift */,
 				25B2A80B26360FAE00DA7B3F /* Scenario.swift */,
 				25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */,
+				25DFE3EF263C454800FED2BC /* ScenarioList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -593,6 +597,7 @@
 				2551539F26252F3E004881D3 /* View+Shared.swift in Sources */,
 				255153A726252F3E004881D3 /* UITextField+iOS.swift in Sources */,
 				255153A026252F3E004881D3 /* Color+Shared.swift in Sources */,
+				25DFE3F0263C454800FED2BC /* ScenarioList.swift in Sources */,
 				2500A068261E9E250043FF96 /* DashboardView.swift in Sources */,
 				25AA3B6A26213A1B0049779F /* Database.swift in Sources */,
 				25B2A80F2636194300DA7B3F /* ScenarioRow.swift in Sources */,
@@ -635,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2500A07F261E9E840043FF96 /* iexAPI.swift in Sources */,
+				25DFE3F1263C454800FED2BC /* ScenarioList.swift in Sources */,
 				253CF9EC262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */,
 				25B2A81326361D4F00DA7B3F /* ScenarioEditor.swift in Sources */,
 				2500A069261E9E250043FF96 /* DashboardView.swift in Sources */,

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PositionView: View {
     @Binding var position: Position
-    @State var scenarios: PositionScenarios
+    @State var scenarios: ScenarioList
 
     var body: some View {
          NavigationLink(

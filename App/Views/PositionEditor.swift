@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PositionEditor: View {
     @Binding var position: Position
-    @Binding var scenarios: PositionScenarios
+    @Binding var scenarios: ScenarioList
     var activateTickerField = false
     @EnvironmentObject var db: Database
     
@@ -30,9 +30,12 @@ struct PositionEditor: View {
 
             List {
                 ForEach(scenarios.list.indices, id: \.self) { index in
-                    ScenarioRow(scenario: $scenarios.list[index])
+                    ScenarioRow(scenario: $scenarios.list[index], position: position)
                         .environmentObject(db)
                 }
+                .onDelete(perform: { indexSet in
+                    scenarios.deleteAt(indexSet)
+                })
             }
             HStack {
                 Checkbox(isChecked: $position.isOwned, title: "Owned") { (changed) in

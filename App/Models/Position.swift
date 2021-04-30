@@ -24,7 +24,7 @@ class Position: Identifiable, Codable {
     @Published var isOwned: Bool
     var annualized: Double
     var doNotify: Bool                  // Ignore this position for alerts
-    var scenarios: PositionScenarios
+    var scenarios: ScenarioList
     
     var symbol: String {
         get {
@@ -115,7 +115,7 @@ class Position: Identifiable, Codable {
         self.isOwned = isOwned
         self.doNotify = buyNotifications
         self.annualized = 0.0
-        self.scenarios = PositionScenarios()
+        self.scenarios = ScenarioList()
     }
     
     convenience init() {
@@ -130,7 +130,7 @@ class Position: Identifiable, Codable {
             self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
             self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
             self.annualized = (try? container.decode(Double.self, forKey: .annualized)) ?? 0.0
-            self.scenarios = (try? container.decode(PositionScenarios.self, forKey: .scenarios)) ?? PositionScenarios()
+            self.scenarios = (try? container.decode(ScenarioList.self, forKey: .scenarios)) ?? ScenarioList()
         } catch {
             Log.error("Failed to decode: \(error)")
             throw error

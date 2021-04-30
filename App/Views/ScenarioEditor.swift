@@ -10,7 +10,8 @@ import SwiftUI
 struct ScenarioEditor: View {
     @EnvironmentObject var db: Database
     @Binding var scenario: Scenario
-    
+    var position: Position
+
     var body: some View {
         Form {
             Text("Exit Scenario")
@@ -30,6 +31,6 @@ struct ScenarioEditor: View {
 
 struct ScenarioEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioEditor(scenario: .constant(Scenario()))
+        ScenarioEditor(scenario: .constant(Scenario()), position: Database.testPosition)
     }
 }

@@ -41,7 +41,7 @@ struct ScenarioTitleRow: View {
                 }
                 .frame(alignment: .trailing)
             }
-            ScenarioEditor(scenario: $newScenario)
+            ScenarioEditor(scenario: $newScenario, position: position)
                 .environmentObject(db)
         })
         .frame(height: 54, alignment: .bottom)
