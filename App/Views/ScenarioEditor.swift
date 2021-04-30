@@ -18,7 +18,7 @@ struct ScenarioEditor: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             TextFieldActive(title: "Payout", placeholder: "0.0", disableAutocorrection: true, activate: true, text: $scenario.payoutString)
-                .keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
                 .frame(height: 64)
             DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
                 .frame(height: 64)

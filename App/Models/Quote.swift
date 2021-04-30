@@ -24,6 +24,10 @@ struct PriceTime: Hashable, Codable {
 }
 
 struct Quote: Hashable, Codable, Identifiable {
+    enum PriceType {
+        case bid, ask, mid, purchase, high, low, last
+    }
+    
     let id: String
     let symbol: String
     let companyName: String
@@ -48,6 +52,26 @@ struct Quote: Hashable, Codable, Identifiable {
     
     var low: Double {
         return lowPriceTime.price
+    }
+    
+    var midPoint: Double? {
+        if let ask = ask, let bid = bid {
+            return (ask + bid)/2
+        }
+        return nil
+    }
+    
+    var purchasePrice: Double? {
+        if let ask = ask {
+            return ask
+        }
+        if let mid = midPoint {
+            return mid
+        }
+        if let bid = bid {
+            return bid
+        }
+        return lastTradePrice
     }
 
     init() {
@@ -105,5 +129,24 @@ struct Quote: Hashable, Codable, Identifiable {
         volume = 0
         self.bid = bid
         self.ask = ask
+    }
+    
+    func annualizedReturnFor(_ priceType: PriceType, isOwned: Bool, exitPrice: Double, periodDays: Int) -> AnnualizedReturn {
+        switch priceType {
+        case .ask:
+            return AnnualizedReturn(symbol: symbol, price: ask, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .bid:
+            return AnnualizedReturn(symbol: symbol, price: bid, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .mid:
+            return AnnualizedReturn(symbol: symbol, price: midPoint, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .purchase:
+            return AnnualizedReturn(symbol: symbol, price: purchasePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .low:
+            return AnnualizedReturn(symbol: symbol, price: low, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+       case .high:
+            return AnnualizedReturn(symbol: symbol, price: high, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+        case .last:
+            return AnnualizedReturn(symbol: symbol, price: lastTradePrice, exitPrice: exitPrice, days: periodDays, isOwned: isOwned)
+       }
     }
 }

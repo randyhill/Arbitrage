@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct PositionEditor: View {
-    @Binding var position: Position
+    @State var position: Position
     @Binding var scenarios: ScenarioList
     var activateTickerField = false
     @EnvironmentObject var db: Database
     
     // Private state
+    @State private var symbol = ""
     @State private var latest = Date()
     @State private var averageDays = 0
     @State private var exitPrice: Double = 0
     @State private var exitDays: Int = 0
     @State private var exitDate = Date()
-  
+   
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $position.symbol)
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol, onChangeCallback: { value in
+                    if value.count > 0 {
+                        symbol = value.capitalized
+                        db.getSymbolQuote(value) { quote in
+                            position.quote = quote
+                        }
+                    }
+                })
             StockInfoPanel(position: position)
             ExitValuesRow(exitPrice: $exitPrice, periodDays: $exitDays, endDate: $exitDate)
             ScenarioTitleRow(position: $position)
@@ -46,12 +54,14 @@ struct PositionEditor: View {
             }.padding()
         }
         .onAppear() {
-            self.averageDays = position.periodDays
-            self.exitPrice = position.exitPrice
-            self.exitDays = position.periodDays
-            self.exitDate = position.endDate
+            symbol = position.symbol
+            averageDays = position.periodDays
+            exitPrice = position.exitPrice
+            exitDays = position.periodDays
+            exitDate = position.endDate
         }
         .onDisappear() {
+            position.symbol = symbol
             db.save()
             db.refreshAllSymbols()
         }
@@ -60,7 +70,7 @@ struct PositionEditor: View {
 
 struct PositionEditor_Previews: PreviewProvider {
     static var previews: some View {
-        PositionEditor(position: .constant(Database.testPosition), scenarios: .constant(Database.testPosition.scenarios))
+        PositionEditor(position: Database.testPosition, scenarios: .constant(Database.testPosition.scenarios))
             .environmentObject(Database())
     }
 }

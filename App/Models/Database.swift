@@ -56,7 +56,7 @@ class Database: ObservableObject {
         return sortedPositions
     }
 
-    func addEquity(symbol: String, quote: Quote) {
+   private  func addEquity(symbol: String, quote: Quote) {
         equities += [quote]
     }
     
@@ -75,24 +75,40 @@ class Database: ObservableObject {
             return Log.error("Can't add position without symbol")
         }
         Log.threadCheck(shouldBeMain: true)
-        positions.append(newPosition)
-        refreshSymbolData(newPosition.symbol) { quote in
+        
+        // Replace existing, don't create duplicates.
+        if let existingIndex = symbolMatch(newPosition.symbol) {
+            positions[existingIndex] = newPosition
+        } else {
+            positions.append(newPosition)
+        }
+        getSymbolQuote(newPosition.symbol) { quote in
             newPosition.quote = quote
             self.positions = self.sorted
         }
     }
     
+    func symbolMatch(_ symbol: String ) -> Int? {
+        for index in 0..<positions.count {
+            let position = positions[index]
+            if position.symbol == symbol {
+                 return index
+            }
+        }
+        return nil
+    }
+    
     func refreshAllSymbols() {
         for position in positions {
-            refreshSymbolData(position.symbol) { newEquity in
+            getSymbolQuote(position.symbol) { newEquity in
                 self.addEquity(symbol: position.symbol, quote: newEquity)
                 position.quote = newEquity
                 self.positions = self.sorted
            }
         }
     }
-    
-    private func refreshSymbolData(_ symbol: String, completion: @escaping (_ quote: Quote)->Void) {
+        
+    func getSymbolQuote(_ symbol: String, completion: @escaping (_ quote: Quote)->Void) {
         guard symbol.count > 0 else {
             return Log.error("Passed empty symbol")
         }
