@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ScenarioEditor: View {
     @EnvironmentObject var db: Database
-    @Binding var scenario: Scenario
+    @ObservedObject var scenario: Scenario
     @State var percentage = 0.0
+    @State var payoutString = ""
     var position: Position
 
     var body: some View {
@@ -18,7 +19,9 @@ struct ScenarioEditor: View {
             Text("Exit Scenario")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            TextFieldActive(title: "Payout", placeholder: "0.0", disableAutocorrection: true, activate: true, text: $scenario.payoutString)
+            TextFieldActive(title: "Payout", placeholder: "0.0", disableAutocorrection: true, activate: true, text: $payoutString, onChangeCallback: { newValue in
+                scenario.setPayout(newValue)
+            })
                 .keyboardType(.decimalPad)
                 .frame(height: 64)
             DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
@@ -37,6 +40,7 @@ struct ScenarioEditor: View {
         }
         .onAppear() {
             percentage = scenario.percentage
+            payoutString = "\(scenario.payout.stockPrice)"
         }
         .onDisappear() {
             scenario.percentage = percentage
@@ -47,6 +51,6 @@ struct ScenarioEditor: View {
 
 struct ScenarioEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioEditor(scenario: .constant(Scenario()), position: Database.testPosition)
+        ScenarioEditor(scenario: Scenario(), position: Database.testPosition)
     }
 }

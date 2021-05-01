@@ -14,7 +14,7 @@ struct ScenarioRow: View {
     var body: some View {
         NavigationLink(
            destination:
-            ScenarioEditor(scenario: $scenario, position: position),
+            ScenarioEditor(scenario: scenario, position: position),
            label: {
             HStack {
                 Text("Payout:")

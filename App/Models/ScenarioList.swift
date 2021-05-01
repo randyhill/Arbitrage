@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ScenarioList: Identifiable, Codable {
+class ScenarioList: ObservableObject, Identifiable, Codable {
     let id: String
     private var scenarios = [Scenario]()
     var list: [Scenario] {

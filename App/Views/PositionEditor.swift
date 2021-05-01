@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PositionEditor: View {
-    @State var position: Position
-    @Binding var scenarios: ScenarioList
+    @ObservedObject var position: Position
+    @ObservedObject var scenarios: ScenarioList
     var activateTickerField = false
     @EnvironmentObject var db: Database
     
@@ -38,7 +38,7 @@ struct PositionEditor: View {
                 StockInfoPanel(quote: quote, isOwned: position.isOwned, exitPrice: $exitPrice, periodDays: $periodDays)
             }
             ExitValueRow(exitPrice: $exitPrice, periodDays: $periodDays, endDate: $exitDate)
-            ScenarioTitleRow(position: $position)
+            ScenarioTitleRow(position: position)
                 .environmentObject(db)
 
             List {
@@ -76,7 +76,7 @@ struct PositionEditor: View {
 
 struct PositionEditor_Previews: PreviewProvider {
     static var previews: some View {
-        PositionEditor(position: Database.testPosition, scenarios: .constant(Database.testPosition.scenarios))
+        PositionEditor(position: Database.testPosition, scenarios: Database.testPosition.scenarios)
             .environmentObject(Database())
     }
 }

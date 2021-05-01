@@ -9,22 +9,17 @@ import SwiftUI
 
 let annualizedReturnGoal: Double = 0.50 // 50%
 
-class Position: Identifiable, Codable {
-//    enum PriceType {
-//        case bid, ask, mid, purchase, high, low, last
-//    }
-    
+class Position: ObservableObject, Identifiable, Codable {
     enum CodingKeys: CodingKey {
         case id, _symbol, bestCase, worstCase, bestPercentage, soonest, latest, isOwned, doNotify, annualized, scenarios
     }
     
     let id: String
-    var _symbol: String
+    @Published var _symbol: String
     @Published var quote: Quote?
-    @Published var isOwned: Bool
-    var annualized: Double
-    var doNotify: Bool                  // Ignore this position for alerts
-    var scenarios: ScenarioList
+    @Published var isOwned: Bool                // If true, calculate sales returns and alert on good selling opportunities.
+    @Published var doNotify: Bool               // If true, display alerts when returns change for this position
+    @Published var scenarios: ScenarioList
     
     var symbol: String {
         get {
@@ -78,7 +73,6 @@ class Position: Identifiable, Codable {
         self._symbol = symbol.uppercased()
         self.isOwned = isOwned
         self.doNotify = buyNotifications
-        self.annualized = 0.0
         self.scenarios = ScenarioList()
     }
     
@@ -93,7 +87,6 @@ class Position: Identifiable, Codable {
             self._symbol = try container.decode(String.self, forKey: ._symbol)
             self.isOwned = try container.decode(Bool.self, forKey: .isOwned)
             self.doNotify = try container.decode(Bool.self, forKey: .doNotify)
-            self.annualized = (try? container.decode(Double.self, forKey: .annualized)) ?? 0.0
             self.scenarios = (try? container.decode(ScenarioList.self, forKey: .scenarios)) ?? ScenarioList()
         } catch {
             Log.error("Failed to decode: \(error)")
@@ -108,7 +101,6 @@ class Position: Identifiable, Codable {
             try container.encode(_symbol, forKey: ._symbol)
             try container.encode(isOwned, forKey: .isOwned)
             try container.encode(doNotify, forKey: .doNotify)
-            try container.encode(annualized, forKey: .annualized)
             try container.encode(scenarios, forKey: .scenarios)
         } catch {
             Log.error("Failed to encode: \(error)")

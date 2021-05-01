@@ -10,7 +10,7 @@ import SwiftUI
 struct ScenarioTitleRow: View {
     @EnvironmentObject var db: Database
 
-    @Binding var position: Position
+    @ObservedObject var position: Position
     @State private var newScenario: Scenario = Scenario()
     @State private var showScenarioEditor = false
 
@@ -41,7 +41,7 @@ struct ScenarioTitleRow: View {
                 }
                 .frame(alignment: .trailing)
             }
-            ScenarioEditor(scenario: $newScenario, position: position)
+            ScenarioEditor(scenario: newScenario, position: position)
                 .environmentObject(db)
         })
         .frame(height: 54, alignment: .bottom)
@@ -50,6 +50,6 @@ struct ScenarioTitleRow: View {
 
 struct NewScenarioEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioTitleRow(position: .constant(Database.testPosition))
+        ScenarioTitleRow(position: Database.testPosition)
     }
 }

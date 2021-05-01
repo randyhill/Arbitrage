@@ -14,7 +14,7 @@ struct PositionView: View {
     var body: some View {
          NavigationLink(
             destination:
-                PositionEditor(position: position, scenarios: $scenarios),
+                PositionEditor(position: position, scenarios: scenarios),
             label: {
                 PositionRow(position: $position)
         })
