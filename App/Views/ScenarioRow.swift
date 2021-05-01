@@ -20,6 +20,7 @@ struct ScenarioRow: View {
                 Text("Payout:")
                 Text(scenario.payout.currency)
                 Text("Days: \(scenario.days)")
+                Text("\(scenario.percentString)")
             }
         })
     }

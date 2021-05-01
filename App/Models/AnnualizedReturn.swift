@@ -78,16 +78,24 @@ struct AnnualizedReturn: Comparable {
     let symbol: String
     let price: Double?
     let annualReturn: Double?
+    let state: State
+
     var bgColor: Color {
         return state.color
     }
+    
     var textColor: Color {
         return state.textColor
     }
+    
     var frameColor: Color {
-        return Color.black
+        switch state {
+        case .neutral:
+            return Color.white
+        default:
+            return Color.black
+        }
     }
-    let state: State
     
     var priceString: String {
         if let price = price {

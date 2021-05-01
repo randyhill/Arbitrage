@@ -44,8 +44,8 @@
 		253CF9DE262BA29800AE5D4A /* JSON+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2551538526252F3E004881D3 /* JSON+Shared.swift */; };
 		253CF9DF262BA2A100AE5D4A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153F426261050004881D3 /* Log.swift */; };
 		253CF9E0262BA2A300AE5D4A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255153F426261050004881D3 /* Log.swift */; };
-		253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */; };
-		253CF9E9262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */; };
+		253CF9E8262BBDEA00AE5D4A /* PositionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* PositionRow.swift */; };
+		253CF9E9262BBDEA00AE5D4A /* PositionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9E7262BBDEA00AE5D4A /* PositionRow.swift */; };
 		253CF9EB262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
 		253CF9EC262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */; };
 		253CFA00262CD03300AE5D4A /* DateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253CF9FF262CD03300AE5D4A /* DateRow.swift */; };
@@ -102,8 +102,8 @@
 		25B2A81326361D4F00DA7B3F /* ScenarioEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A81126361D4F00DA7B3F /* ScenarioEditor.swift */; };
 		25B2A8152636382600DA7B3F /* ScenarioTitleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8142636382600DA7B3F /* ScenarioTitleRow.swift */; };
 		25B2A8162636382600DA7B3F /* ScenarioTitleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A8142636382600DA7B3F /* ScenarioTitleRow.swift */; };
-		25B2A81826364C0F00DA7B3F /* ExitValuesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A81726364C0F00DA7B3F /* ExitValuesRow.swift */; };
-		25B2A81926364C0F00DA7B3F /* ExitValuesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A81726364C0F00DA7B3F /* ExitValuesRow.swift */; };
+		25B2A81826364C0F00DA7B3F /* ExitValueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A81726364C0F00DA7B3F /* ExitValueRow.swift */; };
+		25B2A81926364C0F00DA7B3F /* ExitValueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2A81726364C0F00DA7B3F /* ExitValueRow.swift */; };
 		25D9AB88263B398100ECCFC2 /* IExQuoteDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */; };
 		25D9AB89263B398100ECCFC2 /* IExQuoteDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */; };
 		25D9AB8B263B3D6E00ECCFC2 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */; };
@@ -146,7 +146,7 @@
 		2500A065261E9E250043FF96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2500A07A261E9E4C0043FF96 /* IEXQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXQuote.swift; sourceTree = "<group>"; };
 		2500A07D261E9E840043FF96 /* iexAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iexAPI.swift; sourceTree = "<group>"; };
-		253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedRow.swift; sourceTree = "<group>"; };
+		253CF9E7262BBDEA00AE5D4A /* PositionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRow.swift; sourceTree = "<group>"; };
 		253CF9EA262BC43100AE5D4A /* AnnualizedReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualizedReturn.swift; sourceTree = "<group>"; };
 		253CF9FF262CD03300AE5D4A /* DateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRow.swift; sourceTree = "<group>"; };
 		2551538026252F3E004881D3 /* Math+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Math+Shared.swift"; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		25B2A80E2636194300DA7B3F /* ScenarioRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioRow.swift; sourceTree = "<group>"; };
 		25B2A81126361D4F00DA7B3F /* ScenarioEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioEditor.swift; sourceTree = "<group>"; };
 		25B2A8142636382600DA7B3F /* ScenarioTitleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioTitleRow.swift; sourceTree = "<group>"; };
-		25B2A81726364C0F00DA7B3F /* ExitValuesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitValuesRow.swift; sourceTree = "<group>"; };
+		25B2A81726364C0F00DA7B3F /* ExitValueRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitValueRow.swift; sourceTree = "<group>"; };
 		25D9AB87263B398100ECCFC2 /* IExQuoteDelayed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IExQuoteDelayed.swift; sourceTree = "<group>"; };
 		25D9AB8A263B3D6E00ECCFC2 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		25DFE3EF263C454800FED2BC /* ScenarioList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioList.swift; sourceTree = "<group>"; };
@@ -394,7 +394,6 @@
 			isa = PBXGroup;
 			children = (
 				25DFE3EE263B776400FED2BC /* Rows */,
-				25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */,
 				2563DF58262D140000A77A59 /* AppTitleBar.swift */,
 				2500A03D261E9E240043FF96 /* ArbitrageApp.swift */,
 				2500A03E261E9E240043FF96 /* DashboardView.swift */,
@@ -411,9 +410,10 @@
 		25DFE3EE263B776400FED2BC /* Rows */ = {
 			isa = PBXGroup;
 			children = (
-				253CF9E7262BBDEA00AE5D4A /* AnnualizedRow.swift */,
+				25B2A7FB26337A9600DA7B3F /* AnnualizedPrice.swift */,
 				253CF9FF262CD03300AE5D4A /* DateRow.swift */,
-				25B2A81726364C0F00DA7B3F /* ExitValuesRow.swift */,
+				25B2A81726364C0F00DA7B3F /* ExitValueRow.swift */,
+				253CF9E7262BBDEA00AE5D4A /* PositionRow.swift */,
 				25B2A8052636023000DA7B3F /* PriceReturnRow.swift */,
 				25B2A8142636382600DA7B3F /* ScenarioTitleRow.swift */,
 			);
@@ -584,7 +584,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				255153B226252F3E004881D3 /* TextFieldDynamic.swift in Sources */,
-				253CF9E8262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
+				253CF9E8262BBDEA00AE5D4A /* PositionRow.swift in Sources */,
 				25B2A80026339E0A00DA7B3F /* NewPositionEditor.swift in Sources */,
 				25B2A8062636023000DA7B3F /* PriceReturnRow.swift in Sources */,
 				25D9AB8B263B3D6E00ECCFC2 /* Quote.swift in Sources */,
@@ -601,7 +601,7 @@
 				25AA3B6A26213A1B0049779F /* Database.swift in Sources */,
 				25B2A80F2636194300DA7B3F /* ScenarioRow.swift in Sources */,
 				25B2A8032635FD4900DA7B3F /* StockInfoPanel.swift in Sources */,
-				25B2A81826364C0F00DA7B3F /* ExitValuesRow.swift in Sources */,
+				25B2A81826364C0F00DA7B3F /* ExitValueRow.swift in Sources */,
 				259429A926252B5900B36B5C /* PositionEditor.swift in Sources */,
 				2551539E26252F3E004881D3 /* Collections+Shared.swift in Sources */,
 				255153AF26252F3E004881D3 /* ToggleView.swift in Sources */,
@@ -647,10 +647,10 @@
 				255153F626262C69004881D3 /* Log.swift in Sources */,
 				253CF9DB262BA29800AE5D4A /* Color+Shared.swift in Sources */,
 				2563DF5A262D140000A77A59 /* AppTitleBar.swift in Sources */,
-				253CF9E9262BBDEA00AE5D4A /* AnnualizedRow.swift in Sources */,
+				253CF9E9262BBDEA00AE5D4A /* PositionRow.swift in Sources */,
 				255153F826262C79004881D3 /* Collections+Shared.swift in Sources */,
 				259429AA26252B5900B36B5C /* PositionEditor.swift in Sources */,
-				25B2A81926364C0F00DA7B3F /* ExitValuesRow.swift in Sources */,
+				25B2A81926364C0F00DA7B3F /* ExitValueRow.swift in Sources */,
 				253CF9DD262BA29800AE5D4A /* View+Shared.swift in Sources */,
 				25B2A8162636382600DA7B3F /* ScenarioTitleRow.swift in Sources */,
 				25B2A8102636194300DA7B3F /* ScenarioRow.swift in Sources */,

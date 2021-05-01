@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AnnualizedRow: View {
+struct PositionRow: View {
     @Binding var position: Position
     private let font = Font.callout
     
@@ -44,6 +44,6 @@ struct AnnualizedRow: View {
 
 struct ReturnField_Previews: PreviewProvider {
     static var previews: some View {
-        AnnualizedRow(position: .constant(Database.testPosition2))
+        PositionRow(position: .constant(Database.testPosition2))
     }
 }

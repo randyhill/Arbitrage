@@ -51,7 +51,13 @@ class iexAPI {
                     completion(nil)
                 }
             } catch {
-                Log.error("Failed to fetch: \(symbol), error: \(error)")
+                // For symbols without delayed quotes error will contain keyNotFound "symbol", ignore those.
+                func allowedError(_ errorString: String) -> Bool {
+                    return errorString.contains("symbol")
+                }
+                if !allowedError("\(error)") {
+                     Log.error("Failed to fetch: \(symbol), error: \(error)")
+                }
                 completion(nil)
             }
         }

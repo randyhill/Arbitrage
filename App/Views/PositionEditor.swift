@@ -37,7 +37,7 @@ struct PositionEditor: View {
             if let quote = quote {
                 StockInfoPanel(quote: quote, isOwned: position.isOwned, exitPrice: exitPrice, periodDays: periodDays)
             }
-            ExitValuesRow(exitPrice: $exitPrice, periodDays: $periodDays, endDate: $exitDate)
+            ExitValueRow(exitPrice: $exitPrice, periodDays: $periodDays, endDate: $exitDate)
             ScenarioTitleRow(position: $position)
                 .environmentObject(db)
 

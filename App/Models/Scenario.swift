@@ -24,6 +24,11 @@ class Scenario: Identifiable, Codable {
         }
     }
     
+    var percentString: String {
+        let percent = Int(percentage*100)
+        return "\(percent)%"
+    }
+    
     var averagePayout: Double {
         return percentage * payout
     }

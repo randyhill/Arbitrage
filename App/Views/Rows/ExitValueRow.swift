@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExitValuesRow: View {
+struct ExitValueRow: View {
     @Binding var exitPrice: Double
     @Binding var periodDays: Int
     @Binding var endDate: Date
@@ -18,10 +18,10 @@ struct ExitValuesRow: View {
             Text("Exit:")
                 .font(font)
                 .fontWeight(.bold)
-                .frame(width: 40, alignment: .trailing)
-            Text("$\(exitPrice.stockPrice)")
-                .font(font)
                 .frame(width: 60, alignment: .leading)
+            Text("\(exitPrice.currency)")
+                .font(font)
+                .frame(width: 44, alignment: .leading)
             Text("Days:")
                 .font(font)
                 .fontWeight(.bold)
@@ -38,6 +38,6 @@ struct ExitValuesRow: View {
 
 struct ExitValuesRow_Previews: PreviewProvider {
     static var previews: some View {
-        ExitValuesRow(exitPrice: .constant(34.97), periodDays: .constant(30), endDate: .constant(Date().add(months:1)))
+        ExitValueRow(exitPrice: .constant(34.97), periodDays: .constant(30), endDate: .constant(Date().add(months:1)))
     }
 }
