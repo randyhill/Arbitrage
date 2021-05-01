@@ -23,6 +23,7 @@ class ScenarioList: Identifiable, Codable {
         var aveDays = scenarios.reduce(0) { days, scenario in
             return days + scenario.averageDays
         }
+        // Round up so that tommorrow is one day away, even if it's only 12 hours away.
         if aveDays.truncatingRemainder(dividingBy: 1) >= 0.5 {
             aveDays += 1
         }
@@ -48,16 +49,27 @@ class ScenarioList: Identifiable, Codable {
         recalcPercentages()
     }
     
-    // Percentages should always add up to 1
-    func recalcPercentages() {
-        let currentTotal = scenarios.reduce(0) { total, next in
-            return total + next.percentage
+    // Percentages for combined scenarios should always add up to 1 (100%)
+    // If one of the scenarios has it's percentage changed, allocate the remaining amount proportionately among other scenarios
+    // NOTE: ONLY WORKS WITH TWO SCENARIOS ATM.
+    func recalcPercentages(_ changedScenario: Scenario? = nil) {
+        let unchanged = scenarios.filter { scenario in
+            return scenario != changedScenario
         }
-        let multiplier = 1/currentTotal
-        for scenario in scenarios {
-            scenario.percentage *= multiplier
+
+        if let changed = changedScenario {
+            let remainingPercent = Double(Int((1.0 - changed.percentage)*100))/100
+            unchanged.first?.percentage = remainingPercent
+        } else {
+            let currentTotal = scenarios.reduce(0) { total, next in
+                return total + next.percentage
+            }
+            let adjustment = 1/currentTotal
+             for scenario in scenarios {
+                scenario.percentage *= adjustment
+            }
         }
-    }
+     }
     
     func get(_ index: Int) -> Scenario {
         return scenarios[index]

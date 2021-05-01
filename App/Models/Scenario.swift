@@ -7,11 +7,21 @@
 
 import Foundation
 
-class Scenario: Identifiable, Codable {
+class Scenario: Identifiable, Codable, Equatable {
+    static func == (lhs: Scenario, rhs: Scenario) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let id: String
     var payout: Double
     var endDate: Date
-    var percentage: Double
+    var percentage: Double {
+        didSet {
+            Log.assert(percentage >= 0 && percentage <= 1.0)
+            if percentage < 0 { percentage = 0}
+            if percentage > 1 { percentage = 0}
+        }
+    }
     
     var payoutString: String = ""
     {

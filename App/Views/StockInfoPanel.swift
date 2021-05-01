@@ -10,8 +10,8 @@ import SwiftUI
 struct StockInfoPanel: View {
     var quote: Quote
     var isOwned: Bool
-    var exitPrice: Double
-    var periodDays: Int
+    @Binding var exitPrice: Double
+    @Binding var periodDays: Int
     let font = Font.footnote
 
     var body: some View {
@@ -42,6 +42,6 @@ struct StockInfoPanel: View {
 
 struct StockInfoRow_Previews: PreviewProvider {
     static var previews: some View {
-        StockInfoPanel(quote: Database.testPosition.quote!, isOwned: true, exitPrice: 22, periodDays: 40)
+        StockInfoPanel(quote: Database.testPosition.quote!, isOwned: true, exitPrice: .constant(22), periodDays: .constant(40))
     }
 }

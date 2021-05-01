@@ -27,6 +27,11 @@ struct ScenarioEditor: View {
                 let percentString = Int(percentage*100).formatted
                 Text(percentString + "%")
                 Slider(value: $percentage, in: 0...1)
+                    .onChange(of: percentage, perform: { value in
+                        let intValue = Int(value*100)
+                        scenario.percentage = Double(intValue)/100
+                        position.scenarios.recalcPercentages(scenario)
+                    })
 
             }
         }

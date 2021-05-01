@@ -401,7 +401,6 @@
 				259429A826252B5900B36B5C /* PositionEditor.swift */,
 				255153FA262767C6004881D3 /* PositionView.swift */,
 				25B2A81126361D4F00DA7B3F /* ScenarioEditor.swift */,
-				25B2A80E2636194300DA7B3F /* ScenarioRow.swift */,
 				25B2A8022635FD4900DA7B3F /* StockInfoPanel.swift */,
 			);
 			path = Views;
@@ -415,6 +414,7 @@
 				25B2A81726364C0F00DA7B3F /* ExitValueRow.swift */,
 				253CF9E7262BBDEA00AE5D4A /* PositionRow.swift */,
 				25B2A8052636023000DA7B3F /* PriceReturnRow.swift */,
+				25B2A80E2636194300DA7B3F /* ScenarioRow.swift */,
 				25B2A8142636382600DA7B3F /* ScenarioTitleRow.swift */,
 			);
 			path = Rows;
