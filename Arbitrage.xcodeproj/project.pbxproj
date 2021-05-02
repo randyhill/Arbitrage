@@ -114,6 +114,10 @@
 		25DFE3F4263E122800FED2BC /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3F2263E122800FED2BC /* Test.swift */; };
 		25DFE3F6263E3DFB00FED2BC /* PercentSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3F5263E3DFB00FED2BC /* PercentSlider.swift */; };
 		25DFE3F7263E3DFB00FED2BC /* PercentSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3F5263E3DFB00FED2BC /* PercentSlider.swift */; };
+		25DFE3F9263E46C200FED2BC /* TextField+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3F8263E46C200FED2BC /* TextField+iOS.swift */; };
+		25DFE3FA263E46C200FED2BC /* TextField+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3F8263E46C200FED2BC /* TextField+iOS.swift */; };
+		25DFE3FC263E4A3E00FED2BC /* DatePickerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3FB263E4A3E00FED2BC /* DatePickerButtons.swift */; };
+		25DFE3FD263E4A3E00FED2BC /* DatePickerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFE3FB263E4A3E00FED2BC /* DatePickerButtons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +200,8 @@
 		25DFE3EF263C454800FED2BC /* ScenarioList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioList.swift; sourceTree = "<group>"; };
 		25DFE3F2263E122800FED2BC /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		25DFE3F5263E3DFB00FED2BC /* PercentSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentSlider.swift; sourceTree = "<group>"; };
+		25DFE3F8263E46C200FED2BC /* TextField+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+iOS.swift"; sourceTree = "<group>"; };
+		25DFE3FB263E4A3E00FED2BC /* DatePickerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +347,7 @@
 				2551539126252F3E004881D3 /* TimeInterval+iOS.swift */,
 				2551539026252F3E004881D3 /* Date+iOS.swift */,
 				2551538F26252F3E004881D3 /* UILabel+iOS.swift */,
+				25DFE3F8263E46C200FED2BC /* TextField+iOS.swift */,
 			);
 			path = "iOS Extensions";
 			sourceTree = "<group>";
@@ -362,6 +369,7 @@
 				2551539826252F3E004881D3 /* TextFieldDynamic.swift */,
 				2551539A26252F3E004881D3 /* Checkbox.swift */,
 				25DFE3F5263E3DFB00FED2BC /* PercentSlider.swift */,
+				25DFE3FB263E4A3E00FED2BC /* DatePickerButtons.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -620,6 +628,7 @@
 				255153AC26252F3E004881D3 /* Date+iOS.swift in Sources */,
 				255153AA26252F3E004881D3 /* UITextView+iOS.swift in Sources */,
 				253CF9EB262BC43100AE5D4A /* AnnualizedReturn.swift in Sources */,
+				25DFE3FC263E4A3E00FED2BC /* DatePickerButtons.swift in Sources */,
 				255153A926252F3E004881D3 /* UIImage+IOS.swift in Sources */,
 				255153B126252F3E004881D3 /* TextFieldActive.swift in Sources */,
 				255153B026252F3E004881D3 /* TextFieldDynamicNative.swift in Sources */,
@@ -637,6 +646,7 @@
 				255153AD26252F3E004881D3 /* TimeInterval+iOS.swift in Sources */,
 				255153A626252F3E004881D3 /* Color+iOS.swift in Sources */,
 				255153F526262C68004881D3 /* Log.swift in Sources */,
+				25DFE3F9263E46C200FED2BC /* TextField+iOS.swift in Sources */,
 				255153A826252F3E004881D3 /* String+iOS.swift in Sources */,
 				255153FB262767C6004881D3 /* PositionView.swift in Sources */,
 				255153B426252F3E004881D3 /* Checkbox.swift in Sources */,
@@ -664,6 +674,8 @@
 				25B2A81926364C0F00DA7B3F /* ExitValueRow.swift in Sources */,
 				253CF9DD262BA29800AE5D4A /* View+Shared.swift in Sources */,
 				25B2A8162636382600DA7B3F /* ScenarioTitleRow.swift in Sources */,
+				25DFE3FA263E46C200FED2BC /* TextField+iOS.swift in Sources */,
+				25DFE3FD263E4A3E00FED2BC /* DatePickerButtons.swift in Sources */,
 				25B2A8102636194300DA7B3F /* ScenarioRow.swift in Sources */,
 				2500A067261E9E250043FF96 /* ArbitrageApp.swift in Sources */,
 				25B2A8042635FD4900DA7B3F /* StockInfoPanel.swift in Sources */,

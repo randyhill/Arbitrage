@@ -27,8 +27,10 @@ struct ScenarioEditor: View {
                 .keyboardType(.decimalPad)
                 .frame(height: 64)
 
-            DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
-                .frame(height: 64)
+            VStack {
+                DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
+                    .frame(height: 64)
+            }
             PercentSlider(percentage: $percentage, percentString: "", range: 0...1.0, onChange: nil)
                 .onChange(of: percentage, perform: { value in
                     let intValue = Int(value*100)
