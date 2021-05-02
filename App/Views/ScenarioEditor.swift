@@ -12,6 +12,7 @@ struct ScenarioEditor: View {
     @ObservedObject var scenario: Scenario
     @State var percentage = 0.0
     @State var payoutString = ""
+    @State private var percentString = ""
     var position: Position
 
     var body: some View {
@@ -28,20 +29,16 @@ struct ScenarioEditor: View {
 
             DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
                 .frame(height: 64)
-            HStack {
-                let percentString = Int(percentage*100).formatted
-                Text(percentString + "%")
-                Slider(value: $percentage, in: 0...1)
-                    .onChange(of: percentage, perform: { value in
-                        let intValue = Int(value*100)
-                        scenario.percentage = Double(intValue)/100
-                        position.scenarios.recalcPercentages(scenario)
-                    })
-
-            }
+            PercentSlider(percentage: $percentage, percentString: "", range: 0...1.0, onChange: nil)
+                .onChange(of: percentage, perform: { value in
+                    let intValue = Int(value*100)
+                    scenario.percentage = Double(intValue)/100
+                    position.scenarios.recalcPercentages(scenario)
+            })
         }
         .onAppear() {
             percentage = scenario.percentage
+            percentString = Int(percentage*100).formatted
             payoutString = "\(scenario.payout.stockPrice)"
         }
         .onDisappear() {

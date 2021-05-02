@@ -46,7 +46,8 @@ class Position: ObservableObject, Identifiable, Codable {
     }
     
     var endDate: Date {
-        return Date().add(days: periodDays)
+        let date = Date().add(days: periodDays)
+        return date
     }
     
     var annualizedReturn: Double? {

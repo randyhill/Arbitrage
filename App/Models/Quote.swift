@@ -140,12 +140,14 @@ struct Quote: Hashable, Codable, Identifiable {
     // Used to create test versions
     init(latestPrice: Double, bid: Double?, ask: Double?)  {
         id = UUID().uuidString
-        symbol = ""
-        companyName = ""
+        symbol = "Test"
+        companyName = "Testing, inc"
         lastTrade = PriceTime(price: latestPrice, time: Int(Date().timeIntervalSince1970))
-        highPriceTime = PriceTime.create(price: 0, time: 0)
-        lowPriceTime = PriceTime.create(price: 0, time: 0)
-        volume = 0
+        let yesterday = Date().add(days: -1)
+        highPriceTime = PriceTime.create(price: latestPrice * 1.2, time: Int(yesterday.timeIntervalSince1970))
+        let weekAgo = Date().add(days: -7)
+        lowPriceTime = PriceTime.create(price: latestPrice * 0.8, time: Int(weekAgo.timeIntervalSince1970))
+        volume = 100000
         self.bid = bid
         self.ask = ask
     }
@@ -180,7 +182,7 @@ struct Quote: Hashable, Codable, Identifiable {
             date = highPriceTime.timeStamp
         }
         guard let date = date else { return "n/a" }
-        return date.toUniqueTimeDayOrDate()
+        return date.toFullUniqueDate(withTime: true)
     }
     
     func priceString(_ priceType: PriceType)->  String {

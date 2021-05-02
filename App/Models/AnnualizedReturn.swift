@@ -8,15 +8,6 @@
 import SwiftUI
 
 struct AnnualizedReturn: Comparable {
-    static func < (lhs: AnnualizedReturn, rhs: AnnualizedReturn) -> Bool {
-        if let leftReturn = lhs.annualReturn {
-            if let rightReturn = rhs.annualReturn {
-                return leftReturn < rightReturn
-            }
-            return true
-        }
-        return false
-    }
     
     enum State: Equatable {
         case buy, possibleBuy, neutral, possibleSale(Bool), sell(Bool)
@@ -143,13 +134,25 @@ struct AnnualizedReturn: Comparable {
         let years = Double(days)/364
         let annualized = (pow(1 + grossReturn, 1/years))
         if negativeReturn {
-            if annualized > 10 {
-                return -10
+            if annualized <= -10 {
+                return -9.99
             }
             return -annualized
         } else {
-            if annualized > 10 { return 10 }
+            if annualized >= 10 { return 9.99 }
             return annualized - 1
         }
+    }
+}
+
+extension AnnualizedReturn {
+    static func < (lhs: AnnualizedReturn, rhs: AnnualizedReturn) -> Bool {
+         if let leftReturn = lhs.annualReturn {
+            if let rightReturn = rhs.annualReturn {
+                return leftReturn < rightReturn
+            }
+            return true
+        }
+        return false
     }
 }

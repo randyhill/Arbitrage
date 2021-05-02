@@ -76,8 +76,15 @@ struct PositionEditor: View {
 }
 
 struct PositionEditor_Previews: PreviewProvider {
+    static var testValue: Position {
+        let position = Database.testPosition
+        let scenarios = [Scenario(payout: 150, date: Date().add(days: 100), percentage: 0.4), Scenario(payout: 133, date: Date().add(days: 200), percentage: 0.6)]
+        position.scenarios.replace(scenarios)
+        return position
+    }
     static var previews: some View {
-        PositionEditor(position: Database.testPosition, scenarios: Database.testPosition.scenarios)
+        let testValue = testValue
+        PositionEditor(position: testValue, scenarios: testValue.scenarios)
             .environmentObject(Database())
     }
 }
