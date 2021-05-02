@@ -35,7 +35,7 @@ struct ScenarioEditor: View {
                 .onChange(of: percentage, perform: { value in
                     let intValue = Int(value*100)
                     scenario.percentage = Double(intValue)/100
-                    position.scenarios.recalcPercentages(scenario)
+                    position.scenarios.recalcOtherPercentages(scenario)
             })
         }
         .onAppear() {

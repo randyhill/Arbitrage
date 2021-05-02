@@ -46,29 +46,39 @@ class ScenarioList: ObservableObject, Identifiable, Codable {
         if let index = indexes.first {
             scenarios.remove(at: index)
         }
-        recalcPercentages()
+        recalcPercentagesTo(total: 1.0, scenarios: scenarios)
     }
     
     // Percentages for combined scenarios should always add up to 1 (100%)
     // If one of the scenarios has it's percentage changed, allocate the remaining amount proportionately among other scenarios
     // NOTE: ONLY WORKS WITH TWO SCENARIOS ATM.
-    func recalcPercentages(_ changedScenario: Scenario? = nil) {
+    func recalcOtherPercentages(_ changed: Scenario) {
         let unchanged = scenarios.filter { scenario in
-            return scenario != changedScenario
+            return scenario != changed
         }
 
-        if let changed = changedScenario {
-            let remainingPercent = Double(Int((1.0 - changed.percentage)*100))/100
-            unchanged.first?.percentage = remainingPercent
+        let remainingPercent = ((1.0 - changed.percentage).percent)/100
+        if scenarios.count == 2 {
+            // Only one other scenario so make it the inverse of our current scenario
+              unchanged.first?.percentage = remainingPercent
         } else {
-            let currentTotal = scenarios.reduce(0) { total, next in
-                return total + next.percentage
-            }
-            let adjustment = 1/currentTotal
-             for scenario in scenarios {
-                scenario.percentage *= adjustment
-            }
+            recalcPercentagesTo(total: remainingPercent, scenarios: unchanged)
         }
+     }
+    
+    // Proportionately reduce/increase current percentages to total value given
+    // Typically increasing remaining to to tototal 100% after deleting a scenario.
+    func recalcPercentagesTo(total: Double = 1.0, scenarios: [Scenario]) {
+        guard total <= 1.0 else {
+            return Log.error("Can't recalc percentages to total: \(total)")
+        }
+         let currentTotal = scenarios.reduce(0) { total, next in
+            return total + next.percentage
+         }
+         let adjustment = total/currentTotal
+         for scenario in scenarios {
+            scenario.percentage *= adjustment
+         }
      }
     
     func get(_ index: Int) -> Scenario {

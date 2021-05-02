@@ -336,18 +336,18 @@
 		2551538626252F3E004881D3 /* iOS Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				2551538726252F3E004881D3 /* URL+Shared.swift */,
-				2551538826252F3E004881D3 /* UIView+Shared.swift */,
-				2551538926252F3E004881D3 /* UIColor+Shared.swift */,
 				2551538A26252F3E004881D3 /* Color+iOS.swift */,
-				2551538B26252F3E004881D3 /* UITextField+iOS.swift */,
-				2551538C26252F3E004881D3 /* String+iOS.swift */,
-				2551538D26252F3E004881D3 /* UIImage+IOS.swift */,
-				2551538E26252F3E004881D3 /* UITextView+iOS.swift */,
-				2551539126252F3E004881D3 /* TimeInterval+iOS.swift */,
 				2551539026252F3E004881D3 /* Date+iOS.swift */,
-				2551538F26252F3E004881D3 /* UILabel+iOS.swift */,
+				2551538C26252F3E004881D3 /* String+iOS.swift */,
 				25DFE3F8263E46C200FED2BC /* TextField+iOS.swift */,
+				2551539126252F3E004881D3 /* TimeInterval+iOS.swift */,
+				2551538926252F3E004881D3 /* UIColor+Shared.swift */,
+				2551538D26252F3E004881D3 /* UIImage+IOS.swift */,
+				2551538F26252F3E004881D3 /* UILabel+iOS.swift */,
+				2551538B26252F3E004881D3 /* UITextField+iOS.swift */,
+				2551538E26252F3E004881D3 /* UITextView+iOS.swift */,
+				2551538826252F3E004881D3 /* UIView+Shared.swift */,
+				2551538726252F3E004881D3 /* URL+Shared.swift */,
 			);
 			path = "iOS Extensions";
 			sourceTree = "<group>";
