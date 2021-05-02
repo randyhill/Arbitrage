@@ -10,7 +10,8 @@ import SwiftUI
 struct ScenarioRow: View {
     @Binding var scenario: Scenario
     var position: Position
-    
+    let font = Font.footnote
+
     var body: some View {
         NavigationLink(
            destination:
@@ -18,9 +19,16 @@ struct ScenarioRow: View {
            label: {
             HStack {
                 Text("Payout:")
+                    .font(font)
+                    .fontWeight(.bold)
                 Text(scenario.payout.currency)
+                    .font(font)
                 Text("Days: \(scenario.days)")
-                Text("\(scenario.percentString)")
+                    .font(font)
+               Text("\(scenario.percentString)")
+                    .font(font)
+                .font(font)
+                .fontWeight(.bold)
             }
         })
     }

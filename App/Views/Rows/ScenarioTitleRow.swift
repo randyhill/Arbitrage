@@ -25,22 +25,18 @@ struct ScenarioTitleRow: View {
                 if position.scenarios.list.count == 0 {
                     newScenario.pctFraction = 1
                 }
+                position.scenarios.add(newScenario)
                 showScenarioEditor = true
             }
         }
         .sheet(isPresented: $showScenarioEditor, content: {
             VStack (alignment: .leading) {
                 HStack {
-                    Button("Cancel") {
+                    Button("Done") {
                         showScenarioEditor = false
                     }
                     .padding()
-                    Spacer()
-                    Button("Save") {
-                        showScenarioEditor = false
-                        position.scenarios.add(newScenario)
-                    }
-                    .padding()
+                    .frame(width: 100, height: 30, alignment: .leading)
                 }
                 .frame(alignment: .trailing)
             }

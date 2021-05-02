@@ -10,14 +10,6 @@ import SwiftUI
 class ScenarioList: ObservableObject, Identifiable, Codable {
     let id: String
     @Published var list = [Scenario]()
-//    var list: [Scenario] {
-//        get {
-//            return scenarios
-//        }
-//        set {
-//            scenarios = newValue
-//        }
-//    }
     
     var averageDays: Int {
         var aveDays = list.reduce(0) { days, scenario in

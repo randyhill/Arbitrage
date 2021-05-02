@@ -29,9 +29,9 @@ struct PositionEditor: View {
                         db.getSymbolQuote(value) { quote in
                             self.quote = quote
                             position.quote = quote
-                            let capped = value.capitalized
-                            self.symbol = capped
-                            position.symbol = capped
+//                            let capped = value.capitalized
+//                            self.symbol = capped
+                            position.symbol = value
                         }
                     }
                 })
