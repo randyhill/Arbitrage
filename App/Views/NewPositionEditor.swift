@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NewPositionEditor: View {
     @EnvironmentObject var db: Database
-    @Binding var newPosition: Position
     @Binding var isShowingDetailView: Bool
+    @Binding var newPosition: Position
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
@@ -20,8 +20,12 @@ struct NewPositionEditor: View {
                 .padding()
                 Spacer()
                 Button("Save") {
+                    // Not only do we save new position to database
+                    // But make sure to replace it so next new
+                    // isn't pointing at the now exiting position.
                     isShowingDetailView = false
                     db.addPosition(newPosition)
+                    newPosition = Position()
                 }
                 .padding()
             }
@@ -34,7 +38,7 @@ struct NewPositionEditor: View {
 
 struct NewPositionEditor_Previews: PreviewProvider {
     static var previews: some View {
-        NewPositionEditor(newPosition: .constant(Database.testPosition), isShowingDetailView: .constant(true))
+        NewPositionEditor(isShowingDetailView: .constant(true), newPosition: .constant(Database.testPosition))
             .environmentObject(Database())
     }
 }

@@ -10,8 +10,8 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var db: Database
     @State private var isShowingDetailView = false
-    @State var newPosition = Position()
     @State var navigationTitle = "Positions"
+    @State var newPosition = Position()
 
     var body: some View {
         NavigationView {
@@ -22,14 +22,13 @@ struct DashboardView: View {
             }
             .toolbar {
                  ToolbarItem(placement: .principal) {
-                    AppTitleBar(isShowingDetailView: $isShowingDetailView, newPosition: $newPosition, title: $navigationTitle)
+                    AppTitleBar(isShowingDetailView: $isShowingDetailView, title: $navigationTitle)
                         .environmentObject(db)
                    }
             }
- 
         }
         .fullScreenCover(isPresented: $isShowingDetailView, content: {
-            NewPositionEditor(newPosition: $newPosition, isShowingDetailView: $isShowingDetailView)
+            NewPositionEditor(isShowingDetailView: $isShowingDetailView, newPosition: $newPosition)
                 .environmentObject(db)
         })
     }

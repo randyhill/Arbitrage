@@ -10,7 +10,6 @@ import SwiftUI
 struct AppTitleBar: View {
     @EnvironmentObject var db: Database
     @Binding var isShowingDetailView: Bool
-    @Binding var newPosition: Position
     @Binding var title: String
 
     var body: some View {
@@ -23,7 +22,6 @@ struct AppTitleBar: View {
                 Spacer(minLength: 80.0)
                 Button(action: {
                     isShowingDetailView = true
-                    newPosition = db.newPosition
                 }, label: {
                     Image(systemName: "pencil.circle.fill")
                             .font(.largeTitle)
@@ -31,6 +29,9 @@ struct AppTitleBar: View {
                 .frame(alignment: .trailing)
                 Spacer(minLength: 20.0)
                 Button(action: {
+#if DEV
+                Test.addDataToQuotes = true
+#endif
                     db.refreshAllSymbols()
                 }, label: {
                     Image(systemName: "arrow.clockwise.circle.fill")
@@ -44,6 +45,6 @@ struct AppTitleBar: View {
 
 struct AppTitleBar_Previews: PreviewProvider {
     static var previews: some View {
-        AppTitleBar(isShowingDetailView: .constant(false), newPosition: .constant(Database.testPosition), title: .constant("Positions"))
+        AppTitleBar(isShowingDetailView: .constant(false), title: .constant("Positions"))
     }
 }

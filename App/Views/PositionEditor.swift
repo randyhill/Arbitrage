@@ -23,14 +23,15 @@ struct PositionEditor: View {
    
     var body: some View {
         Form {
-            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol, onChangeCallback: { value in
+            TextFieldActive(title: "Ticker:", placeholder: "Ticker", activate: activateTickerField, text: $symbol)
+                .onChange(of: symbol, perform: { value in
                     if value.count > 0 {
-                        let capped = value.capitalized
-                        self.symbol = capped
-                        position.symbol = capped
                         db.getSymbolQuote(value) { quote in
                             self.quote = quote
                             position.quote = quote
+                            let capped = value.capitalized
+                            self.symbol = capped
+                            position.symbol = capped
                         }
                     }
                 })

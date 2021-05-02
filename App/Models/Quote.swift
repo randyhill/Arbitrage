@@ -116,8 +116,8 @@ struct Quote: Hashable, Codable, Identifiable {
         } else {
             lastTrade = lastQuoteTime
         }
-        bid = quote.bid
-        ask = quote.ask
+        bid = quote.bid ?? Test.randomPercent(startValue: lastQuoteTime.price, range: 0.7..<1.0)
+        ask = quote.ask ?? Test.randomPercent(startValue: lastQuoteTime.price, range: 1..<1.3)
         volume = delayed.totalVolume > quote.volume ? delayed.totalVolume : quote.volume
         let hpt = quote.highPriceTime
         highPriceTime = hpt.time > delayed.delayedPriceTime ? hpt : PriceTime(price: delayed.high, time: delayed.delayedPriceTime)
@@ -130,8 +130,8 @@ struct Quote: Hashable, Codable, Identifiable {
         symbol = quote.symbol
         companyName = quote.companyName
         lastTrade = quote.lastPriceTime
-        bid = quote.bid
-        ask = quote.ask
+        bid = quote.bid ?? Test.randomPercent(startValue: quote.lastTradePrice, range: 0.7..<1.0)
+        ask = quote.ask ?? Test.randomPercent(startValue: quote.lastTradePrice, range: 1..<1.3)
         volume = quote.volume
         highPriceTime = quote.highPriceTime
         lowPriceTime = quote.lowPriceTime

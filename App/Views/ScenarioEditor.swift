@@ -19,11 +19,13 @@ struct ScenarioEditor: View {
             Text("Exit Scenario")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            TextFieldActive(title: "Payout", placeholder: "0.0", disableAutocorrection: true, activate: true, text: $payoutString, onChangeCallback: { newValue in
-                scenario.setPayout(newValue)
-            })
+            TextFieldActive(title: "Payout", placeholder: "0.0", disableAutocorrection: true, activate: true, text: $payoutString)
+                .onChange(of: payoutString, perform: { value in
+                    scenario.setPayout(value)
+                })
                 .keyboardType(.decimalPad)
                 .frame(height: 64)
+
             DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
                 .frame(height: 64)
             HStack {
@@ -43,7 +45,7 @@ struct ScenarioEditor: View {
             payoutString = "\(scenario.payout.stockPrice)"
         }
         .onDisappear() {
-            scenario.percentage = percentage
+            // Remember so we can default to these values next scenario
             db.lastScenario = scenario
         }
     }
