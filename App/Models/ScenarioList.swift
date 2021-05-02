@@ -9,18 +9,18 @@ import SwiftUI
 
 class ScenarioList: ObservableObject, Identifiable, Codable {
     let id: String
-    private var scenarios = [Scenario]()
-    var list: [Scenario] {
-        get {
-            return scenarios
-        }
-        set {
-            scenarios = newValue
-        }
-    }
+    @Published var list = [Scenario]()
+//    var list: [Scenario] {
+//        get {
+//            return scenarios
+//        }
+//        set {
+//            scenarios = newValue
+//        }
+//    }
     
     var averageDays: Int {
-        var aveDays = scenarios.reduce(0) { days, scenario in
+        var aveDays = list.reduce(0) { days, scenario in
             return days + scenario.averageDays
         }
         // Round up so that tommorrow is one day away, even if it's only 12 hours away.
@@ -31,10 +31,27 @@ class ScenarioList: ObservableObject, Identifiable, Codable {
     }
     
     var averagePayout: Double {
-        let avePayout = scenarios.reduce(0) { payouts, scenario in
+        let avePayout = list.reduce(0) { payouts, scenario in
             return payouts + scenario.averagePayout
         }
         return avePayout
+    }
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case list
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        list = try container.decode([Scenario].self, forKey: .list)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(list, forKey: .list)
     }
     
     init() {
@@ -44,62 +61,66 @@ class ScenarioList: ObservableObject, Identifiable, Codable {
     // Only allow one deletion at a time
     func deleteAt(_ indexes: IndexSet) {
         if let index = indexes.first {
-            scenarios.remove(at: index)
+            list.remove(at: index)
         }
-        recalcPercentagesTo(total: 1.0, scenarios: scenarios)
+        recalcPercentagesTo(total: 1.0, unchanged: list)
     }
     
     // Percentages for combined scenarios should always add up to 1 (100%)
     // If one of the scenarios has it's percentage changed, allocate the remaining amount proportionately among other scenarios
-    // NOTE: ONLY WORKS WITH TWO SCENARIOS ATM.
     func recalcOtherPercentages(_ changed: Scenario) {
-        let unchanged = scenarios.filter { scenario in
+        guard list.count > 0 else {
+            changed.pctFraction = 1.0
+            return
+        }
+        let unchanged = list.filter { scenario in
             return scenario != changed
         }
 
-        let remainingPercent = ((1.0 - changed.percentage).percent)/100
-        if scenarios.count == 2 {
+        let remainingPercent = (1.0 - changed.pctFraction)
+        if list.count == 2 {
             // Only one other scenario so make it the inverse of our current scenario
-              unchanged.first?.percentage = remainingPercent
+            unchanged.first?.pctFraction = remainingPercent
         } else {
-            recalcPercentagesTo(total: remainingPercent, scenarios: unchanged)
+            recalcPercentagesTo(total: Double(remainingPercent), unchanged: unchanged)
         }
      }
     
     // Proportionately reduce/increase current percentages to total value given
     // Typically increasing remaining to to tototal 100% after deleting a scenario.
-    func recalcPercentagesTo(total: Double = 1.0, scenarios: [Scenario]) {
-        guard total <= 1.0 else {
+    func recalcPercentagesTo(total: Double = 1, unchanged: [Scenario]) {
+        guard total <= 1, total >= 0 else {
             return Log.error("Can't recalc percentages to total: \(total)")
         }
-         let currentTotal = scenarios.reduce(0) { total, next in
-            return total + next.percentage
-         }
-         let adjustment = total/currentTotal
-         for scenario in scenarios {
-            scenario.percentage *= adjustment
-         }
+        let currentTotal = unchanged.reduce(0) { total, next in
+            return total + next.pctFraction
+        }
+        Log.assert(currentTotal > 0)
+        if currentTotal > 0 {
+            let adjustment = total/currentTotal
+            for scenario in unchanged {
+                let newPercentage = scenario.pctFraction * adjustment
+                scenario.pctFraction = newPercentage
+            }
+        }
      }
     
     func get(_ index: Int) -> Scenario {
-        return scenarios[index]
+        return list[index]
     }
     
     func replace(_ newScenarios: [Scenario]) {
-        scenarios.removeAll()
-        scenarios.append(contentsOf: newScenarios)
+        list.removeAll()
+        list.append(contentsOf: newScenarios)
     }
     
     func add(_ newScenario: Scenario) {
-        guard scenarios.count > 0 else {
-            newScenario.percentage = 1.0
-            scenarios += [newScenario]
+        guard list.count > 0 else {
+            newScenario.pctFraction = 1
+            list += [newScenario]
             return
         }
-        let remainingAvailable = 1 - newScenario.percentage
-        for scenario in scenarios {
-            scenario.percentage *= remainingAvailable
-        }
-        scenarios += [newScenario]
+        recalcOtherPercentages(newScenario)
+        list += [newScenario]
     }
 }

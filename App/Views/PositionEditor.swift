@@ -78,7 +78,7 @@ struct PositionEditor: View {
 struct PositionEditor_Previews: PreviewProvider {
     static var testValue: Position {
         let position = Database.testPosition
-        let scenarios = [Scenario(payout: 150, date: Date().add(days: 100), percentage: 0.4), Scenario(payout: 133, date: Date().add(days: 200), percentage: 0.6)]
+        let scenarios = [Scenario(payout: 150, date: Date().add(days: 100), pctFraction: 0.4), Scenario(payout: 133, date: Date().add(days: 200), pctFraction: 0.6)]
         position.scenarios.replace(scenarios)
         return position
     }

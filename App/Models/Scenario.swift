@@ -15,21 +15,26 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
     let id: String
     @Published var payout: Double
     @Published var endDate: Date
-    @Published var percentage: Double {
-        didSet {
-            Log.assert(percentage >= 0 && percentage <= 1.0)
-            if percentage < 0 { percentage = 0}
-            if percentage > 1 { percentage = 0}
+    var percentage: Int {     // 0 -> 100
+        get {
+             return pctFraction.percent
         }
     }
     
+    @Published var pctFraction: Double {     // 0 -> 1.0
+        didSet {
+            Log.assert(pctFraction >= 0 && pctFraction <= 1)
+            if pctFraction < 0 { pctFraction = 0}
+            if pctFraction > 1 { pctFraction = 1}
+        }
+    }
+
     var percentString: String {
-        let percent = Int(percentage*100)
-        return "\(percent)%"
+         return "\(percentage)%"
     }
     
     var averagePayout: Double {
-        return percentage * payout
+        return pctFraction * payout
     }
     
     var days: Int {
@@ -38,18 +43,18 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
     }
     
     var averageDays: Double {
-        return Double(days) * percentage
+        return Double(days) * pctFraction
     }
     
     var copy: Scenario {
-        return Scenario(payout: payout, date: endDate, percentage: percentage)
+        return Scenario(payout: payout, date: endDate, pctFraction: pctFraction)
     }
     
     enum CodingKeys: CodingKey {
         case id
         case payout
         case endDate
-        case percentage
+        case pctFraction
     }
 
     required init(from decoder: Decoder) throws {
@@ -57,7 +62,7 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
         id = try container.decode(String.self, forKey: .id)
         payout = try container.decode(Double.self, forKey: .payout)
         endDate = try container.decode(Date.self, forKey: .endDate)
-        percentage = try container.decode(Double.self, forKey: .percentage)
+        pctFraction = try container.decode(Double.self, forKey: .pctFraction)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -65,14 +70,14 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
         try container.encode(id, forKey: .id)
         try container.encode(payout, forKey: .payout)
         try container.encode(endDate, forKey: .endDate)
-        try container.encode(percentage, forKey: .percentage)
+        try container.encode(pctFraction, forKey: .pctFraction)
     }
     
-    init(payout: Double = 2.0, date: Date = Date(), percentage: Double = 0.5) {
+    init(payout: Double = 2.0, date: Date = Date(), pctFraction: Double = 1) {
         self.id = UUID().uuidString
         self.payout = payout
         self.endDate = date
-        self.percentage = percentage
+        self.pctFraction = pctFraction
     }
     
     func setPayout(_ payoutString: String) {

@@ -22,6 +22,9 @@ struct ScenarioTitleRow: View {
             Spacer()
             Button("Add...") {
                 newScenario = db.lastScenario.copy
+                if position.scenarios.list.count == 0 {
+                    newScenario.pctFraction = 1
+                }
                 showScenarioEditor = true
             }
         }

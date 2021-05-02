@@ -31,16 +31,20 @@ struct ScenarioEditor: View {
                 DatePicker("End Date", selection: $scenario.endDate, displayedComponents: .date)
                     .frame(height: 64)
             }
-            PercentSlider(percentage: $percentage, percentString: "", range: 0...1.0, onChange: nil)
-                .onChange(of: percentage, perform: { value in
-                    let intValue = Int(value*100)
-                    scenario.percentage = Double(intValue)/100
-                    position.scenarios.recalcOtherPercentages(scenario)
-            })
+            if position.scenarios.list.count > 0 {
+                PercentSlider(percentage: $percentage, percentString: "", onChange: nil)
+                    .onChange(of: percentage, perform: { value in
+                        let intPercent = value.rounded
+                        if intPercent != scenario.percentage {
+                            scenario.pctFraction = value
+                            position.scenarios.recalcOtherPercentages(scenario)
+                        }
+                 })
+            }
         }
         .onAppear() {
-            percentage = scenario.percentage
-            percentString = Int(percentage*100).formatted
+            percentage = Double(scenario.pctFraction)
+            percentString = percentage.formatted
             payoutString = "\(scenario.payout.stockPrice)"
         }
         .onDisappear() {
