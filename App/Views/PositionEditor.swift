@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PositionEditor: View {
     @ObservedObject var position: Position
-    @ObservedObject var scenarios: ScenarioList
+//    @ObservedObject var scenarios: ScenarioList
     var activateTickerField = false
     @EnvironmentObject var db: Database
     
@@ -41,15 +41,15 @@ struct PositionEditor: View {
                 .environmentObject(db)
 
             List {
-                ForEach(scenarios.list.indices, id: \.self) { index in
-                    ScenarioRow(scenario: $scenarios.list[index], position: position)
+                ForEach(position.scenarios.list.indices, id: \.self) { index in
+                    ScenarioRow(scenario: $position.scenarios.list[index], position: position)
                         .environmentObject(db)
-                        .onChange(of: scenarios.list, perform: { value in
+                        .onChange(of: position.scenarios.list, perform: { value in
                             exitPrice = position.exitPrice
                         })
                 }
                 .onDelete(perform: { indexSet in
-                    scenarios.deleteAt(indexSet)
+                    position.scenarios.deleteAt(indexSet)
                     exitPrice = position.exitPrice
                 })
             }
@@ -86,7 +86,7 @@ struct PositionEditor_Previews: PreviewProvider {
     }
     static var previews: some View {
         let testValue = testValue
-        PositionEditor(position: testValue, scenarios: testValue.scenarios)
+        PositionEditor(position: testValue)
             .environmentObject(Database())
     }
 }
