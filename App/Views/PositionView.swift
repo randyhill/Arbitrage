@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct PositionView: View {
-    @State var position: Position
-//    @State var scenarios: ScenarioList
+    @ObservedObject var position: Position
 
     var body: some View {
          NavigationLink(
             destination:
                 PositionEditor(position: position),
             label: {
-                PositionRow(position: $position)
-        })
+                PositionRow(position: position)
+            })
         .listRowBackground(Color.gray)
         .background(Color.black)
         .foregroundColor(Color.white)

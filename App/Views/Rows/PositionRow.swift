@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PositionRow: View {
-    @Binding var position: Position
+    @ObservedObject var position: Position
     private let font = Font.callout
     
     var body: some View {
@@ -44,6 +44,6 @@ struct PositionRow: View {
 
 struct ReturnField_Previews: PreviewProvider {
     static var previews: some View {
-        PositionRow(position: .constant(Database.testPosition2))
+        PositionRow(position: (Database.testPosition2))
     }
 }
