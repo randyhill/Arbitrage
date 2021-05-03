@@ -37,10 +37,11 @@ struct ScenarioTitleRow: View {
                         showScenarioEditor = false
                         exitPrice = position.exitPrice
                     }
+                    .font(.title3.bold())
+                    .frame(width: 100, alignment: .center)
                     .padding()
-                    .frame(width: 100, height: 30, alignment: .leading)
+                    Spacer()
                 }
-                .frame(alignment: .trailing)
             }
             ScenarioEditor(scenario: newScenario, position: position)
                 .environmentObject(db)
