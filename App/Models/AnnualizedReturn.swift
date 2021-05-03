@@ -129,16 +129,17 @@ struct AnnualizedReturn: Comparable {
     // Since we are using days instead of years there is a minor amount of imprecision since we ignore leap years
     static func calc(sellAt: Double, price: Double, days: Int) -> Double {
         guard price > 0 else { return 0 }
+        guard days > 0 else { return 0 }
+        guard sellAt > 0 else { return 0 }
         let grossReturn = returnCalc(sellAt: sellAt, price: price)
         let negativeReturn = grossReturn < 0
         let years = Double(days)/364
-        let annualized = (pow(1 + grossReturn, 1/years))
         if negativeReturn {
-            if annualized <= -10 {
-                return -9.99
-            }
-            return -annualized
+            let exp = 1 + grossReturn
+            let annualized = (pow(exp, 1/years))
+            return -(1-annualized)
         } else {
+            let annualized = (pow(1 + grossReturn, 1/years))
             if annualized >= 10 { return 9.99 }
             return annualized - 1
         }
