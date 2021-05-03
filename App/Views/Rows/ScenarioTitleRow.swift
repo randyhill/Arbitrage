@@ -11,6 +11,7 @@ struct ScenarioTitleRow: View {
     @EnvironmentObject var db: Database
 
     @ObservedObject var position: Position
+    @Binding var exitPrice: Double
     @State private var newScenario: Scenario = Scenario()
     @State private var showScenarioEditor = false
 
@@ -34,6 +35,7 @@ struct ScenarioTitleRow: View {
                 HStack {
                     Button("Done") {
                         showScenarioEditor = false
+                        exitPrice = position.exitPrice
                     }
                     .padding()
                     .frame(width: 100, height: 30, alignment: .leading)
@@ -49,6 +51,6 @@ struct ScenarioTitleRow: View {
 
 struct NewScenarioEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioTitleRow(position: Database.testPosition)
+        ScenarioTitleRow(position: Database.testPosition, exitPrice: .constant(22))
     }
 }

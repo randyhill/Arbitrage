@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-class ScenarioList: ObservableObject, Identifiable, Codable {
+class ScenarioList: ObservableObject, Identifiable, Codable, Equatable {
+    static func == (lhs: ScenarioList, rhs: ScenarioList) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let id: String
     @Published var list = [Scenario]()
     

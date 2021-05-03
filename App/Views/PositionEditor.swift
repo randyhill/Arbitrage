@@ -29,8 +29,6 @@ struct PositionEditor: View {
                         db.getSymbolQuote(value) { quote in
                             self.quote = quote
                             position.quote = quote
-//                            let capped = value.capitalized
-//                            self.symbol = capped
                             position.symbol = value
                         }
                     }
@@ -39,16 +37,20 @@ struct PositionEditor: View {
                 StockInfoPanel(quote: quote, isOwned: position.isOwned, exitPrice: $exitPrice, periodDays: $periodDays)
             }
             ExitValueRow(exitPrice: $exitPrice, periodDays: $periodDays, endDate: $exitDate)
-            ScenarioTitleRow(position: position)
+            ScenarioTitleRow(position: position, exitPrice: $exitPrice)
                 .environmentObject(db)
 
             List {
                 ForEach(scenarios.list.indices, id: \.self) { index in
                     ScenarioRow(scenario: $scenarios.list[index], position: position)
                         .environmentObject(db)
+                        .onChange(of: scenarios.list, perform: { value in
+                            exitPrice = position.exitPrice
+                        })
                 }
                 .onDelete(perform: { indexSet in
                     scenarios.deleteAt(indexSet)
+                    exitPrice = position.exitPrice
                 })
             }
             HStack {

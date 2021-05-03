@@ -38,7 +38,7 @@ class Database: ObservableObject {
     
     var sorted: [Position] {
          let sortedPositions = positions.sorted { first, second in
-            first.annualizedReturnFor(.ask) > second.annualizedReturnFor(.ask)
+            first.annualizedReturnFor(.purchase) > second.annualizedReturnFor(.purchase)
         }
         return sortedPositions
     }

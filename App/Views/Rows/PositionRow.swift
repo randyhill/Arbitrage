@@ -19,19 +19,19 @@ struct PositionRow: View {
                 .fontWeight(.semibold)
                 .frame(width: 72, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0))
-            if position.quote?.bidPrice != nil, position.quote?.askPrice != nil, position.quote?.midPoint != nil {
-                Spacer().frame(width: 8)
-                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.bid), alignment: .center)
-                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.mid), alignment: .center)
-                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.ask), alignment: .center)
-            } else {
+//            if position.quote?.bidPrice != nil, position.quote?.askPrice != nil, position.quote?.midPoint != nil {
+//                Spacer().frame(width: 8)
+//                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.bid), alignment: .center)
+//                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.mid), alignment: .center)
+//                AnnualizedPrice(annualReturn: position.annualizedReturnFor(.ask), alignment: .center)
+//            } else {
                 Spacer().frame(width: 40)
                 AnnualizedPrice(annualReturn: position.annualizedReturnFor(.purchase), alignment: .trailing, preText: "$")
                 Spacer().frame(width: 40)
                 Text(annualReturn.annualizedString)
                    .font(font)
                    .fontWeight(.heavy)
-           }
+//           }
 //            let APR = position.annualizedReturnFor(.ask)
 //            Text("\(APR.annualizedString)")
 //                .font(.caption2)

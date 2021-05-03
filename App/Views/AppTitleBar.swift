@@ -30,7 +30,7 @@ struct AppTitleBar: View {
                 Spacer(minLength: 20.0)
                 Button(action: {
 #if DEV
-                Test.addDataToQuotes = true
+                Test.addDataToQuotes = false
 #endif
                     db.refreshAllSymbols()
                 }, label: {
