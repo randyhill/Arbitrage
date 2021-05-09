@@ -10,7 +10,9 @@ import SwiftUI
 struct ScenarioRow: View {
     @Binding var scenario: Scenario
     var position: Position
-    let font = Font.footnote
+    var tag: String
+    
+    private let font = Font.footnote
 
     var body: some View {
         NavigationLink(
@@ -30,12 +32,15 @@ struct ScenarioRow: View {
                 .font(font)
                 .fontWeight(.bold)
             }
+            .debug {
+                Log.console("Scenario: \(scenario.percentage) for: \(position.companyName) ")
+            }
         })
     }
 }
 
 struct ScenarioRow_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioRow(scenario: .constant(Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition)
+        ScenarioRow(scenario: .constant(Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition, tag: Database.testPosition.id)
     }
 }

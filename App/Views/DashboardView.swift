@@ -17,8 +17,13 @@ struct DashboardView: View {
         NavigationView {
             List {
                 ForEach(db.sorted.indices, id: \.self) { index in
-                    PositionView(position: db.positions[index])
+                    // Need unique id for view so it doesn't open twice when dashboard refreshed.
+                    let position = db.positions[index]
+                    PositionView(position: position, tag: index)
                 }
+            }
+            .onAppear() {
+                db.refreshAllSymbols()
             }
             .toolbar {
                  ToolbarItem(placement: .principal) {

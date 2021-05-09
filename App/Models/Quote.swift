@@ -46,11 +46,17 @@ struct Quote: Hashable, Codable, Identifiable {
         return lastTrade.timeStamp
     }
 
-    var high: Double {
+    var high: Double? {
+        if highPriceTime.price == 0 {
+            return nil
+        }
         return highPriceTime.price
     }
     
-    var low: Double {
+    var low: Double? {
+        if  lowPriceTime.price == 0 {
+            return nil
+        }
         return lowPriceTime.price
     }
     

@@ -69,6 +69,10 @@ class Position: ObservableObject, Identifiable, Codable {
         return quote?.companyName ?? "No Data"
     }
     
+    var description: String {
+        return "\(id) \(companyName), \(symbol)\n\(quote.debugDescription)\n\(scenarios.description)"
+    }
+    
     init(symbol: String, best: Double = 0.0, worst: Double? = nil, bestPercentage: Double = 0.5, soonest: Date = Date(), latest: Date? = nil, isOwned: Bool = false, buyNotifications: Bool = true) {
         self.id = UUID().uuidString
         self._symbol = symbol.uppercased()

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct PositionView: View {
     @ObservedObject var position: Position
+    var tag: Int
 
     var body: some View {
          NavigationLink(
             destination:
-                PositionEditor(position: position),
+                PositionEditor(position: position, tag: tag),
             label: {
                 PositionRow(position: position)
             })
@@ -26,7 +27,8 @@ struct PositionView: View {
 
 struct PositionView_Previews: PreviewProvider {
     static var previews: some View {
-        PositionView(position: (Database.testPositions.first!))
+        let position = Database.testPositions.first!
+        PositionView(position: position, tag: 1)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ScenarioList: ObservableObject, Identifiable, Codable, Equatable {
+class ScenarioList: ObservableObject, Identifiable, Equatable {
     static func == (lhs: ScenarioList, rhs: ScenarioList) -> Bool {
         return lhs.id == rhs.id
     }
@@ -33,26 +33,28 @@ class ScenarioList: ObservableObject, Identifiable, Codable, Equatable {
         return avePayout
     }
     
-    enum CodingKeys: CodingKey {
-        case id
-        case list
+    var description: String {
+        guard list.count > 0 else {
+            return "Scenarios: Empty"
+        }
+        var ds: String = "Scenarios: "
+        for scenario in list {
+            ds += scenario.description + "\n"
+        }
+        return ds
     }
 
+    
+    init() {
+        self.id = UUID().uuidString
+    }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         list = try container.decode([Scenario].self, forKey: .list)
     }
 
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(list, forKey: .list)
-    }
-    
-    init() {
-        self.id = UUID().uuidString
-    }
     
     // Only allow one deletion at a time
     func deleteAt(_ indexes: IndexSet) {
@@ -118,5 +120,20 @@ class ScenarioList: ObservableObject, Identifiable, Codable, Equatable {
         }
         recalcOtherPercentages(newScenario)
         list += [newScenario]
+    }
+}
+
+extension ScenarioList: Codable {
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case list
+    }
+
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(list, forKey: .list)
     }
 }

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PositionEditor: View {
     @ObservedObject var position: Position
-//    @ObservedObject var scenarios: ScenarioList
     var activateTickerField = false
     @EnvironmentObject var db: Database
+    var tag: Int
     
     // Private state
     @State private var symbol = ""
@@ -42,7 +42,7 @@ struct PositionEditor: View {
 
             List {
                 ForEach(position.scenarios.list.indices, id: \.self) { index in
-                    ScenarioRow(scenario: $position.scenarios.list[index], position: position)
+                    ScenarioRow(scenario: $position.scenarios.list[index], position: position, tag: position.id)
                         .environmentObject(db)
                         .onChange(of: position.scenarios.list, perform: { value in
                             exitPrice = position.exitPrice
@@ -60,7 +60,11 @@ struct PositionEditor: View {
                 Spacer()
                 Checkbox(isChecked: $position.doNotify, title: "Notifications") { (changed) in
                 }
-            }.padding()
+            }
+            .padding()
+            .debug {
+                Log.console("OPENED INDEX: \(tag)\n \(position.description)")
+            }
         }
         .onAppear() {
             symbol = position.symbol
@@ -72,7 +76,6 @@ struct PositionEditor: View {
         }
         .onDisappear() {
             db.save()
-            db.refreshAllSymbols()
         }
     }
 }
@@ -86,7 +89,7 @@ struct PositionEditor_Previews: PreviewProvider {
     }
     static var previews: some View {
         let testValue = testValue
-        PositionEditor(position: testValue)
+        PositionEditor(position: testValue, tag: 1)
             .environmentObject(Database())
     }
 }

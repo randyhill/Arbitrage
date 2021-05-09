@@ -19,22 +19,26 @@ struct StockInfoPanel: View {
             Text(quote.companyName)
             Divider()
             PriceReturnRow(title: "Price:", quote: quote, priceType: .last, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
-            Divider()
-            if quote.bidPrice != nil {
-                PriceReturnRow(title: "Bid:",  quote: quote, priceType: .bid, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+                if quote.bidPrice != nil {
                 Divider()
+                PriceReturnRow(title: "Bid:",  quote: quote, priceType: .bid, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
             }
             if quote.midPoint != nil {
+                Divider()
                 PriceReturnRow(title: "Mid:",  quote: quote, priceType: .mid, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
-                Divider()
-            }
+             }
             if quote.askPrice != nil {
-                PriceReturnRow(title: "Ask:",  quote: quote, priceType: .ask, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
                 Divider()
+                PriceReturnRow(title: "Ask:",  quote: quote, priceType: .ask, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
             }
-            PriceReturnRow(title: "Low:",  quote: quote, priceType: .low, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
-            Divider()
-            PriceReturnRow(title: "High:",  quote: quote, priceType: .high, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+            if quote.low != nil {
+                Divider()
+                PriceReturnRow(title: "Low:",  quote: quote, priceType: .low, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+            }
+            if quote.high != nil {
+                Divider()
+                PriceReturnRow(title: "High:",  quote: quote, priceType: .high, isOwned: isOwned, exitPrice: exitPrice, periodDays: periodDays)
+            }
 
         })
     }

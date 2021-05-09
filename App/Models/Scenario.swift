@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-class Scenario: ObservableObject, Identifiable, Codable, Equatable {
-    static func == (lhs: Scenario, rhs: Scenario) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
+class Scenario: ObservableObject, Identifiable {
     let id: String
     @Published var payout: Double
     @Published var endDate: Date
@@ -50,11 +46,8 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
         return Scenario(payout: payout, date: endDate, pctFraction: pctFraction)
     }
     
-    enum CodingKeys: CodingKey {
-        case id
-        case payout
-        case endDate
-        case pctFraction
+    var description: String {
+        return "Scenario: \(id), payout: \(payout), endDate: \(endDate), percentage: \(pctFraction)"
     }
 
     required init(from decoder: Decoder) throws {
@@ -63,14 +56,6 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
         payout = try container.decode(Double.self, forKey: .payout)
         endDate = try container.decode(Date.self, forKey: .endDate)
         pctFraction = try container.decode(Double.self, forKey: .pctFraction)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(payout, forKey: .payout)
-        try container.encode(endDate, forKey: .endDate)
-        try container.encode(pctFraction, forKey: .pctFraction)
     }
     
     init(payout: Double = 2.0, date: Date = Date(), pctFraction: Double = 1) {
@@ -86,6 +71,29 @@ class Scenario: ObservableObject, Identifiable, Codable, Equatable {
        } else if let newPayout = Double(payoutString) {
            payout = newPayout
        }
+    }
+}
+
+extension Scenario: Equatable {
+    static func == (lhs: Scenario, rhs: Scenario) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+extension Scenario: Codable {
+    enum CodingKeys: CodingKey {
+        case id
+        case payout
+        case endDate
+        case pctFraction
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(payout, forKey: .payout)
+        try container.encode(endDate, forKey: .endDate)
+        try container.encode(pctFraction, forKey: .pctFraction)
     }
 }
 
