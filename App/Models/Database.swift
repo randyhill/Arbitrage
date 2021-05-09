@@ -94,6 +94,7 @@ class Database: ObservableObject {
     }
     
     func refreshAllSymbols() {
+        Log.console("REFRESHING SYMBOLS")
         for position in positions {
             getSymbolQuote(position.symbol) { newEquity in
                 self.addEquity(symbol: position.symbol, quote: newEquity)

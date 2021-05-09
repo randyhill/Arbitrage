@@ -30,7 +30,7 @@ struct NewPositionEditor: View {
                 .padding()
             }
             .frame(alignment: .trailing)
-            PositionEditor(position: newPosition, activateTickerField: true, tag: 0)
+            PositionEditor(position: newPosition, activateTickerField: true)
                 .environmentObject(db)
         }
     }

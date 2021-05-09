@@ -11,7 +11,6 @@ struct PositionEditor: View {
     @ObservedObject var position: Position
     var activateTickerField = false
     @EnvironmentObject var db: Database
-    var tag: Int
     
     // Private state
     @State private var symbol = ""
@@ -42,7 +41,7 @@ struct PositionEditor: View {
 
             List {
                 ForEach(position.scenarios.list) { scenario in
-                    ScenarioRow(scenario: scenario, position: position, tag: position.id)
+                    ScenarioRow(scenario: scenario, position: position)
                         .environmentObject(db)
                         .onChange(of: position.scenarios.list, perform: { value in
                             exitPrice = position.exitPrice
@@ -63,7 +62,7 @@ struct PositionEditor: View {
             }
             .padding()
             .debug {
-                Log.console("OPENED INDEX: \(tag)\n \(position.description)")
+                Log.console("OPENED:\(position.description)")
             }
         }
         .onAppear() {
@@ -89,7 +88,7 @@ struct PositionEditor_Previews: PreviewProvider {
     }
     static var previews: some View {
         let testValue = testValue
-        PositionEditor(position: testValue, tag: 1)
+        PositionEditor(position: testValue)
             .environmentObject(Database())
     }
 }

@@ -10,14 +10,13 @@ import SwiftUI
 struct ScenarioRow: View {
     @ObservedObject var scenario: Scenario
     var position: Position
-    var tag: String
     
     private let font = Font.footnote
 
     var body: some View {
         NavigationLink(
            destination:
-            ScenarioEditor(scenario: scenario, position: position),
+                ScenarioEditor(scenario: scenario, position: position),
            label: {
             HStack {
                 Text("Payout:")
@@ -41,6 +40,6 @@ struct ScenarioRow: View {
 
 struct ScenarioRow_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioRow(scenario: (Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition, tag: Database.testPosition.id)
+        ScenarioRow(scenario: (Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition)
     }
 }
