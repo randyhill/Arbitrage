@@ -93,18 +93,27 @@ class Database: ObservableObject {
         return nil
     }
     
-    func refreshAllSymbols() {
+    func refreshAllSymbols(completion: (()->Void)? = nil) {
         Log.console("REFRESHING SYMBOLS")
+        var fetchTasks = positions.count
         for position in positions {
             getSymbolQuote(position.symbol) { newEquity in
-                self.addEquity(symbol: position.symbol, quote: newEquity)
-                position.quote = newEquity
-                self.positions = self.sorted
+                if let newEquity = newEquity {
+                    self.addEquity(symbol: position.symbol, quote: newEquity)
+                    position.quote = newEquity
+                    self.positions = self.sorted
+                }
+                
+                // Keep track of tasks by count
+                fetchTasks -= 1
+                if fetchTasks <= 0 {
+                    completion?()
+                }
            }
         }
     }
         
-    func getSymbolQuote(_ symbol: String, completion: @escaping (_ quote: Quote)->Void) {
+    func getSymbolQuote(_ symbol: String, completion: @escaping (_ quote: Quote?)->Void) {
         guard symbol.count > 0 else {
             return Log.error("Passed empty symbol")
         }

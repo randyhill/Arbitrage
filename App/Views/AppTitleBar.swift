@@ -11,6 +11,7 @@ struct AppTitleBar: View {
     @EnvironmentObject var db: Database
     @Binding var isShowingDetailView: Bool
     @Binding var title: String
+    @State private var animationOn = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,11 +33,19 @@ struct AppTitleBar: View {
 #if DEV
                 Test.addDataToQuotes = true
 #endif
-                    db.refreshAllSymbols()
-                }, label: {
+                    withAnimation {
+                        animationOn = true
+                        db.refreshAllSymbols {
+                            animationOn = false 
+                        }
+                    }
+                 }, label: {
                     Image(systemName: "arrow.clockwise.circle.fill")
-                            .font(.largeTitle)
-                })
+                        .font(.largeTitle)
+                        .animation(.easeInOut)
+                        .rotationEffect(animationOn ? .degrees(90) : .degrees(0))
+                        .scaleEffect(animationOn ? 2.0 : 1.0)
+               })
                 .frame(alignment: .trailing)
             }
         }
