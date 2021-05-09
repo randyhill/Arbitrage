@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScenarioRow: View {
-    @Binding var scenario: Scenario
+    @ObservedObject var scenario: Scenario
     var position: Position
     var tag: String
     
@@ -41,6 +41,6 @@ struct ScenarioRow: View {
 
 struct ScenarioRow_Previews: PreviewProvider {
     static var previews: some View {
-        ScenarioRow(scenario: .constant(Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition, tag: Database.testPosition.id)
+        ScenarioRow(scenario: (Scenario(payout: 77, date: Date().add(years:1))), position: Database.testPosition, tag: Database.testPosition.id)
     }
 }

@@ -16,10 +16,8 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(db.sorted.indices, id: \.self) { index in
-                    // Need unique id for view so it doesn't open twice when dashboard refreshed.
-                    let position = db.positions[index]
-                    PositionView(position: position, tag: index)
+                ForEach(db.sorted) { position in
+                     PositionView(position: position, tag: 1)
                 }
             }
             .onAppear() {

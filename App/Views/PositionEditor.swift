@@ -41,8 +41,8 @@ struct PositionEditor: View {
                 .environmentObject(db)
 
             List {
-                ForEach(position.scenarios.list.indices, id: \.self) { index in
-                    ScenarioRow(scenario: $position.scenarios.list[index], position: position, tag: position.id)
+                ForEach(position.scenarios.list) { scenario in
+                    ScenarioRow(scenario: scenario, position: position, tag: position.id)
                         .environmentObject(db)
                         .onChange(of: position.scenarios.list, perform: { value in
                             exitPrice = position.exitPrice
